@@ -1,11 +1,13 @@
 require('dotenv').config();
 
-const commonProps = require('./generate/common.properties');
+
 const fs = require('fs');
 const gulp = require('gulp');
 const replace = require('gulp-replace');
 const run = require('gulp-run-command').default;
 const propertiesPath = './src/properties';
+const pwaAssetGenerator = require('pwa-asset-generator');
+const publicPath = './src/public';
 
 
 /**
@@ -19,6 +21,8 @@ const propertiesPath = './src/properties';
  * Modify generate/*.properties.js to add more properties
  * 
  */
+
+const commonProps = require('./generate/common.properties');
 
 // generate common.properties.json for client and server consumption
 const generateCommonProperties = (done) => {
@@ -42,7 +46,8 @@ const generateNextSiteMapConfig = async (done) => {
         done(error);
     }
 }
-exports.properties = gulp.series(generateCommonProperties, generateNextSiteMapConfig);
+
+exports.config = gulp.series(generateCommonProperties, generateNextSiteMapConfig);
 
 /**
  *
@@ -81,3 +86,74 @@ const build = async (done) => {
 }
 
 exports.build = build;
+
+/**
+ *
+ * `gulp pwa`
+ *
+ *  Generate assets required for PWA
+ *
+ */
+
+
+const brandPath = `${publicPath}/brand`;
+
+// generate common.properties.json for client and server consumption
+const manifest = require('./generate/manifest');
+const generateManifest = (done) => {
+    const filePath = `${publicPath}/manifest.json`;
+    const value = JSON.stringify(manifest, null, 2);
+    try {
+        fs.writeFile(filePath, value, done);
+    } catch (error) {
+        done(error);
+    }
+}
+
+const clearAssets = async (done) => {
+    try {
+        await run(`rm -rf ${brandPath}`)();
+        done();
+    } catch (e) {
+        done(error);
+    }
+}
+
+const generateFavicon = async (done) => {
+    try {
+        await pwaAssetGenerator.generateImages(
+            './gravit/icon.svg',
+            `${brandPath}/favicon`,
+            {
+                scrape: true,
+                opaque: false,
+                iconOnly: true,
+                favicon: true,
+                log: false,
+                manifest: `${publicPath}/manifest.json`
+            });
+        done();
+    } catch (error) {
+        done(error);
+    }
+}
+
+const generateSplashScreen = async (done) => {
+    try {
+        await pwaAssetGenerator.generateImages(
+            './gravit/logo.svg',
+            `${brandPath}/splash`,
+            {
+                scrape: true,
+                splashOnly: true,
+                portraitOnly: true,
+                log: false,
+                manifest: `${publicPath}/manifest.json`
+            });
+        done();
+    } catch (error) {
+        done(error);
+    }
+}
+
+exports.pwa = gulp.series(clearAssets, generateManifest, generateFavicon, generateSplashScreen);

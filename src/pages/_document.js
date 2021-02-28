@@ -36,16 +36,6 @@ class MyDocument extends Document {
                     <link rel="apple-touch-startup-image" href="/brand/splash/apple-splash-640-1136.jpg" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
                     <link rel="apple-touch-startup-image" href="/brand/splash/apple-splash-1136-640.jpg" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" />
                     <link
-                        rel='shortcut icon'
-                        href='/favicon.ico'
-                        type='image/x-icon'
-                    />
-                    <link
-                        rel='icon'
-                        href='/favicon.ico'
-                        type='image/x-icon'
-                    />
-                    <link
                         rel='icon'
                         type='image/png'
                         sizes='192x192'

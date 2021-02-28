@@ -6,4 +6,6 @@
 dist/
 node_modules/
 src/properties
+src/public/manifest.json
+src/public/brand
 /next-sitemap.js
