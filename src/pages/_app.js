@@ -2,6 +2,12 @@ import React from 'react';
 import Head from 'next/head';
 
 /**
+ * Import stylesheet
+ */
+
+import '../styles/main.css';
+
+/**
  * Entry point
  * @param {*} props
  */
