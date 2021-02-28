@@ -2,8 +2,11 @@ require('dotenv').config();
 
 const commonProps = require('./generate/common.properties');
 const fs = require('fs');
+const gulp = require('gulp');
+const replace = require('gulp-replace');
 const run = require('gulp-run-command').default;
 const propertiesPath = './src/properties';
+
 
 /**
  * 
@@ -17,6 +20,7 @@ const propertiesPath = './src/properties';
  * 
  */
 
+// generate common.properties.json for client and server consumption
 const generateCommonProperties = (done) => {
     const filePath = `${propertiesPath}/common.properties.json`;
     const value = JSON.stringify(commonProps, null, 2);
@@ -26,7 +30,19 @@ const generateCommonProperties = (done) => {
         done(error);
     }
 }
-exports.properties = generateCommonProperties;
+
+// generate next-sitemap config with siteUrl value
+const generateNextSiteMapConfig = async (done) => {
+    try {
+        await gulp.src('./generate/next-sitemap.js')
+            .pipe(replace('/*URL*/', commonProps.APPLICATION_URL))
+            .pipe(gulp.dest('./'));
+        done();
+    } catch (error) {
+        done(error);
+    }
+}
+exports.properties = gulp.series(generateCommonProperties, generateNextSiteMapConfig);
 
 /**
  *

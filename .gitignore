@@ -6,3 +6,4 @@
 dist/
 node_modules/
 src/properties
+/next-sitemap.js
