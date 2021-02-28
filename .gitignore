@@ -5,3 +5,4 @@
 # Dependency directories
 dist/
 node_modules/
+src/properties

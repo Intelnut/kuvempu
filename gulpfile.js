@@ -1,4 +1,32 @@
+require('dotenv').config();
+
+const commonProps = require('./generate/common.properties');
+const fs = require('fs');
 const run = require('gulp-run-command').default;
+const propertiesPath = './src/properties';
+
+/**
+ * 
+ * `gulp properties`
+ * 
+ * Save the properties module output as json 
+ * for consumption by server and client
+ * 
+ * JSON files generated should not be committed to the codebase
+ * Modify generate/*.properties.js to add more properties
+ * 
+ */
+
+const generateCommonProperties = (done) => {
+    const filePath = `${propertiesPath}/common.properties.json`;
+    const value = JSON.stringify(commonProps, null, 2);
+    try {
+        fs.writeFile(filePath, value, done);
+    } catch (error) {
+        done(error);
+    }
+}
+exports.properties = generateCommonProperties;
 
 /**
  *
