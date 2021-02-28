@@ -1,6 +1,20 @@
-function defaultTask(cb) {
-    // place code for your default task here
-    cb();
+const run = require('gulp-run-command').default;
+
+/**
+ *
+ * `gulp dev`
+ *
+ * Run local NextJs development server
+ *
+ */
+
+const dev = async (done) => {
+    try {
+        await run('next src/')();
+        done();
+    } catch (error) {
+        done(error);
+    }
 }
 
-exports.default = defaultTask
+exports.dev = dev;

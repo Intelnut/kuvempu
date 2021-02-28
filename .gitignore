@@ -3,4 +3,5 @@
 .env.test
 
 # Dependency directories
+dist/
 node_modules/
