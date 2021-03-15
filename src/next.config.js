@@ -12,9 +12,8 @@ module.exports = withPWA({
         disable: isDev,
     },
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-
-        config.output.crossOriginLoading = "anonymous";
         if (!isDev) {
+            config.output.crossOriginLoading = "anonymous";
             config.plugins.push(
                 new SriPlugin({
                     hashFuncNames: ["sha256", "sha384"],
