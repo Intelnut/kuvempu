@@ -43,9 +43,11 @@
     "gulp-replace": "^1.0.0",
     "gulp-run-command": "^0.0.10",
     "next-pwa": "^5.0.6",
+    "next-secure-headers": "^2.2.0",
     "next-sitemap": "^1.5.8",
     "postcss": "^8.2.6",
     "pwa-asset-generator": "^4.1.1",
-    "tailwindcss": "^2.0.3"
+    "tailwindcss": "^2.0.3",
+    "webpack-subresource-integrity": "^1.5.2"
   }
 }
