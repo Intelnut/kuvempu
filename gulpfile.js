@@ -7,7 +7,7 @@ const replace = require('gulp-replace');
 const run = require('gulp-run-command').default;
 const propertiesPath = './src/properties';
 const pwaAssetGenerator = require('pwa-asset-generator');
-const publicPath = './src/public';
+const consumerPublicPath = './src/consumer/public';
 
 
 /**
@@ -47,7 +47,9 @@ const generateNextSiteMapConfig = async (done) => {
     }
 }
 
-exports.config = gulp.series(generateCommonProperties, generateNextSiteMapConfig);
+const config = gulp.series(generateCommonProperties, generateNextSiteMapConfig)
+
+exports.config = config;
 
 /**
  *
@@ -59,7 +61,7 @@ exports.config = gulp.series(generateCommonProperties, generateNextSiteMapConfig
 
 const dev = async (done) => {
     try {
-        await run('next src/')();
+        await run('next src/consumer/')();
         done();
     } catch (error) {
         done(error);
@@ -76,16 +78,16 @@ exports.dev = dev;
  *
  */
 
-const build = async (done) => {
+const buildConsumer = async (done) => {
     try {
-        await run('next build src/')();
+        await run('next build src/consumer/')();
         done();
     } catch (error) {
         done(error);
     }
 }
 
-exports.build = build;
+exports.buildConsumer = buildConsumer;
 
 /**
  *
@@ -96,12 +98,12 @@ exports.build = build;
  */
 
 
-const brandPath = `${publicPath}/brand`;
+const brandPath = `${consumerPublicPath}/brand`;
 
 // generate common.properties.json for client and server consumption
 const manifest = require('./generate/manifest');
 const generateManifest = (done) => {
-    const filePath = `${publicPath}/manifest.json`;
+    const filePath = `${consumerPublicPath}/manifest.json`;
     const value = JSON.stringify(manifest, null, 2);
     try {
         fs.writeFile(filePath, value, done);
@@ -122,7 +124,7 @@ const clearAssets = async (done) => {
 const generateFavicon = async (done) => {
     try {
         await pwaAssetGenerator.generateImages(
-            './gravit/icon.svg',
+            './gravit/icon.svg', //TODO: env
             `${brandPath}/favicon`,
             {
                 scrape: true,
@@ -130,7 +132,7 @@ const generateFavicon = async (done) => {
                 iconOnly: true,
                 favicon: true,
                 log: false,
-                manifest: `${publicPath}/manifest.json`
+                manifest: `${consumerPublicPath}/manifest.json`
             });
         done();
     } catch (error) {
@@ -141,14 +143,14 @@ const generateFavicon = async (done) => {
 const generateSplashScreen = async (done) => {
     try {
         await pwaAssetGenerator.generateImages(
-            './gravit/logo.svg',
+            './gravit/logo.svg', //TODO: env
             `${brandPath}/splash`,
             {
                 scrape: true,
                 splashOnly: true,
                 portraitOnly: true,
                 log: false,
-                manifest: `${publicPath}/manifest.json`
+                manifest: `${consumerPublicPath}/manifest.json`
             });
         done();
     } catch (error) {
@@ -156,4 +158,6 @@ const generateSplashScreen = async (done) => {
     }
 }
 
-exports.pwa = gulp.series(clearAssets, generateManifest, generateFavicon, generateSplashScreen);
+const consumerPWA = gulp.series(clearAssets, generateManifest, generateFavicon, generateSplashScreen);
+
+exports.consumerPWA = consumerPWA;

@@ -1,6 +1,6 @@
 module.exports = {
     siteUrl: '/*URL*/',
     generateRobotsTxt: true,
-    sourceDir: './dist',
-    outDir: './src/public'
+    sourceDir: './dist/consumer', //TODO: env
+    outDir: './src/consumer/public' //TODO: env
 }

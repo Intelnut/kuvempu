@@ -6,6 +6,8 @@
 dist/
 node_modules/
 src/properties
-src/public/manifest.json
-src/public/brand
+src/consumer/public/manifest.json
+src/consumer/public/brand
+src/consumer/public/sw.js
+src/consumer/public/workbox*.js
 /next-sitemap.js
