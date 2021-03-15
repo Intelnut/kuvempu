@@ -12,6 +12,7 @@ module.exports = withPWA({
         disable: isDev,
     },
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+
         config.output.crossOriginLoading = "anonymous";
         if (!isDev) {
             config.plugins.push(
@@ -22,9 +23,6 @@ module.exports = withPWA({
             );
         }
 
-        config.plugins.push(new MomentLocalesPlugin());
-
-        // Important: return the modified config
         return config;
     },
     async headers() {
