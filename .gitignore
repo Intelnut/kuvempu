@@ -11,4 +11,5 @@ src/consumer/public/brand
 src/consumer/public/sw.js
 src/consumer/public/workbox*.js
 src/consumer/next-sitemap.js
-src/consumer/lib
+src/**/lib
+src/**/.firebase

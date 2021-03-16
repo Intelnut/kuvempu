@@ -1,5 +1,6 @@
 {
     "hosting": {
+        "target": "consumer",
         "public": "./public",
         "ignore": [
             "firebase.json",
@@ -9,7 +10,7 @@
         "rewrites": [
             {
                 "source": "**",
-                "function": "client"
+                "function": "consumer"
             }
         ]
     },

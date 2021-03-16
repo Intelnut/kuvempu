@@ -5,6 +5,7 @@ const buildConsumer = require('./scripts/gulp-build-consumer');
 const consumerDev = require('./scripts/gulp-consumer-dev');
 const consumerPWA = require('./scripts/gulp-consumer-pwa');
 const setupConsumerHosting = require('./scripts/gulp-setup-consumer-hosting');
+const deployConsumer = require('./scripts/gulp-deploy-consumer');
 /**
  * `gulp settings:common`
  * Generate setting common for all apps 
@@ -70,4 +71,12 @@ exports['build:consumer'] = buildConsumer;
  */
 
 exports['build'] = gulp.series(buildConsumer);
+
+/**
+ *
+ * `gulp deploy:consumer`
+ * Build prod ready consumer app
+ */
+
+exports['deploy:consumer'] = deployConsumer;
 
