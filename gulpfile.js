@@ -3,7 +3,9 @@ require('dotenv').config();
 const fs = require('fs');
 const gulp = require('gulp');
 const run = require('gulp-run-command').default;
+
 const generateConfig = require('./scripts/gulp-generate-config');
+const buildConsumer = require('./scripts/gulp-build-consumer');
 const consumerDev = require('./scripts/gulp-consumer-dev');
 
 const pwaAssetGenerator = require('pwa-asset-generator');
@@ -13,30 +15,21 @@ const consumerPublicPath = './src/consumer/public';
  * `gulp generateConfig`
  * generates properties files and sitemap config for consumer
  */
+
 exports.generateConfig = generateConfig;
 
 /**
  * `gulp consumerDev`
  * start a consumer local development server
  */
+
 exports.consumerDev = consumerDev;
 
 /**
  *
- * `gulp build`
- *
- * Build Next.js production application
- *
+ * `gulp buildConsumer`
+ * Build prod ready consumer app
  */
-
-const buildConsumer = async (done) => {
-    try {
-        await run('next build src/consumer/')();
-        done();
-    } catch (error) {
-        done(error);
-    }
-}
 
 exports.buildConsumer = buildConsumer;
 
