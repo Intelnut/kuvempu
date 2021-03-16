@@ -1,22 +1,46 @@
-const generateConfig = require('./scripts/gulp-generate-config');
+const gulp = require('gulp');
+const generateCommonConfig = require('./scripts/gulp-generate-common-config');
+const generateConsumerConfig = require('./scripts/gulp-generate-consumer-config');
 const buildConsumer = require('./scripts/gulp-build-consumer');
 const consumerDev = require('./scripts/gulp-consumer-dev');
 const consumerPWA = require('./scripts/gulp-consumer-pwa');
 
 /**
- * `gulp generate:config`
- * Generate properties files and sitemap config for consumer
+ * `gulp settings:common`
+ * Generate setting common for all apps 
  */
 
-exports['generate:config'] = generateConfig;
+exports['settings:common'] = generateCommonConfig;
+
+/**
+ * `gulp settings:consumer`
+ * Generate setting for consumer app 
+ */
+
+exports['settings:consumer'] = generateConsumerConfig;
+
+/**
+ * `gulp settings`
+ * Generate setting across apps
+ */
+
+exports['settings'] = gulp.series(generateCommonConfig, generateConsumerConfig);
 
 /**
  *
- * `gulp generate:pwa`
+ * `gulp pwa:consumer`
  *  Generate PWA assets and manifest
  */
 
-exports['generate:pwa'] = consumerPWA;
+exports['pwa:consumer'] = consumerPWA;
+
+/**
+ *
+ * `gulp pwa:consumer`
+ *  Generate PWA assets and manifest for consumer and admin
+ */
+
+exports['pwa'] = gulp.series(consumerPWA);
 
 /**
  * `gulp dev:consumer`
@@ -32,4 +56,12 @@ exports['dev:consumer'] = consumerDev;
  */
 
 exports['build:consumer'] = buildConsumer;
+
+/**
+ *
+ * `gulp build`
+ * Build prod ready app for consumer, admin and rest
+ */
+
+exports['build'] = gulp.series(buildConsumer);
 

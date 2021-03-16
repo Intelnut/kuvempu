@@ -2,12 +2,17 @@
  * Gulp task to build production consumer app
  */
 
-const spawn = require('child_process').spawn;
+const childProcess = require('child_process').spawnSync;
 
 const buildConsumerApp = async (done) => {
     try {
-        spawn('npm', ['run', 'build'], { cwd: 'src/consumer/', stdio: 'inherit', shell: true })
-            .on('close', done);
+        childProcess('npm', ['run', 'build'], { cwd: 'src/consumer/', stdio: 'inherit', shell: true }, (error) => {
+            if (error) {
+                done(error);
+                return;
+            }
+            done();
+        });
     } catch (error) {
         done(error);
     }
