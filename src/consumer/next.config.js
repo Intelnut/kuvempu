@@ -5,7 +5,7 @@ const SriPlugin = require("webpack-subresource-integrity");
 const { createSecureHeaders } = require("next-secure-headers");
 
 module.exports = withPWA({
-    distDir: '../../dist/consumer',
+    distDir: '../../lib/consumer',
     pwa: {
         dest: 'public',
         register: true,

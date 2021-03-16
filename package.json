@@ -19,8 +19,8 @@
   ],
   "author": "Vijay Sasinathan <vj@intelnut.com> (https://intelnut.com/)",
   "license": "ISC",
-  "dependencies": {},
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "gulp": "^4.0.2",
     "gulp-replace": "^1.0.0",
     "gulp-run-command": "^0.0.10",
