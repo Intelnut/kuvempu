@@ -7,14 +7,8 @@ require('dotenv').config()
 
 const properties = {
 
-    // A
-    APPLICATION_URL: process.env.APPLICATION_URL,
-    APPLICATION_NAME: process.env.APPLICATION_NAME,
-    APPLICATION_SHORT_NAME: process.env.APPLICATION_SHORT_NAME,
-    APPLICATION_DESCRIPTION: process.env.APPLICATION_DESCRIPTION,
-
     // C
-    CONSUMER_URL: process.env.CONSUMER_URL,
+    CONSUMER_URL: process.env.CONSUMER_URL
 
 };
 
