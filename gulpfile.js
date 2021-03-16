@@ -21,7 +21,7 @@ const consumerPublicPath = './src/consumer/public';
  * 
  */
 
-const commonProps = require('./generate/common.properties');
+const commonProps = require('./scripts/common.properties');
 
 // generate common.properties.json for client and server consumption
 const generateCommonProperties = (done) => {
@@ -100,7 +100,7 @@ exports.buildConsumer = buildConsumer;
 const brandPath = `${consumerPublicPath}/brand`;
 
 // generate common.properties.json for client and server consumption
-const manifest = require('./generate/manifest');
+const manifest = require('./scripts/manifest');
 const generateManifest = (done) => {
     const filePath = `${consumerPublicPath}/manifest.json`;
     const value = JSON.stringify(manifest, null, 2);
