@@ -1,11 +1,10 @@
 require('dotenv').config();
 
-
 const fs = require('fs');
 const gulp = require('gulp');
 const replace = require('gulp-replace');
 const run = require('gulp-run-command').default;
-const propertiesPath = './src/properties';
+const propertiesPath = './src/common';
 const pwaAssetGenerator = require('pwa-asset-generator');
 const consumerPublicPath = './src/consumer/public';
 
