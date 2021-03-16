@@ -23,5 +23,8 @@
     "postcss": "^8.2.6",
     "tailwindcss": "^2.0.3",
     "webpack-subresource-integrity": "^1.5.2"
+  },
+  "scripts": {
+    "dev": "next dev"
   }
 }

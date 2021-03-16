@@ -4,6 +4,7 @@ const fs = require('fs');
 const gulp = require('gulp');
 const run = require('gulp-run-command').default;
 const generateConfig = require('./scripts/gulp-generate-config');
+const consumerDev = require('./scripts/gulp-consumer-dev');
 
 const pwaAssetGenerator = require('pwa-asset-generator');
 const consumerPublicPath = './src/consumer/public';
@@ -15,22 +16,10 @@ const consumerPublicPath = './src/consumer/public';
 exports.generateConfig = generateConfig;
 
 /**
- *
- * `gulp dev`
- *
- * Run local Next.js development server
- *
+ * `gulp consumerDev`
+ * start a consumer local development server
  */
-const dev = async (done) => {
-    try {
-        await run('next src/consumer/')();
-        done();
-    } catch (error) {
-        done(error);
-    }
-}
-
-exports.dev = dev;
+exports.consumerDev = consumerDev;
 
 /**
  *
