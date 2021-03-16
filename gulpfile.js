@@ -1,163 +1,82 @@
-require('dotenv').config();
-
-
-const fs = require('fs');
 const gulp = require('gulp');
-const replace = require('gulp-replace');
-const run = require('gulp-run-command').default;
-const propertiesPath = './src/properties';
-const pwaAssetGenerator = require('pwa-asset-generator');
-const consumerPublicPath = './src/consumer/public';
-
-
+const generateCommonConfig = require('./scripts/gulp-generate-common-config');
+const generateConsumerConfig = require('./scripts/gulp-generate-consumer-config');
+const buildConsumer = require('./scripts/gulp-build-consumer');
+const consumerDev = require('./scripts/gulp-consumer-dev');
+const consumerPWA = require('./scripts/gulp-consumer-pwa');
+const setupConsumerHosting = require('./scripts/gulp-setup-consumer-hosting');
+const deployConsumer = require('./scripts/gulp-deploy-consumer');
 /**
- * 
- * `gulp properties`
- * 
- * Save the properties module output as json 
- * for consumption by server and client
- * 
- * JSON files generated should not be committed to the codebase
- * Modify generate/*.properties.js to add more properties
- * 
+ * `gulp settings:common`
+ * Generate setting common for all apps 
  */
 
-const commonProps = require('./generate/common.properties');
+exports['settings:common'] = generateCommonConfig;
 
-// generate common.properties.json for client and server consumption
-const generateCommonProperties = (done) => {
-    const filePath = `${propertiesPath}/common.properties.json`;
-    const value = JSON.stringify(commonProps, null, 2);
-    try {
-        fs.writeFile(filePath, value, done);
-    } catch (error) {
-        done(error);
-    }
-}
+/**
+ * `gulp settings:consumer`
+ * Generate setting for consumer app 
+ */
 
-// generate next-sitemap config with siteUrl value
-const generateNextSiteMapConfig = async (done) => {
-    try {
-        await gulp.src('./generate/next-sitemap.js')
-            .pipe(replace('/*URL*/', commonProps.APPLICATION_URL))
-            .pipe(gulp.dest('./'));
-        done();
-    } catch (error) {
-        done(error);
-    }
-}
+exports['settings:consumer'] = generateConsumerConfig;
 
-const config = gulp.series(generateCommonProperties, generateNextSiteMapConfig)
+/**
+ * `gulp settings`
+ * Generate setting across apps
+ */
 
-exports.config = config;
+exports['settings'] = gulp.series(generateCommonConfig, generateConsumerConfig);
+
+/**
+ * `gulp setup:consumer`
+ * Sets up 'consumer' alias for firebase app
+ */
+exports['setup:consumer'] = setupConsumerHosting;
 
 /**
  *
- * `gulp dev`
- *
- * Run local Next.js development server
- *
+ * `gulp pwa:consumer`
+ *  Generate PWA assets and manifest
  */
 
-const dev = async (done) => {
-    try {
-        await run('next src/consumer/')();
-        done();
-    } catch (error) {
-        done(error);
-    }
-}
+exports['pwa:consumer'] = consumerPWA;
 
-exports.dev = dev;
+/**
+ *
+ * `gulp pwa:consumer`
+ *  Generate PWA assets and manifest for consumer and admin
+ */
+
+exports['pwa'] = gulp.series(consumerPWA);
+
+/**
+ * `gulp dev:consumer`
+ * start a consumer local development server
+ */
+
+exports['dev:consumer'] = consumerDev;
+
+/**
+ *
+ * `gulp build:consumer`
+ * Build prod ready consumer app
+ */
+
+exports['build:consumer'] = buildConsumer;
 
 /**
  *
  * `gulp build`
- *
- * Build Next.js production application
- *
+ * Build prod ready app for consumer, admin and rest
  */
 
-const buildConsumer = async (done) => {
-    try {
-        await run('next build src/consumer/')();
-        done();
-    } catch (error) {
-        done(error);
-    }
-}
-
-exports.buildConsumer = buildConsumer;
+exports['build'] = gulp.series(buildConsumer);
 
 /**
  *
- * `gulp pwa`
- *
- *  Generate assets required for PWA
- *
+ * `gulp deploy:consumer`
+ * Build prod ready consumer app
  */
 
+exports['deploy:consumer'] = deployConsumer;
 
-const brandPath = `${consumerPublicPath}/brand`;
-
-// generate common.properties.json for client and server consumption
-const manifest = require('./generate/manifest');
-const generateManifest = (done) => {
-    const filePath = `${consumerPublicPath}/manifest.json`;
-    const value = JSON.stringify(manifest, null, 2);
-    try {
-        fs.writeFile(filePath, value, done);
-    } catch (error) {
-        done(error);
-    }
-}
-
-const clearAssets = async (done) => {
-    try {
-        await run(`rm -rf ${brandPath}`)();
-        done();
-    } catch (e) {
-        done(error);
-    }
-}
-
-const generateFavicon = async (done) => {
-    try {
-        await pwaAssetGenerator.generateImages(
-            './gravit/icon.svg', //TODO: env
-            `${brandPath}/favicon`,
-            {
-                scrape: true,
-                opaque: false,
-                iconOnly: true,
-                favicon: true,
-                log: false,
-                manifest: `${consumerPublicPath}/manifest.json`
-            });
-        done();
-    } catch (error) {
-        done(error);
-    }
-}
-
-const generateSplashScreen = async (done) => {
-    try {
-        await pwaAssetGenerator.generateImages(
-            './gravit/logo.svg', //TODO: env
-            `${brandPath}/splash`,
-            {
-                scrape: true,
-                splashOnly: true,
-                portraitOnly: true,
-                log: false,
-                manifest: `${consumerPublicPath}/manifest.json`
-            });
-        done();
-    } catch (error) {
-        done(error);
-    }
-}
-
-const consumerPWA = gulp.series(clearAssets, generateManifest, generateFavicon, generateSplashScreen);
-
-exports.consumerPWA = consumerPWA;

@@ -5,9 +5,11 @@
 # Dependency directories
 dist/
 node_modules/
-src/properties
+src/common/*.properties.json
 src/consumer/public/manifest.json
 src/consumer/public/brand
 src/consumer/public/sw.js
 src/consumer/public/workbox*.js
-/next-sitemap.js
+src/consumer/next-sitemap.js
+src/**/lib
+src/**/.firebase
