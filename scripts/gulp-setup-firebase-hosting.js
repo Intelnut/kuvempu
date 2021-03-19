@@ -2,10 +2,19 @@
  * Gulp task to run consumer dev server
  */
 const gulp = require('gulp');
+const fs = require('fs');
 const serverPropertiesObject = require('./templates/server.properties');
 const childProcess = require('child_process').spawnSync;
-const templatesPath = './scripts/templates';
-const replace = require('gulp-replace');
+const firebase = require('./templates/firebase');
+
+const consumerPath = 'src/consumer/';
+const consumerTarget = 'consumer';
+
+const restPath = 'src/rest/';
+const restTarget = 'rest';
+
+const adminPath = 'src/admin/';
+const adminTarget = 'admin';
 
 const useResource = (id, cwd, done) => {
     childProcess('firebase',
@@ -17,6 +26,7 @@ const useResource = (id, cwd, done) => {
                 return;
             }
         });
+    done();
 }
 
 const applyTarget = (id, cwd, name, done) => {
@@ -28,43 +38,61 @@ const applyTarget = (id, cwd, name, done) => {
                 done(error);
                 return;
             }
-            done();
         });
-}
-
-const addFBConfig = async (target, path, done) => {
-    await gulp.src(`${templatesPath}/firebase.json`)
-        .pipe(replace('/*TARGET*/', target))
-        .pipe(gulp.dest(path));
     done();
 }
 
-const consumerPath = 'src/consumer/';
-const consumerTarget = 'consumer';
-
-const restPath = 'src/rest/';
-const restTarget = 'rest';
-
-const setupFirebaseConfig = async (done) => {
+const addFBConfig = async (target, path, done) => {
+    const filePath = `${path}/firebase.json`;
+    const value = JSON.stringify(firebase(target), null, 2);
     try {
-        await addFBConfig(consumerTarget, consumerPath, done);
-        await addFBConfig(restTarget, restPath, done);
+        fs.writeFile(filePath, value, done);
     } catch (error) {
         done(error);
     }
 }
 
-const setupHosting = async (done) => {
-    try {
-        // consumer
-        useResource(serverPropertiesObject.CONSUMER_RESOURCE_ID, consumerPath, done);
-        applyTarget(serverPropertiesObject.CONSUMER_RESOURCE_ID, consumerPath, consumerTarget, done);
-
-        // rest
-        useResource(serverPropertiesObject.CONSUMER_RESOURCE_ID, restPath, done);
-        applyTarget(serverPropertiesObject.REST_RESOURCE_ID, restPath, restTarget, done);
-    } catch (error) {
-        done(error);
+const setupConfig = (target, path) => {
+    const addFirebaseConfig = (done) => {
+        try {
+            addFBConfig(target, path, done);
+        } catch (error) {
+            done(error);
+        }
     }
+    return addFirebaseConfig;
 }
-module.exports = gulp.series(setupFirebaseConfig, setupHosting);
+
+const setupUseResource = (path) => {
+    const useFirebaseResource = (done) => {
+        try {
+            useResource(serverPropertiesObject.CONSUMER_RESOURCE_ID, path, done);
+        } catch (error) {
+            done(error);
+        }
+    }
+    return useFirebaseResource;
+}
+
+const setupApplyTarget = (id, path, alias) => {
+    const setupTargetAlias = (done) => {
+        try {
+            applyTarget(id, path, alias, done);
+        } catch (error) {
+            done(error);
+        }
+    }
+    return setupTargetAlias;
+}
+
+module.exports = gulp.series(
+    setupConfig(consumerTarget, consumerPath),
+    setupConfig(restTarget, restPath),
+    setupConfig(adminTarget, adminPath),
+    setupUseResource(consumerPath),
+    setupUseResource(restPath),
+    setupUseResource(adminPath),
+    setupApplyTarget(serverPropertiesObject.CONSUMER_RESOURCE_ID, consumerPath, consumerTarget),
+    setupApplyTarget(serverPropertiesObject.REST_RESOURCE_ID, restPath, restTarget),
+    setupApplyTarget(serverPropertiesObject.ADMIN_RESOURCE_ID, adminPath, adminTarget),
+);
