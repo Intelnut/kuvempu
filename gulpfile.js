@@ -6,7 +6,8 @@ const setupSettings = require('./scripts/gulp-setup-settings');
 const setupFirebaseHosting = require('./scripts/gulp-setup-firebase-hosting');
 const {
     deployConsumer,
-    deployRest
+    deployRest,
+    deployAdmin
 } = require('./scripts/gulp-deploy-app');
 
 
@@ -83,6 +84,15 @@ exports['deploy:consumer'] = deployConsumer;
  */
 
 exports['deploy:rest'] = deployRest;
+
+
+/**
+ *
+ * `gulp deploy:admin`
+ * Deploy admin app
+ */
+
+exports['deploy:admin'] = deployAdmin;
 
 /**
  * `gulp deploy`

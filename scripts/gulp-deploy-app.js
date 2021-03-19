@@ -23,5 +23,6 @@ const deployApp = (target, cwd) => {
 
 module.exports = {
     deployConsumer: deployApp('consumer', 'src/consumer/'),
-    deployRest: deployApp('rest', 'src/rest/')
+    deployRest: deployApp('rest', 'src/rest/'),
+    deployAdmin: deployApp('admin', 'src/admin/')
 };
