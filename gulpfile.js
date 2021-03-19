@@ -4,7 +4,10 @@ const consumerDev = require('./scripts/gulp-consumer-dev');
 const consumerPWA = require('./scripts/gulp-consumer-pwa');
 const setupSettings = require('./scripts/gulp-setup-settings');
 const setupFirebaseHosting = require('./scripts/gulp-setup-firebase-hosting');
-const deployConsumer = require('./scripts/gulp-deploy-consumer');
+const {
+    deployConsumer,
+    deployRest
+} = require('./scripts/gulp-deploy-app');
 
 
 /**
@@ -68,8 +71,23 @@ exports['build'] = gulp.series(buildConsumer);
 /**
  *
  * `gulp deploy:consumer`
- * Build prod ready consumer app
+ * Deploy consumer app
  */
 
 exports['deploy:consumer'] = deployConsumer;
+
+/**
+ *
+ * `gulp deploy:rest`
+ * Deploy Rest app
+ */
+
+exports['deploy:rest'] = deployRest;
+
+/**
+ * `gulp deploy`
+ * Deploy consumer and rest service app
+ * Deploy rest first to ensure peer api dependencies are met
+ */
+exports['deploy'] = gulp.series(deployRest, deployConsumer);
 

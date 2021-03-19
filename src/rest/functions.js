@@ -3,7 +3,7 @@ const functions = require('firebase-functions');
 
 const rest = express();
 rest.all('/test', (req, res) => {
-    res.JSON({
+    res.json({
         message: "Hello World"
     });
 });

@@ -13,3 +13,4 @@ src/consumer/public/workbox*.js
 src/consumer/next-sitemap.js
 src/**/lib
 src/**/.firebase
+**/firebase-debug.log
