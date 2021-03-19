@@ -1,37 +1,30 @@
 const gulp = require('gulp');
-const generateCommonConfig = require('./scripts/gulp-generate-common-config');
-const generateConsumerConfig = require('./scripts/gulp-generate-consumer-config');
 const buildConsumer = require('./scripts/gulp-build-consumer');
 const consumerDev = require('./scripts/gulp-consumer-dev');
 const consumerPWA = require('./scripts/gulp-consumer-pwa');
-const setupConsumerHosting = require('./scripts/gulp-setup-consumer-hosting');
+const setupSettings = require('./scripts/gulp-setup-settings');
+const setupFirebaseHosting = require('./scripts/gulp-setup-firebase-hosting');
 const deployConsumer = require('./scripts/gulp-deploy-consumer');
-/**
- * `gulp settings:common`
- * Generate setting common for all apps 
- */
 
-exports['settings:common'] = generateCommonConfig;
 
 /**
- * `gulp settings:consumer`
- * Generate setting for consumer app 
+ * `gulp setup:settings`
+ * Sets up properties and sitemap settings
  */
-
-exports['settings:consumer'] = generateConsumerConfig;
+exports['setup:settings'] = setupSettings;
 
 /**
- * `gulp settings`
- * Generate setting across apps
+ * `gulp setup:hosting`
+ * Sets up firebase hosting configurations
  */
-
-exports['settings'] = gulp.series(generateCommonConfig, generateConsumerConfig);
+exports['setup:hosting'] = setupFirebaseHosting;
 
 /**
- * `gulp setup:consumer`
- * Sets up 'consumer' alias for firebase app
+ * `gulp setup`
+ * Setup modules
  */
-exports['setup:consumer'] = setupConsumerHosting;
+
+exports['setup'] = gulp.series(setupSettings, setupFirebaseHosting);
 
 /**
  *
