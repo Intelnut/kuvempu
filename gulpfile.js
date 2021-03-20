@@ -115,5 +115,5 @@ exports['deploy:admin'] = deployAdmin;
  * Deploy consumer and rest service app
  * Deploy rest first to ensure peer api dependencies are met
  */
-exports['deploy'] = gulp.series(deployRest, deployConsumer);
+exports['deploy'] = gulp.series(deployRest, deployConsumer, deployAdmin);
 
