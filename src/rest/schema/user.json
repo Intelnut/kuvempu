@@ -1,0 +1,184 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "/user.json",
+    "type": "object",
+    "title": "User Schema",
+    "description": "The user schema comprises personal data, contact information and address",
+    "definitions": {
+        "location": {
+            "$id": "#location",
+            "title": "Longitude and Latitude",
+            "description": "A geographical coordinate",
+            "required": [
+                "latitude",
+                "longitude"
+            ],
+            "type": "object",
+            "properties": {
+                "latitude": {
+                    "type": "number",
+                    "minimum": -90,
+                    "maximum": 90
+                },
+                "longitude": {
+                    "type": "number",
+                    "minimum": -180,
+                    "maximum": 180
+                }
+            }
+        },
+        "address": {
+            "$id": "#address",
+            "type": "object",
+            "title": "Address",
+            "description": "Address",
+            "properties": {
+                "lines": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "country": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Coordinates of the address",
+                    "$ref": "#location"
+                }
+            },
+            "required": [
+                "lines",
+                "city",
+                "state",
+                "code",
+                "country"
+            ]
+        }
+    },
+    "required": [
+        "first_name",
+        "last_name",
+        "email_id"
+    ],
+    "properties": {
+        "first_name": {
+            "$id": "#/properties/first_name",
+            "type": "string",
+            "title": "First Name",
+            "description": "First name of the user",
+            "default": "",
+            "minLength": 2
+        },
+        "middle_name": {
+            "$id": "#/properties/middle_name",
+            "type": "string",
+            "title": "Middle Name",
+            "description": "Middle name of the user",
+            "default": "",
+            "minLength": 1
+        },
+        "last_name": {
+            "$id": "#/properties/last_name",
+            "type": "string",
+            "title": "Last Name",
+            "description": "Last name of the user",
+            "default": "",
+            "minLength": 2
+        },
+        "date_of_birth": {
+            "$id": "#/properties/date_of_birth",
+            "type": "string",
+            "title": "Date of Birth",
+            "description": "Date of Birth in YYYY-MM-DD format",
+            "default": "",
+            "format": "date",
+            "examples": [
+                "2000-01-31"
+            ]
+        },
+        "email_id": {
+            "$id": "#/properties/email_id",
+            "type": "string",
+            "title": "Email Id",
+            "description": "Email Id of the user",
+            "format": "email",
+            "default": ""
+        },
+        "email_verified": {
+            "$id": "#/properties/email_verified",
+            "type": "boolean",
+            "title": "Email Verified",
+            "description": "Check if user email is verified",
+            "default": false
+        },
+        "phone_number": {
+            "$id": "#/properties/phone_number",
+            "type": "string",
+            "title": "Phone Number",
+            "description": "The numbers should start with a plus sign, followed by the country code and national number.",
+            "default": "",
+            "pattern": "^+(?:[0-9] ?){6,14}[0-9]$",
+            "examples": [
+                "+918123456789"
+            ]
+        },
+        "phone_verified": {
+            "$id": "#/properties/phone_verified",
+            "type": "boolean",
+            "title": "Phone Number Verified",
+            "description": "Check if user phone number is verified",
+            "default": false
+        },
+        "photo": {
+            "$id": "#/properties/photo",
+            "type": "string",
+            "title": "The photo schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "format": "uri",
+            "examples": [
+                "https://pic.com/james"
+            ]
+        },
+        "billing_address": {
+            "$ref": "#address",
+            "$id": "#/properties/billing_address",
+            "title": "Billing Address",
+            "description": "Billing address of the user",
+            "default": ""
+        },
+        "shipping_address": {
+            "$id": "#/properties/shipping_address",
+            "title": "Shipping Address",
+            "description": "Shipping address of the user",
+            "allOf": [
+                {
+                    "$ref": "#address"
+                },
+                {
+                    "properties": {
+                        "type": {
+                            "enum": [
+                                "residential",
+                                "business"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ]
+                }
+            ]
+        }
+    }
+}
