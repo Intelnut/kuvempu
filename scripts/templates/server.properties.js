@@ -8,10 +8,13 @@ require('dotenv').config()
 const properties = {
 
     // C
+    ADMIN_RESOURCE_ID: process.env.ADMIN_RESOURCE_ID,
+
+    // C
     CONSUMER_RESOURCE_ID: process.env.CONSUMER_RESOURCE_ID,
 
     // R
-    REST_RESOURCE_ID: process.env.REST_RESOURCE_ID
+    REST_RESOURCE_ID: process.env.REST_RESOURCE_ID,
 };
 
 module.exports = properties;

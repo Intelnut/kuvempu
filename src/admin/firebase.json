@@ -1,17 +1,11 @@
 {
   "hosting": {
-    "target": "consumer",
+    "target": "admin",
     "public": "./public",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "function": "consumer"
-      }
     ]
   },
   "functions": {
