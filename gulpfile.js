@@ -1,6 +1,6 @@
 const gulp = require('gulp');
-const buildConsumer = require('./scripts/gulp-build-consumer');
-const consumerDev = require('./scripts/gulp-consumer-dev');
+const buildApp = require('./scripts/gulp-build');
+const devServer = require('./scripts/gulp-dev');
 const consumerPWA = require('./scripts/gulp-consumer-pwa');
 const setupSettings = require('./scripts/gulp-setup-settings');
 const setupFirebaseHosting = require('./scripts/gulp-setup-firebase-hosting');
@@ -50,8 +50,15 @@ exports['pwa'] = gulp.series(consumerPWA);
  * `gulp dev:consumer`
  * start a consumer local development server
  */
-
+const consumerDev = devServer('./src/consumer');
 exports['dev:consumer'] = consumerDev;
+
+/**
+ * `gulp dev:admin`
+ * start a admin local development server
+ */
+const adminDev = devServer('./src/admin');
+exports['dev:admin'] = adminDev;
 
 /**
  *
@@ -59,7 +66,16 @@ exports['dev:consumer'] = consumerDev;
  * Build prod ready consumer app
  */
 
+const buildConsumer = buildApp('./src/consumer')
 exports['build:consumer'] = buildConsumer;
+
+/**
+ *
+ * `gulp build:admin`
+ * Build prod ready admin app
+ */
+const buildAdmin = buildApp('./src/admin');
+exports['build:admin'] = buildAdmin;
 
 /**
  *
@@ -67,7 +83,7 @@ exports['build:consumer'] = buildConsumer;
  * Build prod ready app for consumer, admin and rest
  */
 
-exports['build'] = gulp.series(buildConsumer);
+exports['build'] = gulp.series(buildConsumer, buildAdmin);
 
 /**
  *
