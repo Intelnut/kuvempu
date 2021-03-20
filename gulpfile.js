@@ -61,6 +61,13 @@ const adminDev = devServer('./src/admin');
 exports['dev:admin'] = adminDev;
 
 /**
+ * `gulp dev:admin`
+ * start a admin local development server
+ */
+const restDev = devServer('./src/rest');
+exports['dev:rest'] = restDev;
+
+/**
  *
  * `gulp build:consumer`
  * Build prod ready consumer app

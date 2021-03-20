@@ -40,7 +40,7 @@ const userRouteHandler = (request, response, next) => {
 }
 
 restApp.post(
-    "/user",
+    "/users/:uid",
     validate({ body: userSchema }),
     userRouteHandler
 );

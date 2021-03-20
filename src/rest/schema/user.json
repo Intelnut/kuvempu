@@ -126,8 +126,7 @@
             "type": "string",
             "title": "Phone Number",
             "description": "The numbers should start with a plus sign, followed by the country code and national number.",
-            "default": "",
-            "pattern": "^+(?:[0-9] ?){6,14}[0-9]$",
+            "pattern": "^\\+(?:[0-9] ?){6,14}[0-9]$",
             "examples": [
                 "+918123456789"
             ]
