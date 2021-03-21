@@ -7,6 +7,7 @@ const gulp = require('gulp');
 const replace = require('gulp-replace');
 
 const commonPropertiesObject = require('./templates/common.properties');
+const serverPropertiesObject = require('./templates/server.properties');
 const consumerPath = './src/consumer';
 const templatesPath = './scripts/templates';
 const commonPath = './src/common';
@@ -14,6 +15,16 @@ const commonPath = './src/common';
 const setupCommonProperties = (done) => {
     const filePath = `${commonPath}/common.properties.json`;
     const value = JSON.stringify(commonPropertiesObject, null, 2);
+    try {
+        fs.writeFile(filePath, value, done);
+    } catch (error) {
+        done(error);
+    }
+}
+
+const setupServerProperties = (done) => {
+    const filePath = `${commonPath}/sever.properties.json`;
+    const value = JSON.stringify(serverPropertiesObject, null, 2);
     try {
         fs.writeFile(filePath, value, done);
     } catch (error) {
@@ -32,4 +43,4 @@ const setupNextSiteMapConfig = async (done) => {
     }
 }
 
-module.exports = gulp.series(setupCommonProperties, setupNextSiteMapConfig);
+module.exports = gulp.series(setupServerProperties, setupCommonProperties, setupNextSiteMapConfig);
