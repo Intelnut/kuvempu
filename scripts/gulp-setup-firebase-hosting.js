@@ -3,7 +3,7 @@
  */
 const gulp = require('gulp');
 const fs = require('fs');
-const serverPropertiesObject = require('./templates/server.properties');
+const serverEnvironmentConfig = require('./templates/server.environment');
 const childProcess = require('child_process').spawnSync;
 const firebase = require('./templates/firebase');
 
@@ -66,7 +66,7 @@ const setupConfig = (target, path) => {
 const setupUseResource = (path) => {
     const useFirebaseResource = (done) => {
         try {
-            useResource(serverPropertiesObject.CONSUMER_RESOURCE_ID, path, done);
+            useResource(serverEnvironmentConfig.CONSUMER_RESOURCE_ID, path, done);
         } catch (error) {
             done(error);
         }
@@ -92,7 +92,7 @@ module.exports = gulp.series(
     setupUseResource(consumerPath),
     setupUseResource(restPath),
     setupUseResource(adminPath),
-    setupApplyTarget(serverPropertiesObject.CONSUMER_RESOURCE_ID, consumerPath, consumerTarget),
-    setupApplyTarget(serverPropertiesObject.REST_RESOURCE_ID, restPath, restTarget),
-    setupApplyTarget(serverPropertiesObject.ADMIN_RESOURCE_ID, adminPath, adminTarget),
+    setupApplyTarget(serverEnvironmentConfig.CONSUMER_RESOURCE_ID, consumerPath, consumerTarget),
+    setupApplyTarget(serverEnvironmentConfig.REST_RESOURCE_ID, restPath, restTarget),
+    setupApplyTarget(serverEnvironmentConfig.ADMIN_RESOURCE_ID, adminPath, adminTarget),
 );

@@ -1,13 +1,13 @@
 
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
-const serverProps = require('../../common/server.properties.json');
-const commonProps = require('../../common/common.properties.json');
+const serverEnv = require('../../environment/server.environment.json');
+const commonEnv = require('../../environment/common.environment.json');
 
 admin.initializeApp({
-    credential: admin.credential.cert(serverProps.FIREBASE_SERVICE_ACCOUNT),
-    databaseURL: commonProps.FIREBASE_CONFIG.databaseURL,
-    storageBucket: commonProps.FIREBASE_CONFIG.storageBucket
+    credential: admin.credential.cert(serverEnv.FIREBASE_SERVICE_ACCOUNT),
+    databaseURL: commonEnv.FIREBASE_CONFIG.databaseURL,
+    storageBucket: commonEnv.FIREBASE_CONFIG.storageBucket
 });
 
 const database = admin.firestore();
