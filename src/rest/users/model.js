@@ -1,6 +1,6 @@
 // TODO: firestore service, photo updation
 
-const { auth, database } = require('../config/firebebase');
+const { auth, database } = require('../config/firebase');
 
 // use dicebear service for default photo url on user creation
 const getPlaceholderAvatar = (seed) => {

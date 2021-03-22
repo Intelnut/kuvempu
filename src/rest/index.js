@@ -1,6 +1,5 @@
-
 const server = require('./config/server');
-const { functions } = require('./config/firebebase');
+const { functions } = require('./config/firebase');
 const { validationErrorHandler: schemaValidationErrorHandler } = require('./middleware/schema');
 
 // users route
