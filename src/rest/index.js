@@ -6,6 +6,10 @@ const { appErrorHandler } = require('./middleware/error');
 const userRoute = require('./routes/users/route');
 server.use('/users', userRoute);
 
+// login route
+const loginRoute = require('./routes/login/route');
+server.use('/login', loginRoute);
+
 // generic error handler
 server.use(appErrorHandler);
 

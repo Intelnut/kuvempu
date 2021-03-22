@@ -7,8 +7,11 @@ const {
     loginUser
 } = require('./controller');
 
-router.post('/', validateSchema({ body: loginSchema }), loginUser);
-
 router.get('/schema', (req, res) => {
     res.status(200).json(loginSchema);
 });
+
+router.post('/', validateSchema({ body: loginSchema }), loginUser);
+
+module.exports = router;
+

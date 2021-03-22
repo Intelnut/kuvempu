@@ -29,7 +29,7 @@ const appErrorHandler = (error, request, response, next) => {
 
     // route errors
     const { statusCode, message } = error;
-    res.status(statusCode).json({
+    response.status(statusCode).json({
         status: "error",
         statusCode,
         message
