@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const buildApp = require('./scripts/gulp-build');
 const devServer = require('./scripts/gulp-dev');
+const runTest = require('./scripts/gulp-test');
 const consumerPWA = require('./scripts/gulp-consumer-pwa');
 const setupPlugins = require('./scripts/gulp-setup-plugins');
 const setupEnvironment = require('./scripts/gulp-setup-environment');
@@ -67,11 +68,18 @@ const adminDev = devServer('./src/admin');
 exports['dev:admin'] = adminDev;
 
 /**
- * `gulp dev:admin`
+ * `gulp dev:rest`
  * start a admin local development server
  */
 const restDev = devServer('./src/rest');
 exports['dev:rest'] = restDev;
+
+/**
+ * `gulp test:rest`
+ * start a admin local development server
+ */
+const restTest = runTest('./src/rest');
+exports['test:rest'] = restTest;
 
 /**
  *
