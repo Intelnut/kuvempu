@@ -8,33 +8,26 @@ const getPlaceholderAvatar = (seed) => {
 }
 
 // TODO: helpers
-const isEmpty = (string) => {
-    return string.trim() === '';
-};
-
-// TODO: helpers
 const isEmail = (email) => {
     const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return email.match(emailRegEx);
+    return email && email.match(emailRegEx);
 };
 
 // TODO: helpers
 const validateAuth = (data) => {
     let errors = [];
 
-    if (isEmpty(data.email)) {
-        errors.push('Email id is missing');
-    } else if (!isEmail(data.email)) {
+    if (!data.email_id || !isEmail(data.email_id)) {
         errors.push('Email id is invalid');
     }
 
-    if (isEmpty(data.password)) {
-        errors.push('Password is missing');
+    if (!data.password) {
+        errors.push('Password is invalid');
     }
 
     return {
         errors,
-        valid: errors === 0
+        valid: errors.length === 0
     };
 };
 
@@ -61,7 +54,8 @@ const create = async (data, done) => {
             password: data.password,
             photoURL: data.photo_url
         };
-        let newUser = auth.createUser(userAuthData);
+        //console.log('auth', auth)
+        let newUser = await auth.createUser(userAuthData);
 
         // assign id to the data object for document creation
         data.id = newUser.uid;
@@ -71,7 +65,7 @@ const create = async (data, done) => {
 
         // create new user document
         const userDocumentRef = database.doc(`/users/${data.id}`);
-        await userDocumentRef.set(userData);
+        await userDocumentRef.set(data);
 
         // successful operation
         done(null, data);
