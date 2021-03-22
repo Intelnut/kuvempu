@@ -61,3 +61,25 @@ describe('create', () => {
     });
 
 });
+
+describe('remove', () => {
+
+    afterEach(() => {
+        mockDone.mockRestore();
+    });
+
+    it('should error if id is invalid', async () => {
+        await User.remove({}, mockDone);
+        expect(mockDone.mock.calls.length).toBe(1);
+        expect(mockDone.mock.calls[0][0].message).toBe('User id is invalid');
+        expect(mockDone.mock.calls[0][1]).toBe(null);
+    });
+
+    it('should remove an user', async () => {
+        await User.remove({ id: '123' }, mockDone);
+        expect(mockDone.mock.calls.length).toBe(1);
+        expect(mockDone.mock.calls[0][0]).toBe(null);
+        expect(mockDone.mock.calls[0][1]).toBeDefined();
+    });
+
+});

@@ -78,7 +78,12 @@ const create = async (data, done) => {
 // handle user deletion
 const remove = async (data, done) => {
     try {
-        // no need of checks for id, firestore api will throw if id is invalid
+
+        if (!data.id) {
+            done(new Error('User id is invalid'), null);
+            return false;
+        }
+
         const userDocumentRef = database.doc(`/users/${data.id}`);
         let response = await userDocumentRef.delete();
 
