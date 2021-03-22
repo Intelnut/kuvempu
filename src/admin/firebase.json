@@ -1,0 +1,15 @@
+{
+  "hosting": {
+    "target": "admin",
+    "public": "./public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "functions": {
+    "source": ".",
+    "runtime": "nodejs12"
+  }
+}

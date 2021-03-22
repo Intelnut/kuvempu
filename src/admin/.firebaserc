@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "kuvempu-demo": {
+      "hosting": {
+        "admin": [
+          "kuvempu-admin"
+        ]
+      }
+    }
+  }
+}

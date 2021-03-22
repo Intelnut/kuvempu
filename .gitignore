@@ -1,0 +1,18 @@
+# dotenv environment variables file
+.env
+.env.test
+
+# Dependency directories
+dist/
+node_modules/
+**/environment
+src/consumer/public/manifest.json
+src/consumer/public/brand
+src/consumer/public/sw.js
+src/consumer/public/workbox*.js
+src/consumer/next-sitemap.js
+src/**/lib
+src/**/.firebase
+**/firebase-debug.log
+**/ui-debug.log
+src/admin/public
