@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { validate: validateSchema } = require('../middleware/schema');
-const userSchema = require('./user.json');
+const userSchema = require('./schema.json');
 
 const {
     getUsers,
