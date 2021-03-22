@@ -26,4 +26,8 @@ router.put('/:userId', validateSchema({ body: userSchema }), updateUser);
 // TODO: Middleware (Owner or Admin only)
 router.delete('/:userId', deleteUser);
 
+router.get('/schema', (req, res) => {
+    res.status(200).json(userSchema);
+})
+
 module.exports = router;

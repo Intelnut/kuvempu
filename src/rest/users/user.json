@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "/user.json",
+    "$id": "/users/schema",
     "type": "object",
     "title": "User Schema",
     "description": "The user data schema",

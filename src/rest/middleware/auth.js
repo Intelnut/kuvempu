@@ -17,7 +17,8 @@ const setUser = async (request, response, next) => {
         }
     } else {
         // if headers are not set, continue without setting user on request object
-        // the error will be triggered by router middleware, wherever the user role validation is applied
+        // the error will be triggered by router middleware
+        // when we introduce roles & capabilities
         next();
     }
 }

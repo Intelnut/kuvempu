@@ -3,19 +3,20 @@ const Controller = require('./controller');
 
 describe('getUsers', () => {
     let mockResponse;
+    let mockNext;
 
     beforeEach(() => {
+        mockNext = jest.fn();
         mockResponse = {
             status: jest.fn().mockReturnThis(),
-            send: jest.fn().mockReturnThis(),
             json: jest.fn().mockReturnThis()
         }
     })
 
     afterEach(() => {
         mockResponse.status.mockRestore();
-        mockResponse.send.mockRestore();
         mockResponse.json.mockRestore();
+        mockNext.mockRestore();
         User.fetch.mockRestore();
     });
 
@@ -24,9 +25,9 @@ describe('getUsers', () => {
             done(new Error('test error'), null);
         });
 
-        Controller.getUsers({}, mockResponse);
-        expect(mockResponse.status.mock.calls[0][0]).toBe(500);
-        expect(mockResponse.send.mock.calls[0][0]).toBe('test error');
+        Controller.getUsers({}, mockResponse, mockNext);
+        expect(mockResponse.status.mock.calls.length).toBe(0);
+        expect(mockNext.mock.calls[0][0].message).toBe('test error');
         expect(User.fetch.mock.calls[0][0]).toEqual({});
     });
 
@@ -36,7 +37,7 @@ describe('getUsers', () => {
             done(null, response);
         });
 
-        Controller.getUsers({}, mockResponse);
+        Controller.getUsers({}, mockResponse, mockNext);
         expect(mockResponse.status.mock.calls[0][0]).toBe(200);
         expect(mockResponse.json.mock.calls[0][0]).toEqual(response);
         expect(User.fetch.mock.calls[0][0]).toEqual({});
@@ -45,19 +46,20 @@ describe('getUsers', () => {
 
 describe('getUser', () => {
     let mockResponse;
+    let mockNext;
     let req = { params: { userId: '123456' } };
     beforeEach(() => {
+        mockNext = jest.fn();
         mockResponse = {
             status: jest.fn().mockReturnThis(),
-            send: jest.fn().mockReturnThis(),
             json: jest.fn().mockReturnThis()
         }
     })
 
     afterEach(() => {
         mockResponse.status.mockRestore();
-        mockResponse.send.mockRestore();
         mockResponse.json.mockRestore();
+        mockNext.mockRestore();
         User.fetch.mockRestore();
     });
 
@@ -66,9 +68,9 @@ describe('getUser', () => {
             done(new Error('test error'), null);
         });
 
-        Controller.getUser(req, mockResponse);
-        expect(mockResponse.status.mock.calls[0][0]).toBe(500);
-        expect(mockResponse.send.mock.calls[0][0]).toBe('test error');
+        Controller.getUser(req, mockResponse, mockNext);
+        expect(mockResponse.status.mock.calls.length).toBe(0);
+        expect(mockNext.mock.calls[0][0].message).toBe('test error');
         expect(User.fetch.mock.calls[0][0]).toEqual({ id: '123456' });
     });
 
@@ -78,7 +80,7 @@ describe('getUser', () => {
             done(null, response);
         });
 
-        Controller.getUser(req, mockResponse);
+        Controller.getUser(req, mockResponse, mockNext);
         expect(mockResponse.status.mock.calls[0][0]).toBe(200);
         expect(mockResponse.json.mock.calls[0][0]).toEqual(response);
         expect(User.fetch.mock.calls[0][0]).toEqual({ id: '123456' });
@@ -87,19 +89,20 @@ describe('getUser', () => {
 
 describe('createUser', () => {
     let mockResponse;
+    let mockNext;
     let req = { body: { email: 'valid@email.com' } };
     beforeEach(() => {
+        mockNext = jest.fn();
         mockResponse = {
             status: jest.fn().mockReturnThis(),
-            send: jest.fn().mockReturnThis(),
             json: jest.fn().mockReturnThis()
         }
     })
 
     afterEach(() => {
         mockResponse.status.mockRestore();
-        mockResponse.send.mockRestore();
         mockResponse.json.mockRestore();
+        mockNext.mockRestore();
         User.create.mockRestore();
     });
 
@@ -108,9 +111,9 @@ describe('createUser', () => {
             done(new Error('test error'), null);
         });
 
-        Controller.createUser(req, mockResponse);
-        expect(mockResponse.status.mock.calls[0][0]).toBe(500);
-        expect(mockResponse.send.mock.calls[0][0]).toBe('test error');
+        Controller.createUser(req, mockResponse, mockNext);
+        expect(mockResponse.status.mock.calls.length).toBe(0);
+        expect(mockNext.mock.calls[0][0].message).toBe('test error');
         expect(User.create.mock.calls[0][0]).toEqual(req.body);
     });
 
@@ -120,7 +123,7 @@ describe('createUser', () => {
             done(null, response);
         });
 
-        Controller.createUser(req, mockResponse);
+        Controller.createUser(req, mockResponse, mockNext);
         expect(mockResponse.status.mock.calls[0][0]).toBe(200);
         expect(mockResponse.json.mock.calls[0][0]).toEqual(response);
         expect(User.create.mock.calls[0][0]).toEqual(req.body);
@@ -129,19 +132,20 @@ describe('createUser', () => {
 
 describe('updateUser', () => {
     let mockResponse;
+    let mockNext;
     let req = { params: { userId: '123456' }, body: { email: 'valid@email.com' } };
     beforeEach(() => {
+        mockNext = jest.fn();
         mockResponse = {
             status: jest.fn().mockReturnThis(),
-            send: jest.fn().mockReturnThis(),
             json: jest.fn().mockReturnThis()
         }
     })
 
     afterEach(() => {
         mockResponse.status.mockRestore();
-        mockResponse.send.mockRestore();
         mockResponse.json.mockRestore();
+        mockNext.mockRestore();
         User.update.mockRestore();
     });
 
@@ -150,9 +154,9 @@ describe('updateUser', () => {
             done(new Error('test error'), null);
         });
 
-        Controller.updateUser(req, mockResponse);
-        expect(mockResponse.status.mock.calls[0][0]).toBe(500);
-        expect(mockResponse.send.mock.calls[0][0]).toBe('test error');
+        Controller.updateUser(req, mockResponse, mockNext);
+        expect(mockResponse.status.mock.calls.length).toBe(0);
+        expect(mockNext.mock.calls[0][0].message).toBe('test error');
         expect(User.update.mock.calls[0][0]).toEqual(Object.assign({}, req.body, { id: '123456' }));
     });
 
@@ -162,7 +166,7 @@ describe('updateUser', () => {
             done(null, response);
         });
 
-        Controller.updateUser(req, mockResponse);
+        Controller.updateUser(req, mockResponse, mockNext);
         expect(mockResponse.status.mock.calls[0][0]).toBe(200);
         expect(mockResponse.json.mock.calls[0][0]).toEqual(response);
         expect(User.update.mock.calls[0][0]).toEqual(Object.assign({}, req.body, { id: '123456' }));
@@ -171,19 +175,20 @@ describe('updateUser', () => {
 
 describe('deleteUser', () => {
     let mockResponse;
+    let mockNext;
     let req = { params: { userId: '123456' } };
     beforeEach(() => {
+        mockNext = jest.fn();
         mockResponse = {
             status: jest.fn().mockReturnThis(),
-            send: jest.fn().mockReturnThis(),
             json: jest.fn().mockReturnThis()
         }
     })
 
     afterEach(() => {
         mockResponse.status.mockRestore();
-        mockResponse.send.mockRestore();
         mockResponse.json.mockRestore();
+        mockNext.mockRestore();
         User.remove.mockRestore();
     });
 
@@ -192,9 +197,9 @@ describe('deleteUser', () => {
             done(new Error('test error'), null);
         });
 
-        Controller.deleteUser(req, mockResponse);
-        expect(mockResponse.status.mock.calls[0][0]).toBe(500);
-        expect(mockResponse.send.mock.calls[0][0]).toBe('test error');
+        Controller.deleteUser(req, mockResponse, mockNext);
+        expect(mockResponse.status.mock.calls.length).toBe(0);
+        expect(mockNext.mock.calls[0][0].message).toBe('test error');
         expect(User.remove.mock.calls[0][0]).toEqual({ id: '123456' });
     });
 
@@ -204,7 +209,7 @@ describe('deleteUser', () => {
             done(null, response);
         });
 
-        Controller.deleteUser(req, mockResponse);
+        Controller.deleteUser(req, mockResponse, mockNext);
         expect(mockResponse.status.mock.calls[0][0]).toBe(200);
         expect(mockResponse.json.mock.calls[0][0]).toEqual(response);
         expect(User.remove.mock.calls[0][0]).toEqual({ id: '123456' });
