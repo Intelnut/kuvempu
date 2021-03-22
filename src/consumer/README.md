@@ -1,6 +1,0 @@
-# Kuvempu Consumer Module
-
-
-
-
-  
