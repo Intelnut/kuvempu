@@ -1,12 +1,12 @@
 const server = require('./config/server');
 const { functions } = require('./config/firebase');
-const { validationErrorHandler: schemaValidationErrorHandler } = require('./middleware/schema');
+const { appErrorHandler } = require('./middleware/error');
 
 // users route
 const userRoute = require('./users/route');
 server.use('/users', userRoute);
 
-// middleware
-server.use(schemaValidationErrorHandler);
+// generic error handler
+server.use(appErrorHandler);
 
 exports.rest = functions.https.onRequest(server);
