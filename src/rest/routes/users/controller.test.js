@@ -11,7 +11,7 @@ describe('getUsers', () => {
             status: jest.fn().mockReturnThis(),
             json: jest.fn().mockReturnThis()
         }
-    })
+    });
 
     afterEach(() => {
         mockResponse.status.mockRestore();
