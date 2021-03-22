@@ -35,7 +35,7 @@ const updateUser = (req, res) => {
     const userId = req.params.userId;
     const data = req.body;
     data.id = userId;
-    User.create(data, (error, updatedData) => {
+    User.update(data, (error, updatedData) => {
         if (error) return res.status(500).send(error.message);
         res.status(200).json(updatedData);
     });
