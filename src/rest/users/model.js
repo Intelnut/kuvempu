@@ -76,6 +76,7 @@ const create = async (data, done) => {
 }
 
 // handle user deletion
+// TODO: incomplete (check auth method and remove user accordingly. not all users use email auth)
 const remove = async (data, done) => {
     try {
 
@@ -85,6 +86,7 @@ const remove = async (data, done) => {
         }
 
         const userDocumentRef = database.doc(`/users/${data.id}`);
+
         let response = await userDocumentRef.delete();
 
         // successful operation
@@ -107,7 +109,7 @@ const fetch = async (data, done) => {
             const userDocument = await userDocumentRef.get();
 
             // terminate if the document does not exist
-            if (userDocument.exists) {
+            if (!userDocument.exists) {
                 error = new Error(`Document ${data.id} does not exist`);
                 done(error, null);
                 return error;
@@ -122,9 +124,10 @@ const fetch = async (data, done) => {
             // TODO: limit
             const userCollectionRef = database.collection(`/users`);
             const userCollection = await userCollectionRef.get();
-
             // create a map of user documents
-            const users = userCollection.docs.map((doc) => doc.data());
+            const users = userCollection.docs.map((doc) => {
+                return doc.data();
+            });
 
             // successful operation
             done(null, users);
@@ -153,8 +156,15 @@ const update = async (data, done) => {
             return error;
         }
 
+        // TODO: incomplete (consumer users) (on updating email id create new auth and user document)
+        // TODO: handle similar scenario for phone number update, if auth method is phone
+        // TODO: same applies to remove
+        if (data.email_id) {
+            delete data.email_id;
+        }
+
         // merge data with existing document
-        await userDocumentRef.set(userData, { merge: true });
+        await userDocumentRef.set(data, { merge: true });
 
         // fetch the updated document
         const updatedDoc = await userDocumentRef.get();

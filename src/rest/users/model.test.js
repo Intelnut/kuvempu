@@ -12,14 +12,19 @@ describe('create', () => {
                 uid: '123456'
             }
         });
-    })
+    });
 
     afterEach(() => {
         mockDone.mockRestore();
         auth.createUser.mockRestore();
     });
 
-    test('should error if email and password is invalid', async () => {
+    afterAll(async () => {
+        const userDocumentRef = database.doc(`/users/123456`);
+        await userDocumentRef.delete();
+    });
+
+    it('should error if email and password is invalid', async () => {
         await User.create({}, mockDone);
         expect(mockDone.mock.calls.length).toBe(1);
         expect(auth.createUser.mock.calls.length).toBe(0);
@@ -27,7 +32,7 @@ describe('create', () => {
         expect(mockDone.mock.calls[0][1]).toBe(null);
     });
 
-    test('should error if email is invalid', async () => {
+    it('should error if email is invalid', async () => {
         await User.create({ email_id: 'invalid', password: 'test123' }, mockDone);
         expect(mockDone.mock.calls.length).toBe(1);
         expect(auth.createUser.mock.calls.length).toBe(0);
@@ -35,7 +40,7 @@ describe('create', () => {
         expect(mockDone.mock.calls[0][1]).toBe(null);
     });
 
-    test('should error if password is invalid', async () => {
+    it('should error if password is invalid', async () => {
         await User.create({ email_id: 'valid@email.com' }, mockDone);
         expect(mockDone.mock.calls.length).toBe(1);
         expect(auth.createUser.mock.calls.length).toBe(0);
@@ -43,7 +48,7 @@ describe('create', () => {
         expect(mockDone.mock.calls[0][1]).toBe(null);
     });
 
-    test('should create a new user', async () => {
+    it('should create a new user', async () => {
         await User.create({ email_id: 'valid@email.com', password: 'test123' }, mockDone);
         expect(mockDone.mock.calls.length).toBe(1);
         expect(mockDone.mock.calls[0][0]).toBe(null);
@@ -68,6 +73,13 @@ describe('remove', () => {
         mockDone.mockRestore();
     });
 
+    beforeAll(async () => {
+        const userDocumentRef = database.doc(`/users/123456`);
+        await userDocumentRef.set({
+            id: '123456'
+        });
+    });
+
     it('should error if id is invalid', async () => {
         await User.remove({}, mockDone);
         expect(mockDone.mock.calls.length).toBe(1);
@@ -75,11 +87,128 @@ describe('remove', () => {
         expect(mockDone.mock.calls[0][1]).toBe(null);
     });
 
-    it('should remove an user', async () => {
-        await User.remove({ id: '123' }, mockDone);
+    it('should remove an existing user document', async () => {
+        await User.remove({ id: '123456' }, mockDone);
         expect(mockDone.mock.calls.length).toBe(1);
         expect(mockDone.mock.calls[0][0]).toBe(null);
         expect(mockDone.mock.calls[0][1]).toBeDefined();
+
+        const userDocumentRef = database.doc(`/users/123456`);
+        const doc = await userDocumentRef.get();
+        expect(doc.exists).toBeFalsy();
     });
 
+});
+
+describe('fetch', () => {
+
+    beforeAll(async () => {
+        auth.createUser = jest.fn((data) => {
+            return {
+                uid: data.email.split('@')[0]
+            }
+        });
+        await User.create({ email_id: 'valid@email.com', password: 'test123' }, () => { });
+        await User.create({ email_id: 'valid2@email.com', password: 'test123' }, () => { });
+    });
+
+    afterAll(async () => {
+        auth.createUser.mockRestore();
+        await User.remove({ id: 'valid' });
+        await User.remove({ id: 'valid2' });
+    });
+
+    afterEach(() => {
+        mockDone.mockRestore();
+    });
+
+    it('should error if user does not exist', async () => {
+        await User.fetch({ id: '123456' }, mockDone);
+        expect(mockDone.mock.calls.length).toBe(1);
+        expect(mockDone.mock.calls[0][0].message).toBe('Document 123456 does not exist');
+        expect(mockDone.mock.calls[0][1]).toBe(null);
+    });
+
+    it('should fetch all users', async () => {
+        await User.fetch({}, mockDone);
+        expect(mockDone.mock.calls.length).toBe(1);
+        expect(mockDone.mock.calls[0][0]).toBe(null);
+        expect(mockDone.mock.calls[0][1]).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    email_id: 'valid@email.com'
+                })
+            ])
+        );
+        expect(mockDone.mock.calls[0][1]).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    email_id: 'valid2@email.com'
+                })
+            ])
+        );
+    });
+
+    it('should fetch an user', async () => {
+        await User.fetch({ id: 'valid' }, mockDone);
+        expect(mockDone.mock.calls.length).toBe(1);
+        expect(mockDone.mock.calls[0][0]).toBe(null);
+        expect(mockDone.mock.calls[0][1]).toEqual(
+            expect.objectContaining({
+                email_id: 'valid@email.com'
+            })
+        );
+    });
+
+});
+
+describe('update', () => {
+    beforeAll(async () => {
+        auth.createUser = jest.fn((data) => {
+            return {
+                uid: data.email.split('@')[0]
+            }
+        });
+        await User.create({ email_id: 'valid@email.com', password: 'test123', first_name: "Valid" }, () => { });
+    });
+
+    afterAll(async () => {
+        auth.createUser.mockRestore();
+        await User.remove({ id: 'valid' });
+    });
+
+    afterEach(() => {
+        mockDone.mockRestore();
+    });
+
+    it('should error if user document does not exist', async () => {
+        await User.update({ id: '123456' }, mockDone);
+        expect(mockDone.mock.calls.length).toBe(1);
+        expect(mockDone.mock.calls[0][0].message).toBe('Document 123456 does not exist');
+        expect(mockDone.mock.calls[0][1]).toBe(null);
+    });
+
+    it('should update user document', async () => {
+        await User.update({ id: 'valid', first_name: 'Changed' }, mockDone);
+        expect(mockDone.mock.calls.length).toBe(1);
+        expect(mockDone.mock.calls[0][0]).toBe(null);
+        expect(mockDone.mock.calls[0][1]).toEqual(
+            expect.objectContaining({
+                first_name: 'Changed',
+                email_id: 'valid@email.com'
+            })
+        );
+    });
+
+    it('TEMP: should not update user email', async () => {
+        await User.update({ id: 'valid', email_id: 'changed@email.com' }, mockDone);
+        expect(mockDone.mock.calls.length).toBe(1);
+        expect(mockDone.mock.calls[0][0]).toBe(null);
+        expect(mockDone.mock.calls[0][1]).toEqual(
+            expect.objectContaining({
+                first_name: 'Changed',
+                email_id: 'valid@email.com'
+            })
+        );
+    });
 });
