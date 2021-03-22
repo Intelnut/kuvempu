@@ -1,5 +1,5 @@
 const User = require('./model');
-const { ErrorHandler } = require('../middleware/error');
+const { ErrorHandler } = require('../../middleware/error');
 
 // get all users
 const getUsers = (req, res, next) => {
