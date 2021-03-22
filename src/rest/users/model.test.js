@@ -57,6 +57,7 @@ describe('create', () => {
             email: 'valid@email.com',
             password: 'test123',
             photoURL: 'https://avatars.dicebear.com/api/initials/valid.svg',
+            emailVerified: true
         });
         expect(mockDone.mock.calls[0][1]).toEqual({
             email_id: 'valid@email.com',
@@ -69,8 +70,13 @@ describe('create', () => {
 
 describe('remove', () => {
 
+    beforeEach(() => {
+        auth.deleteUser = jest.fn();
+    });
+
     afterEach(() => {
         mockDone.mockRestore();
+        auth.deleteUser.mockRestore();
     });
 
     beforeAll(async () => {

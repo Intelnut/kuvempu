@@ -32,6 +32,7 @@ const validateAuth = (data) => {
 };
 
 // handle user creation
+// TODO: user creation with phone number
 const create = async (data, done) => {
     try {
         let error;
@@ -52,7 +53,8 @@ const create = async (data, done) => {
         let userAuthData = {
             email: data.email_id,
             password: data.password,
-            photoURL: data.photo_url
+            photoURL: data.photo_url,
+            emailVerified: true
         };
         //console.log('auth', auth)
         let newUser = await auth.createUser(userAuthData);
@@ -76,7 +78,6 @@ const create = async (data, done) => {
 }
 
 // handle user deletion
-// TODO: incomplete (check auth method and remove user accordingly. not all users use email auth)
 const remove = async (data, done) => {
     try {
 
@@ -84,6 +85,8 @@ const remove = async (data, done) => {
             done(new Error('User id is invalid'), null);
             return false;
         }
+
+        await auth.deleteUser(data.id);
 
         const userDocumentRef = database.doc(`/users/${data.id}`);
 
