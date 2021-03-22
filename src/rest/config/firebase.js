@@ -2,8 +2,8 @@
 const firebase = require('firebase');
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
-const serverEnv = require('../../environment/server.environment.json');
-const commonEnv = require('../../environment/common.environment.json');
+const serverEnv = require('../environment/server.environment.json');
+const commonEnv = require('../environment/common.environment.json');
 
 firebase.initializeApp(commonEnv.FIREBASE_CONFIG);
 
