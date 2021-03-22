@@ -4,7 +4,7 @@ const { auth } = require('../config/firebase');
 const setUser = async (request, response, next) => {
 
     // check for authorization header
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    if (request.headers.authorization && request.headers.authorization.startsWith('Bearer ')) {
         const encryptedToken = req.headers.authorization.split('Bearer ')[1];
         // if headers are set, decrypt and set user reference on request object
         try {

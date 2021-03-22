@@ -11,6 +11,10 @@ const {
     deleteUser
 } = require('./controller');
 
+router.get('/schema', (req, res, next) => {
+    res.status(200).json(userSchema);
+});
+
 // TODO: Middleware (Admin only)
 router.get('/', getUsers);
 
@@ -25,9 +29,5 @@ router.put('/:userId', validateSchema({ body: userSchema }), updateUser);
 
 // TODO: Middleware (Owner or Admin only)
 router.delete('/:userId', deleteUser);
-
-router.get('/schema', (req, res) => {
-    res.status(200).json(userSchema);
-})
 
 module.exports = router;
