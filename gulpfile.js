@@ -1,8 +1,10 @@
 const gulp = require('gulp');
 const buildApp = require('./scripts/gulp-build');
 const devServer = require('./scripts/gulp-dev');
+const runTest = require('./scripts/gulp-test');
 const consumerPWA = require('./scripts/gulp-consumer-pwa');
-const setupSettings = require('./scripts/gulp-setup-settings');
+const setupPlugins = require('./scripts/gulp-setup-plugins');
+const setupEnvironment = require('./scripts/gulp-setup-environment');
 const setupFirebaseHosting = require('./scripts/gulp-setup-firebase-hosting');
 const {
     deployConsumer,
@@ -10,12 +12,17 @@ const {
     deployAdmin
 } = require('./scripts/gulp-deploy-app');
 
+/**
+ * `gulp setup:env`
+ * Sets up environment variables for consumption of apps
+ */
+exports['setup:env'] = setupEnvironment;
 
 /**
- * `gulp setup:settings`
- * Sets up properties and sitemap settings
+ * `gulp setup:plugins`
+ * Sets up plugins for apps
  */
-exports['setup:settings'] = setupSettings;
+exports['setup:plugins'] = setupPlugins;
 
 /**
  * `gulp setup:hosting`
@@ -28,7 +35,7 @@ exports['setup:hosting'] = setupFirebaseHosting;
  * Setup modules
  */
 
-exports['setup'] = gulp.series(setupSettings, setupFirebaseHosting);
+exports['setup'] = gulp.series(setupEnvironment, setupPlugins, setupFirebaseHosting);
 
 /**
  *
@@ -59,6 +66,20 @@ exports['dev:consumer'] = consumerDev;
  */
 const adminDev = devServer('./src/admin');
 exports['dev:admin'] = adminDev;
+
+/**
+ * `gulp dev:rest`
+ * start a admin local development server
+ */
+const restDev = devServer('./src/rest');
+exports['dev:rest'] = restDev;
+
+/**
+ * `gulp test:rest`
+ * start a admin local development server
+ */
+const restTest = runTest('./src/rest');
+exports['test:rest'] = restTest;
 
 /**
  *
