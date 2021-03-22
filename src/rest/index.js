@@ -3,7 +3,7 @@ const { functions } = require('./config/firebase');
 const { appErrorHandler } = require('./middleware/error');
 
 // users route
-const userRoute = require('./users/route');
+const userRoute = require('./routes/users/route');
 server.use('/users', userRoute);
 
 // generic error handler

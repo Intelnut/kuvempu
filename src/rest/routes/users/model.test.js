@@ -1,5 +1,5 @@
 require('firebase-functions-test')();
-const { auth, database } = require('../config/firebase');
+const { auth, database } = require('../../config/firebase');
 const User = require('./model');
 
 const mockDone = jest.fn((error, data) => { });
