@@ -1,8 +1,11 @@
 
+const firebase = require('firebase');
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
 const serverEnv = require('../../environment/server.environment.json');
 const commonEnv = require('../../environment/common.environment.json');
+
+firebase.initializeApp(commonEnv.FIREBASE_CONFIG);
 
 admin.initializeApp({
     credential: admin.credential.cert(serverEnv.FIREBASE_SERVICE_ACCOUNT),
@@ -13,4 +16,4 @@ admin.initializeApp({
 const database = admin.firestore();
 const auth = admin.auth();
 
-module.exports = { auth, database, functions };
+module.exports = { auth, database, firebase, functions };
