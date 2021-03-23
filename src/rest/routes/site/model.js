@@ -1,30 +1,43 @@
-const { auth, database } = require('../../config/firebase');
-const serverProperties = require('../../environment/server.environment.json');
-const { create: createUser } = require('../users/model');
+const { database } = require('../../config/firebase');
 
 const create = async (data, done) => {
     try {
-        if (data.setup) {
-            // create super admin user
-            // when the admin app is instantiated for the first time
-            // ToDo: Should this be part of /users or a /setup route? TBD in near future
-            await createUser({
-                email_id: serverProperties.SUPER_ADMIN_EMAIL_ID,
-                password: serverProperties.SUPER_ADMIN_PASSWORD
-            }, async (error, user) => {
-                if (error) return done(error, null);
-                await auth.setCustomUserClaims(user.id, { super_admin: true });
-                done(null, user);
-            });
+        const siteDocumentRef = database.doc(`/settings/site`);
+        await siteDocumentRef.set(data);
+        done(null, data);
+    } catch (error) {
+        done(error, null);
+    }
+}
+
+const fetch = async (data, done) => {
+    try {
+        const siteDocumentRef = database.doc(`/settings/site`);
+        const siteDocument = await siteDocumentRef.get();
+
+        if (siteDocument.exists) {
+            done(null, siteDocument.data());
         } else {
-            done(null, { status: "TODO" });
+            done(new Error('Site settings does not exist'), null);
         }
-        return true;
+    } catch (error) {
+        done(error, null);
+    }
+}
+
+const update = async (data, done) => {
+    try {
+        const siteDocumentRef = database.doc(`/settings/site`);
+        await siteDocumentRef.set(data, { merge: true });
+
+        done(null, data);
     } catch (error) {
         done(error, null);
     }
 }
 
 module.exports = {
-    create
+    create,
+    fetch,
+    update
 }
