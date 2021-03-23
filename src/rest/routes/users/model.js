@@ -7,30 +7,6 @@ const getPlaceholderAvatar = (seed) => {
     return `https://avatars.dicebear.com/api/initials/${seed}.svg`
 }
 
-// TODO: helpers
-const isEmail = (email) => {
-    const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return email && email.match(emailRegEx);
-};
-
-// TODO: Remove. Schema validator will handle this
-const validateAuth = (data) => {
-    let errors = [];
-
-    if (!data.email_id || !isEmail(data.email_id)) {
-        errors.push('Email id is invalid');
-    }
-
-    if (!data.password) {
-        errors.push('Password is invalid');
-    }
-
-    return {
-        errors,
-        valid: errors.length === 0
-    };
-};
-
 // handle user creation
 // TODO: user creation with phone number
 const create = async (data, done) => {

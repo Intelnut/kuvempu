@@ -4,25 +4,18 @@ const { validate: validateSchema } = require('../../middleware/schema');
 const siteSettingsSchema = require('./schema.json');
 
 const {
-    createSetup,
+    createSiteSettings,
+    fetchSiteSettings,
+    updateSiteSettings
 } = require('./controller');
 
 router.get('/schema', (req, res, next) => {
     res.status(200).json(siteSettingsSchema);
 });
 
-router.post('/setup', createSetup);
-
-router.post('/', (req, res, next) => {
-    res.status(200).send('update generic site settings');
-});
-
-router.get('/', (req, res, next) => {
-    res.status(200).send('fetch generic site settings');
-});
-
-router.put('/', (req, res, next) => {
-    res.status(200).send('update generic site settings');
-});
+// TODO: Role Middleware
+router.get('/', getSiteSettings);
+router.post('/', validateSchema({ body: siteSettingsSchema }), createSiteSettings);
+router.put('/', validateSchema({ body: siteSettingsSchema }), updateSiteSettings);
 
 module.exports = router;
