@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { validate: validateSchema } = require('../../middleware/schema');
+const { restrictAccess } = require('../../middleware/auth');
 const userSchema = require('./schema.json');
 
 const {
@@ -12,26 +13,48 @@ const {
     createSA
 } = require('./controller');
 
+const allowedRoles = ['super_admin', 'admin'];
+
 router.get('/schema', (req, res, next) => {
     res.status(200).json(userSchema);
 });
 
-router.post('/setup_sa', createSA);
+router.post(
+    '/setup_sa',
+    createSA
+);
 
-// TODO: Middleware (Admin only)
-router.get('/', getUsers);
+router.get(
+    '/',
+    restrictAccess(allowedRoles),
+    getUsers
+);
 
-// TODO: Middleware (Owner or Admin only)
-router.get('/:userId', getUser);
+router.get(
+    '/:userId',
+    restrictAccess(allowedRoles),
+    getUser
+);
 
-// TODO: Middleware (Owner or Admin only)
-router.post('/', validateSchema({ body: userSchema }), createUser);
+router.post(
+    '/',
+    restrictAccess(allowedRoles),
+    validateSchema({ body: userSchema }),
+    createUser
+);
 
-// TODO: Middleware (Owner or Admin only)
-router.put('/:userId', validateSchema({ body: userSchema }), updateUser);
+router.put(
+    '/:userId',
+    restrictAccess(allowedRoles),
+    validateSchema({ body: userSchema }),
+    updateUser
+);
 
-// TODO: Middleware (Owner or Admin only)
-router.delete('/:userId', deleteUser);
+router.delete(
+    '/:userId',
+    restrictAccess(allowedRoles),
+    deleteUser
+);
 
 // TODO: implementation
 router.get('/users/roles', (req, res, next) => {

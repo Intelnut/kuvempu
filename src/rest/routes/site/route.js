@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { validate: validateSchema } = require('../../middleware/schema');
+const { restrictAccess } = require('../../middleware/auth');
 const siteSettingsSchema = require('./schema.json');
 
 const {
@@ -9,13 +10,30 @@ const {
     updateSiteSettings
 } = require('./controller');
 
+const allowedRoles = ['super_admin', 'admin'];
+
 router.get('/schema', (req, res, next) => {
     res.status(200).json(siteSettingsSchema);
 });
 
-// TODO: Role Middleware
-router.get('/', getSiteSettings);
-router.post('/', validateSchema({ body: siteSettingsSchema }), createSiteSettings);
-router.put('/', validateSchema({ body: siteSettingsSchema }), updateSiteSettings);
+router.get(
+    '/',
+    restrictAccess(allowedRoles),
+    fetchSiteSettings
+);
+
+router.post(
+    '/',
+    restrictAccess(allowedRoles),
+    validateSchema({ body: siteSettingsSchema }),
+    createSiteSettings
+);
+
+router.put(
+    '/',
+    restrictAccess(allowedRoles),
+    validateSchema({ body: siteSettingsSchema }),
+    updateSiteSettings
+);
 
 module.exports = router;
