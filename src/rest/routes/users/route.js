@@ -30,4 +30,25 @@ router.put('/:userId', validateSchema({ body: userSchema }), updateUser);
 // TODO: Middleware (Owner or Admin only)
 router.delete('/:userId', deleteUser);
 
+// TODO: implementation
+router.get('/users/roles', (req, res, next) => {
+    res.status(200).send('Fetch all users with privileges')
+});
+
+// TODO: implementation
+router.post('/users/roles', (req, res, next) => {
+    res.status(200).send('Create new privileges for a user');
+});
+
+// TODO: implementation
+router.put('/users/roles/:userId', (req, res, next) => {
+    res.status(200).send('Update privilages of a user');
+});
+
+// TODO: implementation
+router.get('/users/roles/:userId', (req, res, next) => {
+    res.status(200).send('Get capabilities of a user');
+});
+
+
 module.exports = router;
