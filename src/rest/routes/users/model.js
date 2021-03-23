@@ -13,7 +13,7 @@ const isEmail = (email) => {
     return email && email.match(emailRegEx);
 };
 
-// TODO: helpers
+// TODO: Remove. Schema validator will handle this
 const validateAuth = (data) => {
     let errors = [];
 
