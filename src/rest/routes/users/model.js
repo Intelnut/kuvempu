@@ -7,44 +7,10 @@ const getPlaceholderAvatar = (seed) => {
     return `https://avatars.dicebear.com/api/initials/${seed}.svg`
 }
 
-// TODO: helpers
-const isEmail = (email) => {
-    const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return email && email.match(emailRegEx);
-};
-
-// TODO: helpers
-const validateAuth = (data) => {
-    let errors = [];
-
-    if (!data.email_id || !isEmail(data.email_id)) {
-        errors.push('Email id is invalid');
-    }
-
-    if (!data.password) {
-        errors.push('Password is invalid');
-    }
-
-    return {
-        errors,
-        valid: errors.length === 0
-    };
-};
-
 // handle user creation
 // TODO: user creation with phone number
 const create = async (data, done) => {
     try {
-        let error;
-        // email id and password is required for user creation
-        // terminate if validation fails
-        const { errors, valid } = validateAuth(data);
-        if (!valid) {
-            error = new Error(errors.join(' & '));
-            done(error, null);
-            return error;
-        }
-
         // very unlikely to receive a photo url on user creation
         // use an avatar as placeholder, if not provided
         data.photo_url = data.photo_url || getPlaceholderAvatar(data.email_id.split('@')[0]);
@@ -68,6 +34,11 @@ const create = async (data, done) => {
         // create new user document
         const userDocumentRef = database.doc(`/users/${data.id}`);
         await userDocumentRef.set(data);
+
+        // set claims
+        if (data.claims) {
+            await auth.setCustomUserClaims(data.id, { [data.name]: data.value });
+        }
 
         // successful operation
         done(null, data);
@@ -171,6 +142,11 @@ const update = async (data, done) => {
 
         // fetch the updated document
         const updatedDoc = await userDocumentRef.get();
+
+        // set claims
+        if (data.claims) {
+            await auth.setCustomUserClaims(data.id, { [data.name]: data.value });
+        }
 
         // successful operation
         done(null, updatedDoc.data());
