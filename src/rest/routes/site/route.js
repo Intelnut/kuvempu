@@ -3,13 +3,15 @@ const router = express.Router();
 const { validate: validateSchema } = require('../../middleware/schema');
 const siteSettingsSchema = require('./schema.json');
 
-router.post('/su', (req, res, next) => {
-    res.status(200).send('setup super user defined in server.properties');
-});
+const {
+    createSetup,
+} = require('./controller');
 
 router.get('/schema', (req, res, next) => {
     res.status(200).json(siteSettingsSchema);
 });
+
+router.post('/setup', createSetup);
 
 router.post('/', (req, res, next) => {
     res.status(200).send('update generic site settings');
