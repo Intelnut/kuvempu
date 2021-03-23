@@ -29,6 +29,10 @@ const properties = {
 
     // R
     REST_RESOURCE_ID: process.env.REST_RESOURCE_ID,
+
+    // S
+    SUPER_ADMIN_EMAIL_ID: process.env.SUPER_ADMIN_EMAIL_ID,
+    SUPER_ADMIN_PASSWORD: process.env.SUPER_ADMIN_PASSWORD //TODO: Encrypt
 };
 
 module.exports = properties;
