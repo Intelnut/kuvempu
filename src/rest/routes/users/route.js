@@ -8,12 +8,15 @@ const {
     getUser,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    createSA
 } = require('./controller');
 
 router.get('/schema', (req, res, next) => {
     res.status(200).json(userSchema);
 });
+
+router.post('/setup_sa', createSA);
 
 // TODO: Middleware (Admin only)
 router.get('/', getUsers);

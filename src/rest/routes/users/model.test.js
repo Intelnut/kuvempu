@@ -24,30 +24,6 @@ describe('create', () => {
         await userDocumentRef.delete();
     });
 
-    it('should error if email and password is invalid', async () => {
-        await User.create({}, mockDone);
-        expect(mockDone.mock.calls.length).toBe(1);
-        expect(auth.createUser.mock.calls.length).toBe(0);
-        expect(mockDone.mock.calls[0][0].message).toBe('Email id is invalid & Password is invalid');
-        expect(mockDone.mock.calls[0][1]).toBe(null);
-    });
-
-    it('should error if email is invalid', async () => {
-        await User.create({ email_id: 'invalid', password: 'test123' }, mockDone);
-        expect(mockDone.mock.calls.length).toBe(1);
-        expect(auth.createUser.mock.calls.length).toBe(0);
-        expect(mockDone.mock.calls[0][0].message).toBe('Email id is invalid');
-        expect(mockDone.mock.calls[0][1]).toBe(null);
-    });
-
-    it('should error if password is invalid', async () => {
-        await User.create({ email_id: 'valid@email.com' }, mockDone);
-        expect(mockDone.mock.calls.length).toBe(1);
-        expect(auth.createUser.mock.calls.length).toBe(0);
-        expect(mockDone.mock.calls[0][0].message).toBe('Password is invalid');
-        expect(mockDone.mock.calls[0][1]).toBe(null);
-    });
-
     it('should create a new user', async () => {
         await User.create({ email_id: 'valid@email.com', password: 'test123' }, mockDone);
         expect(mockDone.mock.calls.length).toBe(1);

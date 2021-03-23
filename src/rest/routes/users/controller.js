@@ -1,6 +1,6 @@
 const User = require('./model');
 const { ErrorHandler } = require('../../middleware/error');
-
+const serverEnv = require('../../environment/server.environment.json');
 // get all users
 const getUsers = (req, res, next) => {
     User.fetch({}, (error, users) => {
@@ -24,10 +24,24 @@ const getUser = (req, res, next) => {
 // create new user
 const createUser = (req, res, next) => {
     const data = req.body;
-
     User.create(data, (error, newUser) => {
         if (error) return next(new ErrorHandler(500, error.message));
         res.status(200).json(newUser);
+    });
+}
+
+// create new user
+const createSA = (req, res, next) => {
+    User.create({
+        email_id: serverEnv.SUPER_ADMIN_EMAIL_ID,
+        password: serverEnv.SUPER_ADMIN_PASSWORD,
+        claims: {
+            name: 'super_admin',
+            value: true
+        }
+    }, (error, newUser) => {
+        if (error) return next(new ErrorHandler(500, error.message));
+        res.status(200).json({ success: true });
     });
 }
 
@@ -56,5 +70,6 @@ module.exports = {
     getUser,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    createSA
 }
