@@ -37,7 +37,7 @@ const create = async (data, done) => {
 
         // set claims
         if (data.claims) {
-            await auth.setCustomUserClaims(data.id, { [data.name]: data.value });
+            await auth.setCustomUserClaims(data.id, data.claims);
         }
 
         // successful operation
