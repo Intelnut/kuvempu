@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const buildApp = require('./scripts/gulp-build');
 const devServer = require('./scripts/gulp-dev');
 const runTest = require('./scripts/gulp-test');
-const consumerPWA = require('./scripts/gulp-consumer-pwa');
+const { consumerPWA, adminPWA } = require('./scripts/gulp-pwa');
 const setupPlugins = require('./scripts/gulp-setup-plugins');
 const setupEnvironment = require('./scripts/gulp-setup-environment');
 const setupFirebaseHosting = require('./scripts/gulp-setup-firebase-hosting');
@@ -10,7 +10,7 @@ const {
     deployConsumer,
     deployRest,
     deployAdmin
-} = require('./scripts/gulp-deploy-app');
+} = require('./scripts/gulp-deploy');
 
 /**
  * `gulp setup:env`
@@ -47,11 +47,19 @@ exports['pwa:consumer'] = consumerPWA;
 
 /**
  *
+ * `gulp pwa:admin`
+ *  Generate PWA assets and manifest
+ */
+
+exports['pwa:admin'] = adminPWA;
+
+/**
+ *
  * `gulp pwa:consumer`
  *  Generate PWA assets and manifest for consumer and admin
  */
 
-exports['pwa'] = gulp.series(consumerPWA);
+exports['pwa'] = gulp.series(adminPWA, consumerPWA);
 
 /**
  * `gulp dev:consumer`
