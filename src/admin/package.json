@@ -3,6 +3,19 @@
   "version": "0.0.0",
   "scripts": {},
   "private": true,
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "firebase": "^8.2.9",
+    "firebase-functions": "^3.13.2",
+    "next": "^10.0.7",
+    "next-pwa": "^5.0.6",
+    "next-secure-headers": "^2.2.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "webpack-subresource-integrity": "^1.5.2"
+  },
+  "devDependencies": {
+    "firebase-tools": "^9.5.0"
+  }
 }
