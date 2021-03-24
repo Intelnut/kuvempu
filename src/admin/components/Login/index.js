@@ -44,8 +44,8 @@ export default function SignIn() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
-        </Typography>
+                    Login in
+                </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
                         variant="outlined"
@@ -86,11 +86,6 @@ export default function SignIn() {
                         <Grid item xs>
                             <Link href="#" variant="body2">
                                 Forgot password?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>
                     </Grid>
