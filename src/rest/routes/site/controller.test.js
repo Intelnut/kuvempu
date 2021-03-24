@@ -1,7 +1,7 @@
 const Site = require('./model');
 const Controller = require('./controller');
 
-describe('getSiteSettings', () => {
+describe('fetchSiteSettings', () => {
     let mockResponse;
     let mockNext;
 
@@ -25,7 +25,7 @@ describe('getSiteSettings', () => {
             done(new Error('test error'), null);
         });
 
-        Controller.getSiteSettings({}, mockResponse, mockNext);
+        Controller.fetchSiteSettings({}, mockResponse, mockNext);
         expect(mockResponse.status.mock.calls.length).toBe(0);
         expect(mockNext.mock.calls[0][0].message).toBe('test error');
         expect(Site.fetch.mock.calls[0][0]).toEqual({});
@@ -37,7 +37,7 @@ describe('getSiteSettings', () => {
             done(null, response);
         });
 
-        Controller.getSiteSettings({}, mockResponse, mockNext);
+        Controller.fetchSiteSettings({}, mockResponse, mockNext);
         expect(mockResponse.status.mock.calls[0][0]).toBe(200);
         expect(mockResponse.json.mock.calls[0][0]).toEqual(response);
         expect(Site.fetch.mock.calls[0][0]).toEqual({});
