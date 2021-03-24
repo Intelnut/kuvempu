@@ -9,12 +9,12 @@ const gulp = require('gulp');
 
 const commonEnvironmentConfig = require('./templates/common.environment');
 const serverEnvironmentConfig = require('./templates/server.environment');
-const environmentPath = './src/environment';
 
-const setupCommonEnvironment = (path) => {
+const setupCommonEnvironment = (app) => {
+    let envPath = `./src/${app}/environment`;
     return (done) => {
-        const filePath = `${path}/common.environment.json`;
-        const value = JSON.stringify(commonEnvironmentConfig, null, 2);
+        const filePath = `${envPath}/common.environment.json`;
+        const value = JSON.stringify(commonEnvironmentConfig(app), null, 2);
         try {
             fs.writeFile(filePath, value, done);
         } catch (error) {
@@ -23,10 +23,11 @@ const setupCommonEnvironment = (path) => {
     }
 }
 
-const setupServerEnvironment = (path) => {
+const setupServerEnvironment = (app) => {
+    let envPath = `./src/${app}/environment`;
     return (done) => {
-        const filePath = `${path}/server.environment.json`;
-        const value = JSON.stringify(serverEnvironmentConfig, null, 2);
+        const filePath = `${envPath}/server.environment.json`;
+        const value = JSON.stringify(serverEnvironmentConfig(app), null, 2);
         try {
             fs.writeFile(filePath, value, done);
         } catch (error) {
@@ -37,8 +38,8 @@ const setupServerEnvironment = (path) => {
 
 
 module.exports = gulp.series(
-    setupCommonEnvironment('./src/consumer/environment'),
-    setupCommonEnvironment('./src/rest/environment'),
-    setupServerEnvironment('./src/rest/environment'),
-    setupCommonEnvironment('./src/admin/environment')
+    setupCommonEnvironment('consumer'),
+    setupCommonEnvironment('rest'),
+    setupServerEnvironment('rest'),
+    setupCommonEnvironment('admin')
 );
