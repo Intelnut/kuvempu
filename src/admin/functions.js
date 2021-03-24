@@ -3,7 +3,7 @@ const functions = require('firebase-functions');
 const { default: next } = require('next');
 
 const isDev = process.env.NODE_ENV !== 'production';
-const consumerServer = next({
+const app = next({
     dev: isDev,
     poweredByHeader: false,
     conf: {
@@ -11,11 +11,11 @@ const consumerServer = next({
     },
 });
 
-const requestHandler = consumerServer.getRequestHandler();
+const requestHandler = app.getRequestHandler();
 
-const consumer = async (req, res) => {
-    await consumerServer.prepare();
+const server = async (req, res) => {
+    await app.prepare();
     return await requestHandler(req, res);
 }
 
-exports.consumer = functions.https.onRequest(consumer);
+exports.admin = functions.https.onRequest(server);

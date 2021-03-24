@@ -39,5 +39,6 @@ const setupServerEnvironment = (path) => {
 module.exports = gulp.series(
     setupCommonEnvironment('./src/consumer/environment'),
     setupCommonEnvironment('./src/rest/environment'),
-    setupServerEnvironment('./src/rest/environment')
+    setupServerEnvironment('./src/rest/environment'),
+    setupCommonEnvironment('./src/admin/environment')
 );

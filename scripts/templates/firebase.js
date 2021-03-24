@@ -25,10 +25,6 @@ const firebase = (target) => {
         }
     }
 
-    if (target === "admin") {
-        delete config.hosting.rewrites;
-    }
-
     return config;
 };
 
