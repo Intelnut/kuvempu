@@ -10,7 +10,7 @@ const {
     deployConsumer,
     deployRest,
     deployAdmin
-} = require('./scripts/gulp-deploy-app');
+} = require('./scripts/gulp-deploy');
 
 /**
  * `gulp setup:env`
