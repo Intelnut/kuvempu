@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const createSuperAdmin = async () => {
-        await http.post('/users/setup_sa');
+        await http.get('/users/setup_sa');
         router.replace(loginRoute);
     }
 
