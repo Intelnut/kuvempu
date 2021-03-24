@@ -19,7 +19,7 @@ router.get('/schema', (req, res, next) => {
     res.status(200).json(userSchema);
 });
 
-router.post(
+router.get(
     '/setup_sa',
     createSA
 );
