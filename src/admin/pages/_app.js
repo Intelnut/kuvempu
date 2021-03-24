@@ -8,10 +8,15 @@ import Head from 'next/head';
 import '../styles/main.css';
 
 /**
+ * Import Application component
+ */
+import Application from '../components/Application';
+
+/**
  * Entry point
  * @param {*} props
  */
-const App = ({ Component, pageProps }) => {
+const App = (props) => {
     return (
         <>
             <Head>
@@ -41,7 +46,7 @@ const App = ({ Component, pageProps }) => {
                 <meta name='msapplication-TileImage' content='/brand/favicon/favicon-196.png' />
                 <meta name='theme-color' content='#333333' />
             </Head>
-            <Component {...pageProps} />
+            <Application {...props} />
         </>
     );
 };
