@@ -17,6 +17,8 @@
     "webpack-subresource-integrity": "^1.5.2"
   },
   "devDependencies": {
-    "firebase-tools": "^9.5.0"
-  }
+    "firebase-tools": "^9.5.0",
+    "webpack": "^4.44.2"
+  },
+  "main": "functions.js"
 }
