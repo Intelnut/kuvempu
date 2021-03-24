@@ -6,6 +6,8 @@
 require('dotenv').config()
 
 const properties = {
+    // A
+    ADMIN_URL: process.env.ADMIN_URL,
 
     // C
     CONSUMER_URL: process.env.CONSUMER_URL,
@@ -21,6 +23,8 @@ const properties = {
         storageBucket: process.env.FIREBASE_CONFIG_STORAGE_BUCKET
     },
 
+    // R
+    REST_URL: process.env.REST_URL
 };
 
 module.exports = properties;
