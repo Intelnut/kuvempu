@@ -57,25 +57,34 @@ export const AuthProvider = ({ children }) => {
     }
 
     const login = async (credentials) => {
-        let response = http.post(loginRoute, credentials);
-        let data = await response.data;
+        try {
 
-        // terminate if invalid
-        // let login component handle the error
+            let response = await http.post(loginRoute, credentials);
+            let data = response.data;
 
-        if (data.status === 'error') return data;
-        if (!hasPermission(data.claims)) return {
-            status: 'error',
-            message: 'Access denied'
-        };
+            if (!hasPermission(data.claims)) {
+                throw new Error('Access denied');
+            };
 
-        // all is well to proceed
-        setClaims(data.claims); // set claims
-        setHTTPAuthHeader(data.token); // attach auth headers
-        router.replace(redirectUrl || '/'); // redirect user
-        setRedirectUrl(null); // reset redirect url
+            // all is well to proceed
+            setClaims(data.claims); // set claims
+            setHTTPAuthHeader(data.token); // attach auth headers
+            router.replace(redirectUrl || '/'); // redirect user
+            setRedirectUrl(null); // reset redirect url
 
-        return data;
+            return {
+                success: true
+            }
+
+        } catch (error) {
+
+            // TODO: Custom error info based on reason
+            console.error(error.response.data);
+            return {
+                error: 'Error authenticating user'
+            }
+
+        }
     }
 
     const createSuperAdmin = async () => {
