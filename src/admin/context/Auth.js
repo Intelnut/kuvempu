@@ -105,3 +105,11 @@ export const AuthProvider = ({ children }) => {
 
     return (<AuthContext.Provider value={{ login, logout, hasPermission, createSuperAdmin }}>{children}</AuthContext.Provider>)
 }
+
+export function ProtectedRoute(Component) {
+    // TODO: Component with meaningful info
+    return () => {
+        const { claims, hasPermission } = useAuth();
+        return (hasPermission(claims)) ? <Component /> : <div className='p-8 text-gray-700'>Protected route</div>;
+    };
+}

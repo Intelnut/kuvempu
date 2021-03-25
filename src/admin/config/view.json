@@ -1,0 +1,45 @@
+{
+    "groups": [
+        {
+            "links": [
+                {
+                    "component": "Dashboard",
+                    "path": "dashboard",
+                    "title": "Dashboard",
+                    "access": [
+                        "super_admin",
+                        "admin"
+                    ]
+                },
+                {
+                    "title": "Manage Users",
+                    "path": "users",
+                    "component": "ConfigTable",
+                    "schema": "/users/schema",
+                    "api": "/users",
+                    "access": [
+                        "super_admin",
+                        "admin"
+                    ]
+                }
+            ],
+            "title": false
+        },
+        {
+            "links": [
+                {
+                    "title": "Site Settings",
+                    "path": "site_settings",
+                    "component": "ConfigForm",
+                    "schema": "/site/schema",
+                    "api": "/site",
+                    "access": [
+                        "super_admin",
+                        "admin"
+                    ]
+                }
+            ],
+            "title": "Settings"
+        }
+    ]
+}

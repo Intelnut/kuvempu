@@ -2,10 +2,10 @@
 /** @format */
 
 import React from 'react';
-import Welcome from '../components/Welcome';
+import DynamicView from '../components/DynamicView';
 
 const Block = (props) => {
-    return <Welcome />;
+    return <DynamicView />;
 };
 
 export default Block;
