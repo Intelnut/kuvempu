@@ -8,7 +8,7 @@ const createSiteSettings = (req, res, next) => {
     });
 }
 
-const getSiteSettings = (req, res, next) => {
+const fetchSiteSettings = (req, res, next) => {
     Site.fetch({}, (error, settings) => {
         if (error) return next(new ErrorHandler(500, error.message));
         res.status(200).json(settings);
@@ -24,6 +24,6 @@ const updateSiteSettings = (req, res, next) => {
 
 module.exports = {
     createSiteSettings,
-    getSiteSettings,
+    fetchSiteSettings,
     updateSiteSettings
 }

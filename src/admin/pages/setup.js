@@ -1,11 +1,10 @@
-
 /** @format */
 
 import React from 'react';
-import Dashboard from '../components/Dashboard';
+import Setup from '../components/Setup';
 
 const Block = (props) => {
-    return <Dashboard />;
+    return <Setup />;
 };
 
 export default Block;

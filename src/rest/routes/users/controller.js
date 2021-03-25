@@ -36,8 +36,7 @@ const createSA = (req, res, next) => {
         email_id: serverEnv.SUPER_ADMIN_EMAIL_ID,
         password: serverEnv.SUPER_ADMIN_PASSWORD,
         claims: {
-            name: 'super_admin',
-            value: true
+            super_admin: true
         }
     }, (error, newUser) => {
         if (error) return next(new ErrorHandler(500, error.message));

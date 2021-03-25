@@ -9,7 +9,6 @@ firebase.initializeApp(commonEnv.FIREBASE_CONFIG);
 
 admin.initializeApp({
     credential: admin.credential.cert(serverEnv.FIREBASE_SERVICE_ACCOUNT),
-    databaseURL: commonEnv.FIREBASE_CONFIG.databaseURL,
     storageBucket: commonEnv.FIREBASE_CONFIG.storageBucket
 });
 

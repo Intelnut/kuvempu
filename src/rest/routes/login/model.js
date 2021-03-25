@@ -6,9 +6,11 @@ const create = async (data, done) => {
         // authenticate with email and password
         const authResponse = await firebase.auth().signInWithEmailAndPassword(data.email_id, data.password);
         const token = await authResponse.user.getIdToken();
+        let idTokenResult = await authResponse.user.getIdTokenResult();
+        let claims = idTokenResult.claims;
 
         // successful operation
-        done(null, { token });
+        done(null, { token, claims });
         return true;
     } catch (error) {
         done(error, null);

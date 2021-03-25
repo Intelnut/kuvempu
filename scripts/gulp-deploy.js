@@ -6,9 +6,9 @@ const childProcess = require('child_process').spawnSync;
 
 const deployApp = (target, cwd) => {
     let toDeploy = `functions:${target},hosting:${target}`;
-    if (target === 'admin') {
-        toDeploy = `hosting:${target}`;
-    }
+    // if (target === 'admin') {
+    //     toDeploy = `hosting:${target}`;
+    // }
     return async (done) => {
         try {
             childProcess('firebase', ['deploy', '--only', toDeploy], { cwd, stdio: 'inherit', shell: true }, (error) => {
