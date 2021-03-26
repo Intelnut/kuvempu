@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProtectedRoute } from '../../context/Auth';
+import { ProtectedView } from '../../context/View';
 
 const Block = (props) => {
     return (
@@ -7,4 +7,4 @@ const Block = (props) => {
     )
 };
 
-export default ProtectedRoute(Block);
+export default ProtectedView(Block);
