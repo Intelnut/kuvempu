@@ -32,31 +32,13 @@ export default useView;
  */
 export const ViewProvider = ({ children }) => {
 
-    const [ui, setUI] = useState(ViewConfig);
     const [context, setContext] = useState(null);
     const [document, setDocument] = useState(null);
     const [schema, setSchema] = useState(null);
 
     const router = useRouter();
 
-    // compose ui configuration for the view
-    const composeUI = (view) => {
-        return {
-            title: '',
-            collections: [{
-                label: '',
-                href: '',
-                as: '',
-                selected: false
-            }],
-            settings: [{
-                label: '',
-                href: '',
-                as: '',
-                selected: false
-            }]
-        }
-    }
+
 
     // listen to changes in window.location
     useEffect(() => {
@@ -73,7 +55,6 @@ export const ViewProvider = ({ children }) => {
             id
         });
 
-        setUI(composeUI(view));
 
     }, [router.pathname]);
 
@@ -109,7 +90,7 @@ export const ViewProvider = ({ children }) => {
         //
     }, [router.pathname]);
 
-    return (<ViewContext.Provider value={{ context, document, schema, ui }}>{children}</ViewContext.Provider>)
+    return (<ViewContext.Provider value={{ context, document, schema }}>{children}</ViewContext.Provider>)
 }
 
 // Auth ensures you are redirected to /login page if the user is not authenticated
