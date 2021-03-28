@@ -5,7 +5,7 @@ import React, {
     useEffect
 } from 'react';
 
-import ViewConfig from '../config/view.json';
+import View from '../config/view.json';
 import useAuth from '../services/Auth';
 import http from '../services/http';
 import { useRouter } from 'next/router';
@@ -32,13 +32,84 @@ export default useView;
  */
 export const ViewProvider = ({ children }) => {
 
-    const [config, setConfig] = useState(ViewConfig);
+    const [ui, setUI] = useState(ViewConfig);
+    const [context, setContext] = useState(null);
+    const [document, setDocument] = useState(null);
+    const [schema, setSchema] = useState(null);
+
+    const router = useRouter();
+
+    // compose ui configuration for the view
+    const composeUI = (view) => {
+        return {
+            title: '',
+            collections: [{
+                label: '',
+                href: '',
+                as: '',
+                selected: false
+            }],
+            settings: [{
+                label: '',
+                href: '',
+                as: '',
+                selected: false
+            }]
+        }
+    }
+
+    // listen to changes in window.location
+    useEffect(() => {
+
+        const query = router.query;
+
+        const view = query[0]; //users, site etc
+        const action = query[1]; //create,update,read. null for setting views
+        const id = query[2]; //id of the doc. null for setting views
+
+        setContext({
+            view,
+            action,
+            id
+        });
+
+        setUI(composeUI(view));
+
+    }, [router.pathname]);
+
+    // listen to changes in view
+    // listen to changes in window.location
+    useEffect(() => {
+
+        const fetchData = async () => {
+            // make http request to fetch schema
+            // memoize schema
+            setSchema();
+
+            if (context.id) {
+                // fetch document
+                // ex: /users/:id
+                setDocument()
+            } else if (isSetting(context.view)) {
+                // fetch setting
+                // ex: /settings/:id
+                setDocument();
+            } else {
+                // fetch collection
+                // ex: /users
+                setDocument();
+            }
+        }
+
+        fetchData();
+
+    }, [context]);
 
     useEffect(() => {
         //
     }, [router.pathname]);
 
-    return (<ViewContext.Provider value={{ config }}>{children}</ViewContext.Provider>)
+    return (<ViewContext.Provider value={{ context, document, schema, ui }}>{children}</ViewContext.Provider>)
 }
 
 // Auth ensures you are redirected to /login page if the user is not authenticated
@@ -48,6 +119,6 @@ export function ProtectedView(Component) {
     // TODO: Component with meaningful info
     return () => {
         const { claims, hasPermission } = useAuth();
-        return (hasPermission(claims)) ? <Component /> : <div className='p-8 text-gray-700'>Protected route</div>;
+        return (hasPermission(claims)) ? <Component /> : <div>Protected route</div>;
     };
 }
