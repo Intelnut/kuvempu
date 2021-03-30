@@ -3,10 +3,14 @@
  */
 
 const firebase = (target) => {
+    let publicFolder = {
+        admin: "./build",
+        default: "./public"
+    }
     const config = {
         hosting: {
             target: target,
-            public: "./public",
+            public: publicFolder[target] || publicFolder['default'],
             ignore: [
                 "firebase.json",
                 "**/.*",
