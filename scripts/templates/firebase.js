@@ -7,6 +7,25 @@ const firebase = (target) => {
         admin: "./build",
         default: "./public"
     }
+
+    let rewrites = {
+        admin: null,
+        default: [
+            {
+                "source": "**",
+                "function": target
+            }
+        ]
+    }
+
+    let functions = {
+        admin: null,
+        default: {
+            "source": ".",
+            "runtime": "nodejs12"
+        }
+    }
+
     const config = {
         hosting: {
             target: target,
@@ -16,17 +35,9 @@ const firebase = (target) => {
                 "**/.*",
                 "**/node_modules/**"
             ],
-            rewrites: [
-                {
-                    "source": "**",
-                    "function": target
-                }
-            ]
+            rewrites: rewrites[target] || rewrites['default']
         },
-        functions: {
-            "source": ".",
-            "runtime": "nodejs12"
-        }
+        functions: functions[target] || functions['default']
     }
 
     return config;
