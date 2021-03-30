@@ -13,6 +13,8 @@ src/consumer/public/workbox*.js
 src/consumer/next-sitemap.js
 src/**/lib
 src/**/.firebase
+src/**/.firebaserc
+src/**/firebase.json
 **/firebase-debug.log
 **/ui-debug.log
 src/admin/build
