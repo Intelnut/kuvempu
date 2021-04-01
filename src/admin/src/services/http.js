@@ -2,7 +2,7 @@
 
 import Axios from 'axios';
 
-import commonProps from '../properties/common.properties.json';
+import commonProps from '../environment/common.environment.json';
 
 const createAxios = () => {
 
