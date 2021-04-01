@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Main from './component/Main';
-
 const Component = (props) => {
-  return <Main />
+    return (
+        <div>Dynamic View Component</div>
+    )
 };
 
 export default Component;

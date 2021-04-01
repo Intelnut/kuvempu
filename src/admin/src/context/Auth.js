@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 
 import http from '../services/http';
-import { useRouter } from 'next/router';
+//import { useRouter } from 'next/router';
 
 /**
  * Auth Context
@@ -35,8 +35,6 @@ export const AuthProvider = ({ children }) => {
     const setupRoute = '/setup';
     const [claims, setClaims] = useState(null);
     const [redirectUrl, setRedirectUrl] = useState(null);
-
-    const router = useRouter();
 
     const logout = () => {
         setClaims(null);
@@ -89,19 +87,20 @@ export const AuthProvider = ({ children }) => {
 
     const createSuperAdmin = async () => {
         await http.get('/users/setup_sa');
-        router.replace(loginRoute);
+        //router.replace(loginRoute);
     }
 
-    useEffect(() => {
-        const unProtectedRoutes = [loginRoute, setupRoute];
-        if (!unProtectedRoutes.includes(router.pathname) && !hasPermission(claims)) {
-            // all routes are protected except login
-            // redirect user to login, if not authenticated
-            setRedirectUrl(router.pathname); // redirect user to current route after login
-            router.push('/login');
-        }
+    // useEffect(() => {
+    //     const unProtectedRoutes = [loginRoute, setupRoute];
+    //     if (!unProtectedRoutes.includes(router.pathname) && !hasPermission(claims)) {
+    //         // all routes are protected except login
+    //         // redirect user to login, if not authenticated
+    //         setRedirectUrl(router.pathname); // redirect user to current route after login
 
-    }, [router.pathname]);
+    //         //router.push('/login');
+    //     }
+
+    // }, [router.pathname]);
 
     return (<AuthContext.Provider value={{ login, logout, hasPermission, createSuperAdmin }}>{children}</AuthContext.Provider>)
 }
