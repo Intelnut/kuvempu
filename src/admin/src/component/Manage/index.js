@@ -11,15 +11,15 @@ import Dashboard from '../Dashboard';
 const Component = (props) => {
 
     return (
-        <Layout>
-            <BrowserRouter>
+        <BrowserRouter>
+            <Layout>
                 <Switch>
-                    <Route path="/:schema" component={Schema} />
-                    <Route path="/settings" component={Settings} />
+                    <Route path="/manage/settings" component={Settings} />
+                    <Route path="/manage/:schema" component={Schema} />
                     <Route path="/" component={Dashboard} />
                 </Switch>
-            </BrowserRouter>
-        </Layout>
+            </Layout>
+        </BrowserRouter>
     )
 };
 

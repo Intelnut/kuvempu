@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+import { useAuth } from '../../context/Auth';
+
+import { Link } from 'react-router-dom';
+
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -118,7 +122,6 @@ const Component = (props) => {
         setOpen(false);
     };
 
-
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -166,13 +169,13 @@ const Component = (props) => {
                 <List>
 
                     <div>
-                        <ListItem button>
+                        <ListItem button component={Link} to="/">
                             <ListItemIcon>
                                 <DashboardIcon />
                             </ListItemIcon>
                             <ListItemText primary="Dashboard" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem button component={Link} to="/manage/users">
                             <ListItemIcon>
                                 <PeopleIcon />
                             </ListItemIcon>
@@ -183,11 +186,12 @@ const Component = (props) => {
                 </List>
 
                 <Divider />
+
                 <List>
 
                     <div>
                         <ListSubheader inset>Settings</ListSubheader>
-                        <ListItem button>
+                        <ListItem button component={Link} to="/manage/settings/site">
                             <ListItemIcon>
                                 <SettingsIcon />
                             </ListItemIcon>
