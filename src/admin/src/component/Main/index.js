@@ -1,11 +1,11 @@
 import AuthProvider from '../../context/Auth';
 import React from 'react';
-import MainRoutes from '../MainRoutes';
+import Routes from '../Routes';
 
 const Component = (props) => {
     return (
         <AuthProvider>
-            <MainRoutes />
+            <Routes />
         </AuthProvider >
     )
 };
