@@ -5,6 +5,10 @@ import React, {
     useEffect
 } from 'react';
 
+import { Redirect } from 'react-router-dom';
+import Forbidden from '../component/Forbidden';
+
+
 import http from '../services/http';
 
 /**
@@ -27,5 +31,38 @@ export default useAuth;
  * Auth Context Provider
  */
 export const AuthProvider = ({ children }) => {
-    return (<AuthContext.Provider value={{}}> { children}</ AuthContext.Provider>)
+
+    const [claims, setClaims] = useState(null);
+
+    const isLoggedIn = () => {
+        return !!claims;
+    }
+
+    const isSuperAdmin = () => {
+        return claims && !!claims.super_admin;
+    }
+
+    return (<AuthContext.Provider value={{ isLoggedIn, isSuperAdmin }}> { children}</ AuthContext.Provider>)
+}
+
+/**
+ * View access control
+ * @param {*} Component 
+ */
+export function CheckAccess(Component) {
+
+    const { isLoggedIn, isSuperAdmin } = useAuth();
+
+    const TakeAction = () => {
+        return (isLoggedIn()) ? <Forbidden /> : <Redirect
+            to={{
+                pathname: "/login",
+                state: {}
+            }}
+        />;
+    }
+
+    return () => {
+        return (isSuperAdmin()) ? <Component /> : <TakeAction />;
+    };
 }
