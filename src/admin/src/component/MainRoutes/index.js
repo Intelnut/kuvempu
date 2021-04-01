@@ -1,4 +1,4 @@
-import { CheckAccess } from '../../context/Auth';
+import { RestrictedAccess } from '../../context/Auth';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import React from 'react';
@@ -12,8 +12,8 @@ const Component = (props) => {
         <BrowserRouter>
             <Switch>
                 <Route path="/login" component={Login} />
-                <Route path="/manage" component={CheckAccess(Manage)} />
-                <Route path="/" component={CheckAccess(Dashboard)} />
+                <Route path="/manage" component={RestrictedAccess(Manage)} />
+                <Route path="/" component={RestrictedAccess(Dashboard)} />
             </Switch>
         </BrowserRouter >
     )

@@ -13,6 +13,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
 import Alert from '@material-ui/lab/Alert';
 
+// hooks
+import { useAuth } from '../../context/Auth';
+
 // component styles
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -53,8 +56,9 @@ const Component = (props) => {
         password: ''
     });
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false)
+    const [error, setError] = useState(false);
 
+    const { login } = useAuth();
 
     const handleChange = (e) => {
         const newCredentials = {
@@ -66,7 +70,17 @@ const Component = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    };
+        setError(null);
+        setLoading(true);
+        let response = await login(credentials);
+        setLoading(false);
+        if (response.error) {
+            setError(response.error);
+        } else {
+            const { history } = props;
+            history.push(history.location.state.referrer || '/');
+        }
+    }
 
     return (
         <Container component='main' maxWidth='xs'>
@@ -75,9 +89,7 @@ const Component = (props) => {
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography component='h1' variant='h5'>
-                    Login in
-                </Typography>
+                <Typography component='h1' variant='h5'>Login</Typography>
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <TextField
                         variant='outlined'
@@ -116,7 +128,7 @@ const Component = (props) => {
                             disabled={loading}
                         >
                             Sign In
-                        </Button>
+        </Button>
                         {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                     </div>
                     {error && <Alert elevation={6} variant='filled' severity='error'>{error}</Alert>}

@@ -1,8 +1,7 @@
 import React, {
     createContext,
     useContext,
-    useState,
-    useEffect
+    useState
 } from 'react';
 
 import { Redirect } from 'react-router-dom';
@@ -20,17 +19,18 @@ const AuthContext = createContext({});
 /**
  * Auth Context Hook
  */
-const useAuth = () => {
+export const useAuth = () => {
     return useContext(AuthContext);
 }
-export default useAuth;
 
 /**
  * 
  * @param {*} Object 
  * Auth Context Provider
  */
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
+
+    const loginApiEndpoint = '/login';
 
     const [claims, setClaims] = useState(null);
 
@@ -42,27 +42,72 @@ export const AuthProvider = ({ children }) => {
         return claims && !!claims.super_admin;
     }
 
-    return (<AuthContext.Provider value={{ isLoggedIn, isSuperAdmin }}> { children}</ AuthContext.Provider>)
+    const unsetHTTPAuthHeader = () => {
+        delete http.defaults.headers.Authorization;
+    }
+
+    const setHTTPAuthHeader = (token) => {
+        http.defaults.headers.Authorization = `Bearer ${token}`;
+    }
+
+    const handleLoginSuccess = (data) => {
+        setClaims(data.claims);
+        setHTTPAuthHeader(data.token);
+    }
+
+    const login = async (credentials) => {
+        try {
+
+            let response = await http.post(loginApiEndpoint, credentials);
+            let data = response.data;
+            handleLoginSuccess(data);
+            return {
+                success: true
+            }
+
+        } catch (error) {
+
+            // TODO: Custom error info based on reason
+            console.error(error.response.data);
+            return {
+                error: 'Error authenticating user'
+            }
+
+        }
+    }
+
+    const logout = () => {
+        setClaims(null);
+        unsetHTTPAuthHeader();
+    }
+
+    return (<AuthContext.Provider value={{ login, logout, isLoggedIn, isSuperAdmin }}> { children}</ AuthContext.Provider>)
 }
+
+export default AuthProvider;
 
 /**
  * View access control
  * @param {*} Component 
  */
-export function CheckAccess(Component) {
+
+export function RestrictedAccess(Component) {
 
     const { isLoggedIn, isSuperAdmin } = useAuth();
 
-    const TakeAction = () => {
+    const TakeAction = (props) => {
+        const location = props.location;
         return (isLoggedIn()) ? <Forbidden /> : <Redirect
             to={{
                 pathname: "/login",
-                state: {}
+                state: {
+                    referer: location.pathname
+                }
             }}
         />;
     }
 
-    return () => {
-        return (isSuperAdmin()) ? <Component /> : <TakeAction />;
+    return (props) => {
+        return (isSuperAdmin()) ? <Component {...props} /> : <TakeAction {...props} />;
     };
 }
