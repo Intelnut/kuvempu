@@ -4,6 +4,7 @@ import React from 'react';
 
 import Schema from '../Schema';
 import Settings from '../Settings';
+import Dashboard from '../Dashboard';
 
 const Component = (props) => {
     return (
@@ -11,6 +12,7 @@ const Component = (props) => {
             <Switch>
                 <Route path="/:schema" component={Schema} />
                 <Route path="/settings" component={Settings} />
+                <Route path="/" component={Dashboard} />
             </Switch>
         </BrowserRouter>
     )
