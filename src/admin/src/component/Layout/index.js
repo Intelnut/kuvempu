@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useAuth } from '../../context/Auth';
 
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -113,6 +113,7 @@ const Component = (props) => {
 
     const classes = useStyles();
     const [open, setOpen] = useState(true);
+    const [appTitle, setAppTitle] = useState(null)
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -121,6 +122,20 @@ const Component = (props) => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    let routeMatch = useRouteMatch("/:type/:resource");
+
+    // TODO: Context + Configuration
+    // update app title on route change
+    useEffect(() => {
+        const appTitles = {
+            dashboard: 'Dashboard',
+            users: 'Manage Users',
+            site: 'Site Settings'
+        }
+        let params = (routeMatch && routeMatch.params) || { resource: 'dashboard' };
+        setAppTitle(appTitles[params.resource]);
+    }, [routeMatch]);
 
     return (
         <div className={classes.root}>
@@ -139,7 +154,7 @@ const Component = (props) => {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Dashboard
+                        {appTitle}
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -175,7 +190,7 @@ const Component = (props) => {
                             </ListItemIcon>
                             <ListItemText primary="Dashboard" />
                         </ListItem>
-                        <ListItem button component={Link} to="/manage/users">
+                        <ListItem button component={Link} to={`/manage/users`}>
                             <ListItemIcon>
                                 <PeopleIcon />
                             </ListItemIcon>
@@ -191,7 +206,7 @@ const Component = (props) => {
 
                     <div>
                         <ListSubheader inset>Settings</ListSubheader>
-                        <ListItem button component={Link} to="/manage/settings/site">
+                        <ListItem button component={Link} to="/settings/site">
                             <ListItemIcon>
                                 <SettingsIcon />
                             </ListItemIcon>

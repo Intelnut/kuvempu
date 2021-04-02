@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import React from 'react';
 
@@ -8,14 +8,12 @@ import DynaTable from '../DynaTable';
 
 const Component = (props) => {
     return (
-        <BrowserRouter>
-            <Switch>
-                <Route path="/create/:id" component={DynaForm} />
-                <Route path="/update/:id" component={DynaForm} />
-                <Route path="/preview/:id" component={DynaView} />
-                <Route path="/" component={DynaTable} />
-            </Switch>
-        </BrowserRouter>
+        <Switch>
+            <Route path="/create" component={DynaForm} />
+            <Route path="/update/:id" component={DynaForm} />
+            <Route path="/preview/:id" component={DynaView} />
+            <Route path="/" component={DynaTable} />
+        </Switch>
     )
 };
 
