@@ -122,7 +122,7 @@ const Component = (props) => {
         setOpen(false);
     };
 
-    let routeMatch = useRouteMatch("/:type/:resource");
+    let routeMatch = useRouteMatch("/:type/:name");
 
     // TODO: Context + Configuration
     // update app title on route change
@@ -133,8 +133,8 @@ const Component = (props) => {
             users: 'Manage Users',
             site: 'Site Settings'
         }
-        let params = (routeMatch && routeMatch.params) || { resource: 'dashboard' };
-        setAppTitle(appTitles[params.resource]);
+        let params = (routeMatch && routeMatch.params) || { name: 'dashboard' };
+        setAppTitle(appTitles[params.name]);
     }, [routeMatch]);
 
     return (

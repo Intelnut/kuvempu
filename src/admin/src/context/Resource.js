@@ -5,6 +5,7 @@ import React, {
 } from 'react';
 
 import http from '../services/http';
+import { useRouteMatch } from 'react-router-dom';
 
 /**
  * Resource Context
@@ -58,6 +59,12 @@ const ResourceProvider = ({ children }) => {
         setData(data);
 
     }, [resourceType, resourceId]);
+
+    // listen to the changes in route
+    let routeMatch = useRouteMatch("/:type/:name");
+    useEffect(() => {
+        console.log('RESOURCE CONTEXT routeMatch >>', routeMatch);
+    }, [routeMatch]);
 
     return (
         <ResourceContext.Provider value={{

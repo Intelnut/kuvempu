@@ -9,9 +9,9 @@ import DynaTable from '../DynaTable';
 const Component = (props) => {
     return (
         <Switch>
-            <Route path="/create" component={DynaForm} />
-            <Route path="/update/:id" component={DynaForm} />
-            <Route path="/preview/:id" component={DynaView} />
+            <Route path="/new" component={DynaForm} />
+            <Route path="/edit/:id" component={DynaForm} />
+            <Route path="/view/:id" component={DynaView} />
             <Route path="/" component={DynaTable} />
         </Switch>
     )
