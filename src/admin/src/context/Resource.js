@@ -41,7 +41,7 @@ const ResourceProvider = ({ children }) => {
 
     useEffect(() => {
         resource.type && updateSchema(resource.type);
-        !resource.type && setSchema({});
+        !resource.type && setSchema(null);
     }, [resource.type]);
 
     // fetch all resources or individual resource
@@ -67,6 +67,7 @@ const ResourceProvider = ({ children }) => {
 
     useEffect(() => {
         resource.type && updateModel(resource.type, resource.id);
+        !resource.type && setModel(null);
     }, [resource.type, resource.id]);
 
     // listen to the changes in route
@@ -75,10 +76,10 @@ const ResourceProvider = ({ children }) => {
         '/:view/:type',
     ];
 
-    const defaultRouteMatch = { params: {} };
-    const cuMatch = useRouteMatch(paths.shift());
-    const allMatch = useRouteMatch(paths.shift());
-    const finalMatch = cuMatch || allMatch || defaultRouteMatch;
+    const defaultMatch = { params: {} };
+    const matchCU = useRouteMatch(paths.shift());
+    const matchAll = useRouteMatch(paths.shift());
+    const finalMatch = matchCU || matchAll || defaultMatch;
 
     const location = useLocation();
 
@@ -95,8 +96,7 @@ const ResourceProvider = ({ children }) => {
         <ResourceContext.Provider value={{
             model,
             schema,
-            resource,
-            setResource
+            resource
         }}>{children}</ ResourceContext.Provider>
     )
 }
