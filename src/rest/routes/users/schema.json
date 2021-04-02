@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "/users/schema",
     "type": "object",
-    "title": "User Schema",
+    "title": "Manage Users",
     "description": "The user data schema",
     "definitions": {
         "location": {
@@ -66,26 +66,13 @@
         }
     },
     "properties": {
-        "first_name": {
-            "$id": "#/properties/first_name",
+        "full_name": {
+            "$id": "#/properties/full_name",
             "type": "string",
-            "title": "First Name",
-            "description": "First name of the user",
-            "minLength": 2
-        },
-        "middle_name": {
-            "$id": "#/properties/middle_name",
-            "type": "string",
-            "title": "Middle Name",
-            "description": "Middle name of the user",
-            "minLength": 1
-        },
-        "last_name": {
-            "$id": "#/properties/last_name",
-            "type": "string",
-            "title": "Last Name",
-            "description": "Last name of the user",
-            "minLength": 2
+            "title": "Full Name",
+            "description": "Full name of the user",
+            "minLength": 2,
+            "listView": true
         },
         "date_of_birth": {
             "$id": "#/properties/date_of_birth",
@@ -102,7 +89,8 @@
             "type": "string",
             "title": "Email Id",
             "description": "Email Id of the user",
-            "format": "email"
+            "format": "email",
+            "listView": true
         },
         "email_verified": {
             "$id": "#/properties/email_verified",
@@ -125,7 +113,8 @@
             "pattern": "^\\+(?:[0-9] ?){6,14}[0-9]$",
             "examples": [
                 "+918123456789"
-            ]
+            ],
+            "listView": true
         },
         "phone_verified": {
             "$id": "#/properties/phone_verified",
@@ -135,14 +124,15 @@
             "default": false
         },
         "photo_url": {
-            "$id": "#/properties/photo",
+            "$id": "#/properties/photo_url",
             "type": "string",
             "title": "The photo schema",
             "description": "Avatar or profile picture of the user",
             "format": "uri",
             "examples": [
                 "https://pic.com/james"
-            ]
+            ],
+            "image": true
         },
         "billing_address": {
             "$ref": "#address",
@@ -172,6 +162,32 @@
                     ]
                 }
             ]
+        },
+        "claims": {
+            "$id": "#/properties/claims",
+            "title": "Claims",
+            "description": "User access",
+            "type": "object",
+            "properties": {
+                "admin": {
+                    "type": "boolean"
+                },
+                "customer": {
+                    "type": "boolean"
+                },
+                "editor": {
+                    "type": "boolean"
+                },
+                "author": {
+                    "type": "boolean"
+                },
+                "contributor": {
+                    "type": "boolean"
+                },
+                "subscriber": {
+                    "type": "boolean"
+                }
+            }
         }
     }
 }
