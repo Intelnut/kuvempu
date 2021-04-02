@@ -1,3 +1,4 @@
+//TODO: Componentize
 import React, { useState, useEffect } from 'react';
 
 import { useAuth } from '../../context/Auth';
