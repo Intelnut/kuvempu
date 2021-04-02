@@ -29,7 +29,7 @@ export const useResource = () => {
 const ResourceProvider = ({ children }) => {
 
     const [resource, setResource] = useState({});
-    const [data, setData] = useState(null);
+    const [model, setModel] = useState(null);
     const [schema, setSchema] = useState(null);
 
     // fetch and update schema when resource type changes
@@ -45,7 +45,7 @@ const ResourceProvider = ({ children }) => {
     }, [resource.type]);
 
     // fetch all resources or individual resource
-    const updateData = async (resourceType, resourceId) => {
+    const updateModel = async (resourceType, resourceId) => {
         resourceId = resourceId || 'none';
 
         const requests = {
@@ -62,11 +62,11 @@ const ResourceProvider = ({ children }) => {
         const response = await request();
         const data = response.data;
 
-        setData(data);
+        setModel(data);
     }
 
     useEffect(() => {
-        resource.type && updateData(resource.type, resource.id);
+        resource.type && updateModel(resource.type, resource.id);
     }, [resource.type, resource.id]);
 
     // listen to the changes in route
@@ -93,10 +93,10 @@ const ResourceProvider = ({ children }) => {
 
     return (
         <ResourceContext.Provider value={{
-            data,
+            model,
+            schema,
             resource,
-            setResource,
-            schema
+            setResource
         }}>{children}</ ResourceContext.Provider>
     )
 }

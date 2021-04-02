@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
 import React from 'react';
 
@@ -8,11 +8,12 @@ import DynaTable from '../DynaTable';
 //import { useResource } from '../../context/Resource';
 
 const Component = (props) => {
+    let { path } = useRouteMatch();
+
     return (
         <Switch>
-            <Route path="/new" component={DynaForm} />
-            <Route path="/:id" component={DynaForm} />
-            <Route path="/" component={DynaTable} />
+            <Route exact path={`${path}/`} component={DynaTable} />
+            <Route path={`${path}/:id`} component={DynaForm} />
         </Switch>
     )
 };

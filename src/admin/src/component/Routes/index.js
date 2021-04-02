@@ -10,8 +10,8 @@ const Component = (props) => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/login" component={Login} />
-                <Route path="/" component={RestrictedAccess(Resource)} />
+                <Route path='/' component={RestrictedAccess(Resource)} />
+                <Route path='/login' component={Login} />
             </Switch>
         </BrowserRouter >
     )
