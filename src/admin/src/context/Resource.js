@@ -1,11 +1,12 @@
 import React, {
     createContext,
     useContext,
-    useState
+    useState,
+    useEffect
 } from 'react';
 
 import http from '../services/http';
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, useLocation } from 'react-router-dom';
 
 /**
  * Resource Context
@@ -27,53 +28,75 @@ export const useResource = () => {
  */
 const ResourceProvider = ({ children }) => {
 
-    const [resourceType, setResourceType] = useState(null);
-    const [resourceId, setResourceId] = useState(null);
+    const [resource, setResource] = useState({});
     const [data, setData] = useState(null);
     const [schema, setSchema] = useState(null);
 
-    // fetch schema when resource type changes
-    useEffect(() => {
-        const response = await http.get(`${resource}/schema`);
+    // fetch and update schema when resource type changes
+    const updateSchema = async (resourceType) => {
+        const response = await http.get(`${resourceType}/schema`);
         const schema = response.data;
-        setSchema(schema);
-    }, [resourceType]);
+        setSchema({ ...schema });
+    }
+
+    useEffect(() => {
+        resource.type && updateSchema(resource.type);
+        !resource.type && setSchema({});
+    }, [resource.type]);
 
     // fetch all resources or individual resource
-    useEffect(() => {
+    const updateData = async (resourceType, resourceId) => {
+        resourceId = resourceId || 'none';
 
         const requests = {
-            async all() {
-                return await http.get(`${resource}`);
+            async none() {
+                return await http.get(`${resourceType}`);
             },
 
-            async single() {
-                return http.get(`${resource}/${resourceId}`);
+            async specified() {
+                return http.get(`${resourceType}/${resourceId}`);
             }
         }
 
-        const request = requests[resourceId] || requests['single'];
+        const request = requests[resourceId] || requests['specified'];
         const response = await request();
         const data = response.data;
 
         setData(data);
+    }
 
-    }, [resourceType, resourceId]);
+    useEffect(() => {
+        resource.type && updateData(resource.type, resource.id);
+    }, [resource.type, resource.id]);
 
     // listen to the changes in route
-    let routeMatch = useRouteMatch("/:type/:name");
-    useEffect(() => {
-        console.log('RESOURCE CONTEXT routeMatch >>', routeMatch);
-    }, [routeMatch]);
+    const paths = [
+        '/:view/:type/:id',
+        '/:view/:type',
+    ];
+
+    const defaultRouteMatch = { params: {} };
+    const cuMatch = useRouteMatch(paths.shift());
+    const allMatch = useRouteMatch(paths.shift());
+    const finalMatch = cuMatch || allMatch || defaultRouteMatch;
+
+    const location = useLocation();
+
+    const onPathChange = () => {
+        const params = finalMatch.params;
+        const type = params.type;
+        const id = !(['new', 'update'].includes(params.id)) && params.id;
+        setResource({ type, id });
+    }
+
+    useEffect(onPathChange, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <ResourceContext.Provider value={{
             data,
-            resourceType,
-            resourceId,
-            schema,
-            setResourceType,
-            setResourceId
+            resource,
+            setResource,
+            schema
         }}>{children}</ ResourceContext.Provider>
     )
 }

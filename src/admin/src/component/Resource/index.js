@@ -14,8 +14,8 @@ const Component = (props) => {
         <ResourceProvider>
             <Layout>
                 <Switch>
-                    <Route path={`/settings`} component={Settings} />
-                    <Route path={`/manage/:schema`} component={Manage} />
+                    <Route path={`/settings/:resourceType`} component={Settings} />
+                    <Route path={`/manage/:resourceType`} component={Manage} />
                     <Route path={`/`} component={Dashboard} />
                 </Switch>
             </Layout>

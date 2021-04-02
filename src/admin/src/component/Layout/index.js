@@ -122,7 +122,8 @@ const Component = (props) => {
         setOpen(false);
     };
 
-    let routeMatch = useRouteMatch("/:type/:name");
+    let manageMatch = useRouteMatch("/manage/:name");
+    let settingsMatch = useRouteMatch("/settings/:name/update");
 
     // TODO: Context + Configuration
     // update app title on route change
@@ -133,9 +134,10 @@ const Component = (props) => {
             users: 'Manage Users',
             site: 'Site Settings'
         }
-        let params = (routeMatch && routeMatch.params) || { name: 'dashboard' };
+        let match = manageMatch || settingsMatch;
+        let params = (match && match.params) || { name: 'dashboard' };
         setAppTitle(appTitles[params.name]);
-    }, [routeMatch]);
+    }, [manageMatch, settingsMatch]);
 
     return (
         <div className={classes.root}>
@@ -206,7 +208,7 @@ const Component = (props) => {
 
                     <div>
                         <ListSubheader inset>Settings</ListSubheader>
-                        <ListItem button component={Link} to="/settings/site">
+                        <ListItem button component={Link} to="/settings/site/update">
                             <ListItemIcon>
                                 <SettingsIcon />
                             </ListItemIcon>
