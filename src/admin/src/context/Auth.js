@@ -96,13 +96,9 @@ export function RestrictedAccess(Component) {
     const { isLoggedIn, isSuperAdmin } = useAuth();
 
     const TakeAction = (props) => {
-        const location = props.location;
         return (isLoggedIn()) ? <Forbidden /> : <Redirect
             to={{
-                pathname: "/login",
-                state: {
-                    referer: location.pathname
-                }
+                pathname: "/login"
             }}
         />;
     }
