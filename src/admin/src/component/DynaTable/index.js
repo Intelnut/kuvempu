@@ -2,17 +2,35 @@ import React, { useState, useEffect } from 'react';
 
 import { useResource } from '../../context/Resource';
 
-import { DataGrid } from '@material-ui/data-grid';
+import { makeStyles } from '@material-ui/core/styles';
 
-import { pickBy, values } from 'lodash';
+import AddIcon from '@material-ui/icons/Add';
+import Button from '@material-ui/core/Button';
+import { DataGrid } from '@material-ui/data-grid';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+
+import { Link } from 'react-router-dom';
+
+import { pickBy } from 'lodash';
+
+const useStyles = makeStyles((theme) => ({
+    button: {
+        margin: theme.spacing(1),
+    },
+}));
 
 const Component = (props) => {
 
+    const classes = useStyles();
     const [loading, setLoading] = useState(true);
     const [columns, setColumns] = useState([]);
     const [rows, setRows] = useState([]);
+    const [selected, setSelected] = useState(null);
 
     const { schema, model, resource } = useResource();
+
+
 
     useEffect(() => {
 
@@ -20,7 +38,7 @@ const Component = (props) => {
 
             // get columns to render
             let allowed = pickBy(schema.properties, (value, key) => value.listView);
-            let columns = Object.keys(_columns).map((key, i) => {
+            let columns = Object.keys(allowed).map((key, i) => {
                 let column = {};
                 let value = allowed[key];
                 column.field = key;
@@ -54,10 +72,57 @@ const Component = (props) => {
         }
     }, [schema, model]);
 
+    const handleRowClick = (e) => {
+        setSelected(e.id);
+    }
+
     return (
-        <div style={{ height: 600 }}>
-            <DataGrid loading={loading} rows={rows} columns={columns} pageSize={20} />
-        </div>
+        <div>
+            <div>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<AddIcon />}
+                    component={Link}
+                    to={`/manage/${resource.type}/new`}
+                    disableElevation
+                >
+                    New
+                </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<EditIcon />}
+                    disableElevation
+                    component={Link}
+                    to={`/manage/${resource.type}/${selected}`}
+                    disabled={!!!selected}
+                >
+                    Edit
+                </Button>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}
+                    disableElevation
+                    disabled={!!!selected}
+                >
+                    Delete
+                </Button>
+            </div>
+            <div style={{ height: 600 }}>
+                <DataGrid
+                    loading={loading}
+                    rows={rows}
+                    columns={columns}
+                    pageSize={20}
+                    onRowClick={handleRowClick}
+                />
+            </div>
+        </div >
     )
 };
 
