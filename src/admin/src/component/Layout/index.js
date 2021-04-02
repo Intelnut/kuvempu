@@ -1,8 +1,6 @@
 //TODO: Componentize
 import React, { useState, useEffect } from 'react';
 
-import { useAuth } from '../../context/Auth';
-
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import clsx from 'clsx';
