@@ -72,6 +72,7 @@
             "title": "Full Name",
             "description": "Full name of the user",
             "minLength": 2,
+            "weight": 1,
             "listView": true
         },
         "date_of_birth": {
@@ -82,7 +83,8 @@
             "format": "date",
             "examples": [
                 "2000-01-31"
-            ]
+            ],
+            "weight": 2
         },
         "email_id": {
             "$id": "#/properties/email_id",
@@ -90,14 +92,16 @@
             "title": "Email Id",
             "description": "Email Id of the user",
             "format": "email",
-            "listView": true
+            "listView": true,
+            "weight": 3
         },
         "email_verified": {
             "$id": "#/properties/email_verified",
             "type": "boolean",
             "title": "Email Verified",
             "description": "Check if user email is verified",
-            "default": false
+            "default": false,
+            "weight": 4
         },
         "password": {
             "$id": "#/properties/password",
@@ -114,14 +118,16 @@
             "examples": [
                 "+918123456789"
             ],
-            "listView": true
+            "listView": true,
+            "weight": 5
         },
         "phone_verified": {
             "$id": "#/properties/phone_verified",
             "type": "boolean",
             "title": "Phone Number Verified",
             "description": "Check if user phone number is verified",
-            "default": false
+            "default": false,
+            "weight": 6
         },
         "photo_url": {
             "$id": "#/properties/photo_url",
@@ -132,13 +138,15 @@
             "examples": [
                 "https://pic.com/james"
             ],
-            "image": true
+            "image": true,
+            "weight": 7
         },
         "billing_address": {
             "$ref": "#address",
             "$id": "#/properties/billing_address",
             "title": "Billing Address",
-            "description": "Billing address of the user"
+            "description": "Billing address of the user",
+            "weight": 8
         },
         "shipping_address": {
             "$id": "#/properties/shipping_address",
@@ -161,7 +169,8 @@
                         "type"
                     ]
                 }
-            ]
+            ],
+            "weight": 9
         },
         "claims": {
             "$id": "#/properties/claims",
@@ -187,7 +196,8 @@
                 "subscriber": {
                     "type": "boolean"
                 }
-            }
+            },
+            "weight": 10
         }
     }
 }
