@@ -66,13 +66,25 @@
         }
     },
     "properties": {
-        "full_name": {
-            "$id": "#/properties/full_name",
+        "first_name": {
+            "$id": "#/properties/first_name",
             "type": "string",
-            "title": "Full Name",
-            "description": "Full name of the user",
+            "title": "First Name",
             "minLength": 2,
             "weight": 1,
+            "listView": true
+        },
+        "middle_name": {
+            "$id": "#/properties/middle_name",
+            "type": "string",
+            "title": "Middle Name",
+            "weight": 2
+        },
+        "last_name": {
+            "$id": "#/properties/last_name",
+            "type": "string",
+            "title": "Last Name",
+            "weight": 3,
             "listView": true
         },
         "date_of_birth": {
@@ -84,7 +96,8 @@
             "examples": [
                 "2000-01-31"
             ],
-            "weight": 2
+            "listView": true,
+            "weight": 4
         },
         "email_id": {
             "$id": "#/properties/email_id",
@@ -93,7 +106,7 @@
             "description": "Email Id of the user",
             "format": "email",
             "listView": true,
-            "weight": 3
+            "weight": 5
         },
         "email_verified": {
             "$id": "#/properties/email_verified",
@@ -101,7 +114,7 @@
             "title": "Email Verified",
             "description": "Check if user email is verified",
             "default": false,
-            "weight": 4
+            "weight": 6
         },
         "password": {
             "$id": "#/properties/password",
@@ -119,7 +132,7 @@
                 "+918123456789"
             ],
             "listView": true,
-            "weight": 5
+            "weight": 7
         },
         "phone_verified": {
             "$id": "#/properties/phone_verified",
@@ -127,7 +140,7 @@
             "title": "Phone Number Verified",
             "description": "Check if user phone number is verified",
             "default": false,
-            "weight": 6
+            "weight": 8
         },
         "photo_url": {
             "$id": "#/properties/photo_url",
@@ -139,14 +152,14 @@
                 "https://pic.com/james"
             ],
             "image": true,
-            "weight": 7
+            "weight": 9
         },
         "billing_address": {
             "$ref": "#address",
             "$id": "#/properties/billing_address",
             "title": "Billing Address",
             "description": "Billing address of the user",
-            "weight": 8
+            "weight": 10
         },
         "shipping_address": {
             "$id": "#/properties/shipping_address",
@@ -170,7 +183,7 @@
                     ]
                 }
             ],
-            "weight": 9
+            "weight": 11
         },
         "claims": {
             "$id": "#/properties/claims",
@@ -197,7 +210,7 @@
                     "type": "boolean"
                 }
             },
-            "weight": 10
+            "weight": 12
         }
     }
 }
