@@ -78,7 +78,7 @@ const Component = (props) => {
             setError(response.error);
         } else {
             const { history } = props;
-            history.push(history.location.state.referrer || '/');
+            history.push('/'); //TODO: Referrer
         }
     }
 

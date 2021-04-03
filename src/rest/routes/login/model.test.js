@@ -26,6 +26,9 @@ describe('create', () => {
                         user: {
                             getIdToken: () => {
                                 return 'ABCD'
+                            },
+                            getIdTokenResult: () => {
+                                return {}
                             }
                         }
                     })

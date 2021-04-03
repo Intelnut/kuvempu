@@ -2,90 +2,29 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "/users/schema",
     "type": "object",
-    "title": "User Schema",
+    "title": "Manage Users",
     "description": "The user data schema",
-    "definitions": {
-        "location": {
-            "$id": "#location",
-            "title": "Longitude and Latitude",
-            "description": "A geographical coordinate",
-            "required": [
-                "latitude",
-                "longitude"
-            ],
-            "type": "object",
-            "properties": {
-                "latitude": {
-                    "type": "number",
-                    "minimum": -90,
-                    "maximum": 90
-                },
-                "longitude": {
-                    "type": "number",
-                    "minimum": -180,
-                    "maximum": 180
-                }
-            }
-        },
-        "address": {
-            "$id": "#address",
-            "type": "object",
-            "title": "Address",
-            "description": "Address",
-            "properties": {
-                "lines": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "country": {
-                    "type": "string"
-                },
-                "city": {
-                    "type": "string"
-                },
-                "state": {
-                    "type": "string"
-                },
-                "code": {
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Coordinates of the address",
-                    "$ref": "#location"
-                }
-            },
-            "required": [
-                "lines",
-                "city",
-                "state",
-                "code",
-                "country"
-            ]
-        }
-    },
     "properties": {
         "first_name": {
             "$id": "#/properties/first_name",
             "type": "string",
             "title": "First Name",
-            "description": "First name of the user",
-            "minLength": 2
+            "minLength": 2,
+            "weight": 1,
+            "listview": true
         },
         "middle_name": {
             "$id": "#/properties/middle_name",
             "type": "string",
             "title": "Middle Name",
-            "description": "Middle name of the user",
-            "minLength": 1
+            "weight": 2
         },
         "last_name": {
             "$id": "#/properties/last_name",
             "type": "string",
             "title": "Last Name",
-            "description": "Last name of the user",
-            "minLength": 2
+            "weight": 3,
+            "listview": true
         },
         "date_of_birth": {
             "$id": "#/properties/date_of_birth",
@@ -95,21 +34,26 @@
             "format": "date",
             "examples": [
                 "2000-01-31"
-            ]
+            ],
+            "listview": true,
+            "weight": 4
         },
         "email_id": {
             "$id": "#/properties/email_id",
             "type": "string",
             "title": "Email Id",
             "description": "Email Id of the user",
-            "format": "email"
+            "format": "email",
+            "listview": true,
+            "weight": 5
         },
         "email_verified": {
             "$id": "#/properties/email_verified",
             "type": "boolean",
             "title": "Email Verified",
-            "description": "Check if user email is verified",
-            "default": false
+            "description": "Is the email if of the user verified?",
+            "default": false,
+            "weight": 6
         },
         "password": {
             "$id": "#/properties/password",
@@ -125,53 +69,56 @@
             "pattern": "^\\+(?:[0-9] ?){6,14}[0-9]$",
             "examples": [
                 "+918123456789"
-            ]
-        },
-        "phone_verified": {
-            "$id": "#/properties/phone_verified",
-            "type": "boolean",
-            "title": "Phone Number Verified",
-            "description": "Check if user phone number is verified",
-            "default": false
+            ],
+            "listview": true,
+            "weight": 7
         },
         "photo_url": {
-            "$id": "#/properties/photo",
+            "$id": "#/properties/photo_url",
             "type": "string",
-            "title": "The photo schema",
+            "title": "Profile Picture",
             "description": "Avatar or profile picture of the user",
             "format": "uri",
             "examples": [
                 "https://pic.com/james"
-            ]
+            ],
+            "media": "image",
+            "weight": 9
         },
-        "billing_address": {
-            "$ref": "#address",
-            "$id": "#/properties/billing_address",
-            "title": "Billing Address",
-            "description": "Billing address of the user"
-        },
-        "shipping_address": {
-            "$id": "#/properties/shipping_address",
-            "title": "Shipping Address",
-            "description": "Shipping address of the user",
-            "allOf": [
-                {
-                    "$ref": "#address"
+        "claims": {
+            "$id": "#/properties/claims",
+            "title": "Claims",
+            "description": "User access",
+            "type": "object",
+            "properties": {
+                "admin": {
+                    "type": "boolean"
                 },
-                {
-                    "properties": {
-                        "type": {
-                            "enum": [
-                                "residential",
-                                "business"
-                            ]
-                        }
-                    },
-                    "required": [
-                        "type"
-                    ]
+                "customer": {
+                    "type": "boolean"
+                },
+                "editor": {
+                    "type": "boolean"
+                },
+                "author": {
+                    "type": "boolean"
+                },
+                "contributor": {
+                    "type": "boolean"
+                },
+                "subscriber": {
+                    "type": "boolean"
                 }
-            ]
+            },
+            "weight": 12
+        },
+        "disabled": {
+            "$id": "#/properties/disabled",
+            "type": "boolean",
+            "title": "Disabled",
+            "description": "Is this user disabled?",
+            "default": false,
+            "weight": 13
         }
     }
 }

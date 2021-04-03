@@ -25,7 +25,7 @@ describe('create', () => {
     });
 
     it('should create a new user', async () => {
-        await User.create({ email_id: 'valid@email.com', password: 'test123' }, mockDone);
+        await User.create({ email_id: 'valid@email.com', password: 'test123', phone_number: '+123', email_verified: false }, mockDone);
         expect(mockDone.mock.calls.length).toBe(1);
         expect(mockDone.mock.calls[0][0]).toBe(null);
         expect(auth.createUser.mock.calls.length).toBe(1);
@@ -33,12 +33,16 @@ describe('create', () => {
             email: 'valid@email.com',
             password: 'test123',
             photoURL: 'https://avatars.dicebear.com/api/initials/valid.svg',
-            emailVerified: true
+            emailVerified: false,
+            phoneNumber: '+123',
+            disabled: false
         });
         expect(mockDone.mock.calls[0][1]).toEqual({
             email_id: 'valid@email.com',
+            email_verified: false,
             id: '123456',
             photo_url: 'https://avatars.dicebear.com/api/initials/valid.svg',
+            phone_number: '+123',
         });
     });
 
@@ -151,15 +155,26 @@ describe('update', () => {
                 uid: data.email.split('@')[0]
             }
         });
+
         await User.create({ email_id: 'valid@email.com', password: 'test123', first_name: "Valid" }, () => { });
     });
 
     afterAll(async () => {
         auth.createUser.mockRestore();
+
         await User.remove({ id: 'valid' });
     });
 
+    beforeEach(() => {
+        auth.updateUser = jest.fn(() => {
+            return {
+                uid: '123456'
+            }
+        });
+    });
+
     afterEach(() => {
+        auth.updateUser.mockRestore();
         mockDone.mockRestore();
     });
 
@@ -171,25 +186,19 @@ describe('update', () => {
     });
 
     it('should update user document', async () => {
-        await User.update({ id: 'valid', first_name: 'Changed' }, mockDone);
+        await User.update({ id: 'valid', first_name: 'Changed', email_id: 'changed@email.com' }, mockDone);
         expect(mockDone.mock.calls.length).toBe(1);
         expect(mockDone.mock.calls[0][0]).toBe(null);
+        expect(auth.updateUser.mock.calls[0][0]).toBe('valid');
+        expect(auth.updateUser.mock.calls[0][1]).toEqual({
+            disabled: false,
+            email: "changed@email.com"
+        });
         expect(mockDone.mock.calls[0][1]).toEqual(
-            expect.objectContaining({
-                first_name: 'Changed',
-                email_id: 'valid@email.com'
-            })
-        );
-    });
 
-    it('TEMP: should not update user email', async () => {
-        await User.update({ id: 'valid', email_id: 'changed@email.com' }, mockDone);
-        expect(mockDone.mock.calls.length).toBe(1);
-        expect(mockDone.mock.calls[0][0]).toBe(null);
-        expect(mockDone.mock.calls[0][1]).toEqual(
             expect.objectContaining({
                 first_name: 'Changed',
-                email_id: 'valid@email.com'
+                email_id: 'changed@email.com'
             })
         );
     });

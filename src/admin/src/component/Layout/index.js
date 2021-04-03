@@ -1,6 +1,5 @@
+//TODO: Componentize
 import React, { useState } from 'react';
-
-import { useAuth } from '../../context/Auth';
 
 import { Link } from 'react-router-dom';
 
@@ -27,6 +26,8 @@ import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+
+import { useResource } from '../../context/Resource';
 
 const drawerWidth = 240;
 
@@ -122,6 +123,9 @@ const Component = (props) => {
         setOpen(false);
     };
 
+
+    const { schema } = useResource();
+
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -139,7 +143,7 @@ const Component = (props) => {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Dashboard
+                        {(schema && schema.title) || 'Dashboard'}
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -175,7 +179,7 @@ const Component = (props) => {
                             </ListItemIcon>
                             <ListItemText primary="Dashboard" />
                         </ListItem>
-                        <ListItem button component={Link} to="/manage/users">
+                        <ListItem button component={Link} to={`/manage/users`}>
                             <ListItemIcon>
                                 <PeopleIcon />
                             </ListItemIcon>
@@ -191,7 +195,7 @@ const Component = (props) => {
 
                     <div>
                         <ListSubheader inset>Settings</ListSubheader>
-                        <ListItem button component={Link} to="/manage/settings/site">
+                        <ListItem button component={Link} to="/settings/site/update">
                             <ListItemIcon>
                                 <SettingsIcon />
                             </ListItemIcon>
