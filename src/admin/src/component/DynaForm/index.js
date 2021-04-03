@@ -23,6 +23,7 @@ const Component = (props) => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [formData, setFormData] = useState(null);
     const [schemaBridge, setSchemaBridge] = useState(null);
     const { schema, model, save } = useResource();
 
@@ -32,6 +33,7 @@ const Component = (props) => {
             const schemaValidator = createValidator(schema);
             const bridge = new JSONSchemaBridge(schema, schemaValidator);
             setSchemaBridge(bridge);
+            !Array.isArray(model) && setFormData({ ...model });
             setLoading(false);
         }
 
@@ -39,6 +41,7 @@ const Component = (props) => {
 
         return () => {
             setSchemaBridge(null);
+            setFormData(null);
             setLoading(true);
         }
     }, [schema, model]);
@@ -57,7 +60,7 @@ const Component = (props) => {
             {success && <Alert variant='filled' severity='success'>{success}</Alert>}
             {!loading && <AutoForm
                 schema={schemaBridge}
-                model={model}
+                model={formData || {}}
                 onSubmit={input => handleSubmit(input)}
             />}
         </div>

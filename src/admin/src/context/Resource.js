@@ -70,6 +70,23 @@ const ResourceProvider = ({ children }) => {
         }
     }
 
+    const remove = async (id) => {
+        try {
+            let respone = await http.delete(`${resource.type}/${id}`);
+            return {
+                data: respone.data,
+                success: true
+            }
+        } catch (error) {
+            const errMsg = `Error deleting ${resource.type} data`
+            console.error(error.response.data);
+            console.error(errMsg);
+            return {
+                error: errMsg
+            }
+        }
+    }
+
     // fetch all resources or individual resource
     const updateModel = async (resourceType, resourceId) => {
         resourceId = resourceId || 'none';
@@ -127,7 +144,8 @@ const ResourceProvider = ({ children }) => {
             model,
             schema,
             resource,
-            save
+            save,
+            remove
         }}>{children}</ ResourceContext.Provider>
     )
 }
