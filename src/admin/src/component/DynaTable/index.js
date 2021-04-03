@@ -37,7 +37,7 @@ const Component = (props) => {
         const setupTableProps = () => {
 
             // get columns to render
-            let allowed = pickBy(schema.properties, (value, key) => value.listView);
+            let allowed = pickBy(schema.properties, (value, key) => value.listview);
             let columns = Object.keys(allowed).map((key, i) => {
                 let column = {};
                 let value = allowed[key];
