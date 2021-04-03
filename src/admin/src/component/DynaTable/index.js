@@ -81,7 +81,6 @@ const Component = (props) => {
             <div>
                 <Button
                     variant="contained"
-                    color="primary"
                     className={classes.button}
                     startIcon={<AddIcon />}
                     component={Link}
@@ -92,7 +91,6 @@ const Component = (props) => {
                 </Button>
                 <Button
                     variant="contained"
-                    color="primary"
                     className={classes.button}
                     startIcon={<EditIcon />}
                     disableElevation
