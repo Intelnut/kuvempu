@@ -20,7 +20,6 @@ const createValidator = (schema) => {
 const Component = (props) => {
     const [loading, setLoading] = useState(true);
     const [schemaBridge, setSchemaBridge] = useState(null);
-    const [formData, setFormData] = useState({});
     const { schema, model, save } = useResource();
 
     useEffect(() => {
@@ -49,7 +48,7 @@ const Component = (props) => {
         <div>
             {!loading && <AutoForm
                 schema={schemaBridge}
-                model={formData}
+                model={model}
                 onSubmit={input => handleSubmit(input)}
             />}
         </div>

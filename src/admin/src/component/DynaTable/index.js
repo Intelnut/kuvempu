@@ -63,7 +63,7 @@ const Component = (props) => {
             setLoading(false);
         }
 
-        schema && model && setupTableProps();
+        schema && Array.isArray(model) && setupTableProps();
 
         return () => {
             setLoading(true);

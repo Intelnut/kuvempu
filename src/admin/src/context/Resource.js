@@ -42,6 +42,10 @@ const ResourceProvider = ({ children }) => {
     useEffect(() => {
         resource.type && updateSchema(resource.type);
         !resource.type && setSchema(null);
+
+        return () => {
+            setSchema(null);
+        }
     }, [resource.type]);
 
     const save = async (model) => {
@@ -90,6 +94,10 @@ const ResourceProvider = ({ children }) => {
     useEffect(() => {
         resource.type && updateModel(resource.type, resource.id);
         !resource.type && setModel(null);
+
+        return () => {
+            setModel(null);
+        }
     }, [resource.type, resource.id]);
 
     // listen to the changes in route
