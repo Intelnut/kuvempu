@@ -21,7 +21,7 @@ const Component = (props) => {
     const [loading, setLoading] = useState(true);
     const [schemaBridge, setSchemaBridge] = useState(null);
     const [formData, setFormData] = useState({});
-    const { schema, model, resource } = useResource();
+    const { schema, model, save } = useResource();
 
     useEffect(() => {
 
@@ -40,12 +40,17 @@ const Component = (props) => {
         }
     }, [schema, model]);
 
+    const handleSubmit = async (input) => {
+        let response = await save(input);
+        // TODO: Handle success/error
+    }
+
     return (
         <div>
             {!loading && <AutoForm
                 schema={schemaBridge}
                 model={formData}
-                onSubmit={input => console.log(JSON.stringify(input, null, 2))}
+                onSubmit={input => handleSubmit(input)}
             />}
         </div>
     )

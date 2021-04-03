@@ -44,6 +44,28 @@ const ResourceProvider = ({ children }) => {
         !resource.type && setSchema(null);
     }, [resource.type]);
 
+    const save = async (model) => {
+        let method = (resource.id) ? 'put' : 'post';
+        let endpoint = {
+            put: `${resource.type}/${resource.id}`,
+            post: `${resource.type}`
+        }
+        try {
+            let respone = await http[method](endpoint[method], model);
+            return {
+                data: respone.data,
+                success: true
+            }
+        } catch (error) {
+            const errMsg = `Error ${method}ing ${resource.type} data`
+            console.error(error.response.data);
+            console.error(errMsg);
+            return {
+                error: errMsg
+            }
+        }
+    }
+
     // fetch all resources or individual resource
     const updateModel = async (resourceType, resourceId) => {
         resourceId = resourceId || 'none';
@@ -96,7 +118,8 @@ const ResourceProvider = ({ children }) => {
         <ResourceContext.Provider value={{
             model,
             schema,
-            resource
+            resource,
+            save
         }}>{children}</ ResourceContext.Provider>
     )
 }
