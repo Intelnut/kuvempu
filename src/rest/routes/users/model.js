@@ -20,9 +20,11 @@ const create = async (data, done) => {
             email: data.email_id,
             password: data.password,
             photoURL: data.photo_url,
-            emailVerified: true
+            emailVerified: data.email_verified,
+            phoneNumber: data.phone_number,
+            disabled: !!data.disabled
         };
-        //console.log('auth', auth)
+
         let newUser = await auth.createUser(userAuthData);
 
         // assign id to the data object for document creation
@@ -130,12 +132,19 @@ const update = async (data, done) => {
             return error;
         }
 
-        // TODO: incomplete (consumer users) (on updating email id create new auth and user document)
-        // TODO: handle similar scenario for phone number update, if auth method is phone
-        // TODO: same applies to remove
-        if (data.email_id) {
-            delete data.email_id;
-        }
+        // create new user with the data provided
+        let userAuthData = {
+            email: data.email_id,
+            password: data.password,
+            photoURL: data.photo_url,
+            emailVerified: data.email_verified,
+            phoneNumber: data.phone_number,
+            disabled: !!data.disabled
+        };
+
+        await auth.updateUser(data.id, userAuthData);
+
+        data.password && delete data.password;
 
         // merge data with existing document
         await userDocumentRef.set(data, { merge: true });
@@ -145,7 +154,7 @@ const update = async (data, done) => {
 
         // set claims
         if (data.claims) {
-            await auth.setCustomUserClaims(data.id, { [data.name]: data.value });
+            await auth.setCustomUserClaims(data.id, data.claims);
         }
 
         // successful operation

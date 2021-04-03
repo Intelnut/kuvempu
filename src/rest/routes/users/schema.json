@@ -73,14 +73,6 @@
             "listview": true,
             "weight": 7
         },
-        "phone_verified": {
-            "$id": "#/properties/phone_verified",
-            "type": "boolean",
-            "title": "Phone Number Verified",
-            "description": "Is the phone number of user verified?",
-            "default": false,
-            "weight": 8
-        },
         "photo_url": {
             "$id": "#/properties/photo_url",
             "type": "string",
@@ -119,6 +111,14 @@
                 }
             },
             "weight": 12
+        },
+        "disabled": {
+            "$id": "#/properties/disabled",
+            "type": "boolean",
+            "title": "Disabled",
+            "description": "Is this user disabled?",
+            "default": false,
+            "weight": 13
         }
     }
 }
