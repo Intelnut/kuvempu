@@ -59,7 +59,6 @@
             "$id": "#/properties/password",
             "type": "string",
             "title": "Password",
-            "format": "password",
             "description": "Password to authenticate the user, in case of user creation"
         },
         "phone_number": {
