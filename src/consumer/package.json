@@ -31,7 +31,7 @@
     "node": "12"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev ./src",
     "build": "next build ./src",
     "postbuild": "next-sitemap"
   }
