@@ -25,7 +25,12 @@ describe('create', () => {
         database.doc = jest.fn((docPath) => {
             whichDocument = docPath;
             return {
-                set: jest.fn((data, option) => { whatWasSet = { data, option } })
+                set: jest.fn((data, option) => { whatWasSet = { data, option } }),
+                get: () => {
+                    return {
+                        exists: false
+                    }
+                }
             }
         });
 

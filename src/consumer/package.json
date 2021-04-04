@@ -33,6 +33,7 @@
   "scripts": {
     "dev": "next dev ./src",
     "build": "next build ./src",
-    "postbuild": "next-sitemap"
+    "postbuild": "next-sitemap",
+    "test": "echo \"ToDo Consumer Tests\""
   }
 }

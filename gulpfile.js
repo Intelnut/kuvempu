@@ -84,10 +84,24 @@ exports['dev:rest'] = restDev;
 
 /**
  * `gulp test:rest`
- * start a admin local development server
+ * run rest tests
  */
-const restTest = runTest('./src/rest');
-exports['test:rest'] = restTest;
+const restRestTest = runTest('./src/rest');
+exports['test:rest'] = restRestTest;
+
+/**
+ * `gulp test:admin`
+ * run admin tests
+ */
+const restAdminTest = runTest('./src/admin');
+exports['test:admin'] = restAdminTest;
+
+/**
+ * `gulp test:consumer`
+ * run consumer tests
+ */
+const restConsumerTest = runTest('./src/consumer');
+exports['test:consumer'] = restConsumerTest;
 
 /**
  *
