@@ -126,7 +126,6 @@ const Component = (props) => {
 
     const handleLogout = () => {
         logout();
-        console.log(props);
         const { history } = props;
         history.push('/'); //TODO: Referrer
     };
