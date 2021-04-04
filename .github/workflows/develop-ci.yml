@@ -1,8 +1,9 @@
 name: Develop CI
 
 on:
+  pull_request:
   push:
-    branches: [ CI-Develop-Branch-#25 ]
+    branches: [ Develop ]
 
 jobs:
   CI:
