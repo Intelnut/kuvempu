@@ -12,7 +12,7 @@ const templatesPath = './scripts/templates';
 const setupNextSiteMapConfig = async (done) => {
     try {
         await gulp.src(`${templatesPath}/next-sitemap.js`)
-            .pipe(replace('/*CONSUMER_URL*/', commonEnvironmentConfig.CONSUMER_URL))
+            .pipe(replace('/*CONSUMER_URL*/', commonEnvironmentConfig('consumer').CONSUMER_URL))
             .pipe(gulp.dest(consumerPath));
         done();
     } catch (error) {
