@@ -53,11 +53,23 @@ jobs:
         npm ci
     - name: Setup Properties
       run: gulp setup:env
+    - name: Install REST
+      run: npm ci
+      working-directory: ./src/rest
     - name: Run REST Tests
-      run: gulp test:rest
+      run: npm run test
+      working-directory: ./src/rest
+    - name: Install ADMIN
+      run: npm ci
+      working-directory: ./src/admin
     - name: Run ADMIN Tests
-      run: gulp test:admin
+      run: npm run test
+      working-directory: ./src/admin
+    - name: Install CONSUMER
+      run: npm ci
+      working-directory: ./src/consumer
     - name: Run CONSUMER Tests
-      run: gulp test:admin
+      run: npm run test
+      working-directory: ./src/consumer
     
 
