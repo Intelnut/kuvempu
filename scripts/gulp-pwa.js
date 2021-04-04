@@ -7,9 +7,11 @@ const run = require('gulp-run-command').default;
 
 const pwaAssetGenerator = require('pwa-asset-generator');
 const consumerPublicPath = './src/consumer/src/public';
-const adminPublicPath = './src/admin/src/public';
+const adminPublicPath = './src/admin/public';
 
 const manifest = require('./templates/manifest');
+
+require('dotenv').config()
 
 const deteleAssets = (publicPath) => {
     const brandPath = `${publicPath}/brand`;
@@ -40,7 +42,7 @@ const setupManifest = (publicPath) => {
     return generateManifest;
 }
 
-const setupFavicon = (publicPath, assetPath) => {
+const setupFavicon = (publicPath, assetPath, bg) => {
     const brandPath = `${publicPath}/brand`;
     const generateFavicon = async (done) => {
         try {
@@ -48,6 +50,7 @@ const setupFavicon = (publicPath, assetPath) => {
                 assetPath,
                 `${brandPath}/favicon`,
                 {
+                    background: bg,
                     scrape: true,
                     opaque: false,
                     iconOnly: true,
@@ -64,7 +67,7 @@ const setupFavicon = (publicPath, assetPath) => {
     return generateFavicon;
 }
 
-const setupSplashScreen = (publicPath, assetPath) => {
+const setupSplashScreen = (publicPath, assetPath, bg) => {
     const brandPath = `${publicPath}/brand`;
     const generateSplashScreen = async (done) => {
         try {
@@ -72,6 +75,7 @@ const setupSplashScreen = (publicPath, assetPath) => {
                 assetPath, //TODO: env
                 `${brandPath}/splash`,
                 {
+                    background: bg,
                     scrape: true,
                     splashOnly: true,
                     portraitOnly: true,
@@ -87,16 +91,45 @@ const setupSplashScreen = (publicPath, assetPath) => {
     return generateSplashScreen;
 }
 
-const pwa = (publicPath, faviconPath, splashPath) => {
+const setupLogo = (publicPath, logoPath) => {
+    const brandPath = `${publicPath}/brand`;
+    const copyLogo = async (done) => {
+        try {
+            await gulp.src(logoPath)
+                .pipe(gulp.dest(brandPath));
+            done();
+        } catch (e) {
+
+        }
+    }
+    return copyLogo;
+}
+
+const pwa = (publicPath, faviconPath, logoPath, splashPath, splashBg, iconBg) => {
     return gulp.series(
         deteleAssets(publicPath),
         setupManifest(publicPath),
-        setupFavicon(publicPath, faviconPath),
-        setupSplashScreen(publicPath, splashPath)
+        setupFavicon(publicPath, faviconPath, iconBg),
+        setupSplashScreen(publicPath, splashPath, splashBg),
+        setupLogo(publicPath, logoPath)
     )
 }
 
 module.exports = {
-    consumerPWA: pwa(consumerPublicPath, './vector/icon.svg', './vector/logo.svg'),
-    adminPWA: pwa(adminPublicPath, './vector/icon.svg', './vector/logo.svg')
+    consumerPWA: pwa(
+        consumerPublicPath,
+        process.env.CONSUMER_BRAND_ICON_PATH,
+        process.env.CONSUMER_BRAND_LOGO_PATH,
+        process.env.CONSUMER_BRAND_SPLASH_PATH,
+        process.env.CONSUMER_BRAND_SPLASH_BACKGROUND,
+        process.env.CONSUMER_BRAND_ICON_BACKGROUND,
+    ),
+    adminPWA: pwa(
+        adminPublicPath,
+        process.env.ADMIN_BRAND_ICON_PATH,
+        process.env.ADMIN_BRAND_LOGO_PATH,
+        process.env.ADMIN_BRAND_SPLASH_PATH,
+        process.env.ADMIN_BRAND_SPLASH_BACKGROUND,
+        process.env.ADMIN_BRAND_ICON_BACKGROUND,
+    )
 };
