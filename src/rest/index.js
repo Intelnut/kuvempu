@@ -10,6 +10,10 @@ server.use('/login', loginRoute);
 
 // S
 
+// setup route
+const setupRoute = require('./routes/setup/route');
+server.use('/setup', setupRoute);
+
 // site route
 const siteRoute = require('./routes/site/route');
 server.use('/site', siteRoute);

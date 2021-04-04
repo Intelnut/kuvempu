@@ -30,20 +30,6 @@ const createUser = (req, res, next) => {
     });
 }
 
-// create new user
-const createSA = (req, res, next) => {
-    User.create({
-        email_id: serverEnv.SUPER_ADMIN_EMAIL_ID,
-        password: serverEnv.SUPER_ADMIN_PASSWORD,
-        claims: {
-            super_admin: true
-        }
-    }, (error, newUser) => {
-        if (error) return next(new ErrorHandler(500, error.message));
-        res.status(200).json({ success: true });
-    });
-}
-
 // update an existing user
 const updateUser = (req, res, next) => {
     const userId = req.params.userId;
@@ -69,6 +55,5 @@ module.exports = {
     getUser,
     createUser,
     updateUser,
-    deleteUser,
-    createSA
+    deleteUser
 }

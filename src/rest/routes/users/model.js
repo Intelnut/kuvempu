@@ -8,7 +8,6 @@ const getPlaceholderAvatar = (seed) => {
 }
 
 // handle user creation
-// TODO: user creation with phone number
 const create = async (data, done) => {
     try {
         // very unlikely to receive a photo url on user creation

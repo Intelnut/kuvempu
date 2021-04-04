@@ -9,8 +9,7 @@ const {
     getUser,
     createUser,
     updateUser,
-    deleteUser,
-    createSA
+    deleteUser
 } = require('./controller');
 
 const allowedRoles = ['super_admin', 'admin'];
@@ -18,11 +17,6 @@ const allowedRoles = ['super_admin', 'admin'];
 router.get('/schema', (req, res, next) => {
     res.status(200).json(userSchema);
 });
-
-router.get(
-    '/setup_sa',
-    createSA
-);
 
 router.get(
     '/',
