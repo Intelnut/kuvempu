@@ -40,7 +40,7 @@ jobs:
       REST_FIREBASE_CONFIG_MEASUREMENT_ID: ${{ secrets.REST_FIREBASE_CONFIG_MEASUREMENT_ID }}
       REST_RESOURCE_ID: ${{ secrets.REST_RESOURCE_ID }}
       REST_URL: ${{ secrets.REST_URL }}
-      
+
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -48,8 +48,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install
-      run: sudo npm install --global firebase-tools
-      run: npm ci
+      run: 
+        sudo npm install --global firebase-tools
+        npm ci
     - name: Setup Properties
       run: gulp setup:env
     - name: Run REST Tests
