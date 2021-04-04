@@ -33,7 +33,9 @@ const properties = (app) => {
 
         // S
         SUPER_ADMIN_EMAIL_ID: process.env.SUPER_ADMIN_EMAIL_ID,
-        SUPER_ADMIN_PASSWORD: process.env.SUPER_ADMIN_PASSWORD //TODO: Encrypt
+        SUPER_ADMIN_PASSWORD: process.env.SUPER_ADMIN_PASSWORD, //TODO: Encrypt
+        SITE_NAME: process.env.SITE_NAME,
+        SITE_DESCRIPTION: process.env.SITE_DESCRIPTION
     }
 };
 
