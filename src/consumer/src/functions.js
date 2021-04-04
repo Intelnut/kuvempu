@@ -7,7 +7,7 @@ const consumerServer = next({
     dev: isDev,
     poweredByHeader: false,
     conf: {
-        distDir: './lib',
+        distDir: './build',
     },
 });
 

@@ -5,7 +5,7 @@
 const firebase = (target) => {
     let publicFolder = {
         admin: "./build",
-        default: "./public"
+        default: "./src/public"
     }
 
     let rewrites = {

@@ -1,5 +1,5 @@
 module.exports = {
-    siteUrl: '/*CONSUMER_URL*/',
+    siteUrl: 'https://kuvempu.intelnut.com',
     generateRobotsTxt: true,
     sourceDir: './src/build', //TODO: env
     outDir: './src/public' //TODO: env

@@ -11,12 +11,7 @@ const commonEnvironmentConfig = require('./templates/common.environment');
 const serverEnvironmentConfig = require('./templates/server.environment');
 
 const setupCommonEnvironment = (app) => {
-    // TODO: Move consumer path to consumer/src
-    let envPaths = {
-        admin: `./src/${app}/src/environment`,
-        default: `./src/${app}/environment`
-    }
-    let envPath = envPaths[app] || envPaths['default'];
+    let envPath = `./src/${app}/src/environment`;
     return (done) => {
         const filePath = `${envPath}/common.environment.json`;
         const value = JSON.stringify(commonEnvironmentConfig(app), null, 2);
@@ -29,7 +24,7 @@ const setupCommonEnvironment = (app) => {
 }
 
 const setupServerEnvironment = (app) => {
-    let envPath = `./src/${app}/environment`;
+    let envPath = `./src/${app}/src/environment`;
     return (done) => {
         const filePath = `${envPath}/server.environment.json`;
         const value = JSON.stringify(serverEnvironmentConfig(app), null, 2);
