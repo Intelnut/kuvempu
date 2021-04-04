@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "firebase emulators:start --only functions",
+    "build": "echo \"Nothing to build in Rest Service\"",
     "test": "jest"
   },
   "author": "",
