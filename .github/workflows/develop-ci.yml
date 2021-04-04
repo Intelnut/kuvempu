@@ -13,8 +13,34 @@ jobs:
         node-version: [10.x, 12.x, 14.x]
 
     env: 
+      ADMIN_FIREBASE_CONFIG_APP_ID: ${{ secrets.ADMIN_FIREBASE_CONFIG_APP_ID }}
+      ADMIN_FIREBASE_CONFIG_MEASUREMENT_ID: ${{ secrets.ADMIN_FIREBASE_CONFIG_MEASUREMENT_ID }}
+      ADMIN_RESOURCE_ID: ${{ secrets.ADMIN_RESOURCE_ID }}
+      ADMIN_URL: ${{ secrets.ADMIN_URL }}
+      CONSUMER_FIREBASE_CONFIG_APP_ID: ${{ secrets.CONSUMER_FIREBASE_CONFIG_APP_ID }}
+      CONSUMER_FIREBASE_CONFIG_MEASUREMENT_ID: ${{ secrets.CONSUMER_FIREBASE_CONFIG_MEASUREMENT_ID }}
+      CONSUMER_URL: ${{ secrets.CONSUMER_URL }}
+      CONSUMER_RESOURCE_ID: ${{ secrets.CONSUMER_RESOURCE_ID }}
+      FIREBASE_CONFIG_API_KEY: ${{ secrets.FIREBASE_CONFIG_API_KEY }}
+      FIREBASE_CONFIG_APP_ID: ${{ secrets.FIREBASE_CONFIG_APP_ID }}
+      FIREBASE_CONFIG_AUTH_DOMAIN: ${{ secrets.FIREBASE_CONFIG_AUTH_DOMAIN }}
+      FIREBASE_CONFIG_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_CONFIG_MESSAGING_SENDER_ID }}
+      FIREBASE_CONFIG_MEASUREMENT_ID: ${{ secrets.FIREBASE_CONFIG_MEASUREMENT_ID }}
+      FIREBASE_CONFIG_PROJECT_ID: ${{ secrets.FIREBASE_CONFIG_PROJECT_ID }}
+      FIREBASE_CONFIG_STORAGE_BUCKET: ${{ secrets.FIREBASE_CONFIG_STORAGE_BUCKET }}
+      FIREBASE_SA_PRIVATE_KEY_ID: ${{ secrets.FIREBASE_SA_PRIVATE_KEY_ID }}
+      FIREBASE_SA_PRIVATE_KEY: ${{ secrets.FIREBASE_SA_PRIVATE_KEY }}
+      FIREBASE_SA_CLIENT_EMAIL: ${{ secrets.FIREBASE_SA_CLIENT_EMAIL }}
+      FIREBASE_SA_CLIENT_ID: ${{ secrets.FIREBASE_SA_CLIENT_ID }}
+      FIREBASE_SA_AUTH_URI: ${{ secrets.FIREBASE_SA_AUTH_URI }}
+      FIREBASE_SA_TOKEN_URI: ${{ secrets.FIREBASE_SA_TOKEN_URI }}
+      FIREBASE_SA_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.FIREBASE_SA_AUTH_PROVIDER_X509_CERT_URL }}
+      FIREBASE_SA_CLIENT_X509_CERT_URL: ${{ secrets.FIREBASE_SA_CLIENT_X509_CERT_URL }}
+      REST_FIREBASE_CONFIG_APP_ID: ${{ secrets.REST_FIREBASE_CONFIG_APP_ID }}
+      REST_FIREBASE_CONFIG_MEASUREMENT_ID: ${{ secrets.REST_FIREBASE_CONFIG_MEASUREMENT_ID }}
+      REST_RESOURCE_ID: ${{ secrets.REST_RESOURCE_ID }}
+      REST_URL: ${{ secrets.REST_URL }}
       
-
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -22,15 +48,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install
-    - run: sudo npm install --global firebase-tools
-    - run: npm ci
+      run: sudo npm install --global firebase-tools
+      run: npm ci
     - name: Setup Properties
-    - run: gulp setup:env
+      run: gulp setup:env
     - name: Run REST Tests
-    - run: gulp test:rest
+      run: gulp test:rest
     - name: Run ADMIN Tests
-    - run: gulp test:admin
+      run: gulp test:admin
     - name: Run CONSUMER Tests
-    - run: gulp test:admin
+      run: gulp test:admin
     
 
