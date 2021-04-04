@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const buildApp = require('./scripts/gulp-build');
 const devServer = require('./scripts/gulp-dev');
+const installDeps = require('./scripts/gulp-install');
 const runTest = require('./scripts/gulp-test');
 const { consumerPWA, adminPWA } = require('./scripts/gulp-pwa');
 const setupPlugins = require('./scripts/gulp-setup-plugins');
@@ -60,6 +61,13 @@ exports['pwa:admin'] = adminPWA;
  */
 
 exports['pwa'] = gulp.series(adminPWA, consumerPWA);
+
+/**
+ * `gulp install`
+ * Install dependencies 
+ */
+
+exports['install'] = installDeps;
 
 /**
  * `gulp dev:consumer`
