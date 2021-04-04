@@ -6,8 +6,8 @@ const gulp = require('gulp');
 const run = require('gulp-run-command').default;
 
 const pwaAssetGenerator = require('pwa-asset-generator');
-const consumerPublicPath = './src/consumer/public';
-const adminPublicPath = './src/admin/public';
+const consumerPublicPath = './src/consumer/src/public';
+const adminPublicPath = './src/admin/src/public';
 
 const manifest = require('./templates/manifest');
 
