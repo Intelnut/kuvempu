@@ -1,0 +1,36 @@
+name: Develop CI
+
+on:
+  push:
+    branches: [ CI-Develop-Branch-#25 ]
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+
+    env: 
+      
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install
+    - run: sudo npm install --global firebase-tools
+    - run: npm ci
+    - name: Setup Properties
+    - run: gulp setup:env
+    - name: Run REST Tests
+    - run: gulp test:rest
+    - name: Run ADMIN Tests
+    - run: gulp test:admin
+    - name: Run CONSUMER Tests
+    - run: gulp test:admin
+    
+
