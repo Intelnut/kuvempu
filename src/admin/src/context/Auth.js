@@ -38,8 +38,12 @@ const AuthProvider = ({ children }) => {
         return !!claims;
     }
 
+    //TODO: Refactor for other roles
     const isSuperAdmin = () => {
         return claims && !!claims.super_admin;
+    }
+    const isAdmin = () => {
+        return claims && !!claims.admin;
     }
 
     const unsetHTTPAuthHeader = () => {
@@ -81,7 +85,7 @@ const AuthProvider = ({ children }) => {
         unsetHTTPAuthHeader();
     }
 
-    return (<AuthContext.Provider value={{ login, logout, isLoggedIn, isSuperAdmin }}> { children}</ AuthContext.Provider>)
+    return (<AuthContext.Provider value={{ login, logout, isLoggedIn, isSuperAdmin, isAdmin }}> { children}</ AuthContext.Provider>)
 }
 
 export default AuthProvider;
@@ -93,7 +97,7 @@ export default AuthProvider;
 
 export function RestrictedAccess(Component) {
 
-    const { isLoggedIn, isSuperAdmin } = useAuth();
+    const { isLoggedIn, isSuperAdmin, isAdmin } = useAuth();
 
     const TakeAction = (props) => {
         return (isLoggedIn()) ? <Forbidden /> : <Redirect
@@ -104,6 +108,6 @@ export function RestrictedAccess(Component) {
     }
 
     return (props) => {
-        return (isSuperAdmin()) ? <Component {...props} /> : <TakeAction {...props} />;
+        return (isSuperAdmin() || isAdmin()) ? <Component {...props} /> : <TakeAction {...props} />;
     };
 }

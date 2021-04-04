@@ -1,13 +1,13 @@
 //TODO: Componentize
 import React, { useState } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 
 import AppBar from '@material-ui/core/AppBar';
-import Badge from '@material-ui/core/Badge';
+import Button from '@material-ui/core/Button';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,13 +21,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import { useResource } from '../../context/Resource';
+import { useAuth } from '../../context/Auth';
 
 const drawerWidth = 240;
 
@@ -114,6 +114,7 @@ const Component = (props) => {
 
     const classes = useStyles();
     const [open, setOpen] = useState(true);
+    const { logout } = useAuth();
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -123,6 +124,11 @@ const Component = (props) => {
         setOpen(false);
     };
 
+    const handleLogout = () => {
+        logout();
+        const { history } = props;
+        history.push('/'); //TODO: Referrer
+    };
 
     const { schema } = useResource();
 
@@ -145,11 +151,9 @@ const Component = (props) => {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         {(schema && schema.title) || 'Dashboard'}
                     </Typography>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
+                    <Button onClick={handleLogout} variant="contained" size="small" color="secondary" className={classes.margin}>
+                        Logout
+                    </Button>
                 </Toolbar>
             </AppBar>
             {/** End AppBar */}
@@ -224,4 +228,4 @@ const Component = (props) => {
     )
 };
 
-export default Component;
+export default withRouter(Component);
