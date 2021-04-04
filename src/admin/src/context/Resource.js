@@ -49,9 +49,9 @@ const ResourceProvider = ({ children }) => {
     }, [resource.type]);
 
     const save = async (model) => {
-        let method = (resource.id) ? 'put' : 'post';
+        let method = ((resource.view === 'settings') || resource.id) ? 'put' : 'post';
         let endpoint = {
-            put: `${resource.type}/${resource.id}`,
+            put: (resource.view === 'settings') ? `${resource.type}` : `${resource.type}/${resource.id}`,
             post: `${resource.type}`
         }
         try {
@@ -133,8 +133,9 @@ const ResourceProvider = ({ children }) => {
     const onPathChange = () => {
         const params = finalMatch.params;
         const type = params.type;
+        const view = params.view;
         const id = !(['new', 'update'].includes(params.id)) && params.id;
-        setResource({ type, id });
+        setResource({ type, id, view });
     }
 
     useEffect(onPathChange, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
