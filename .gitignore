@@ -15,3 +15,5 @@ node_modules/
 **/firebase-debug.log
 **/ui-debug.log
 **/build
+src/consumer/**/sitemap.xml
+src/consumer/**/robots.txt
