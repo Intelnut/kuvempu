@@ -4,7 +4,7 @@ const User = require('./model');
 
 const mockDone = jest.fn((error, data) => { });
 
-describe('create', () => {
+xdescribe('create', () => {
 
     beforeEach(() => {
         auth.createUser = jest.fn(() => {
@@ -48,7 +48,7 @@ describe('create', () => {
 
 });
 
-describe('remove', () => {
+xdescribe('remove', () => {
 
     beforeEach(() => {
         auth.deleteUser = jest.fn();
@@ -86,7 +86,7 @@ describe('remove', () => {
 
 });
 
-describe('fetch', () => {
+xdescribe('fetch', () => {
 
     beforeAll(async () => {
         auth.createUser = jest.fn((data) => {
@@ -148,7 +148,7 @@ describe('fetch', () => {
 
 });
 
-describe('update', () => {
+xdescribe('update', () => {
     beforeAll(async () => {
         auth.createUser = jest.fn((data) => {
             return {
