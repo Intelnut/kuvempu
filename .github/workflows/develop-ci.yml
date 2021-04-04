@@ -51,13 +51,6 @@ jobs:
       run: 
         sudo npm install --global firebase-tools
         npm ci
-    - name: Setup Properties
-      run: gulp setup:env
-    - name: Run REST Tests
-      run: gulp test:rest
-    - name: Run ADMIN Tests
-      run: gulp test:admin
-    - name: Run CONSUMER Tests
-      run: gulp test:admin
+    
     
 
