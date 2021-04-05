@@ -133,7 +133,7 @@ exports['build:admin'] = buildAdmin;
  * `gulp build`
  * Build prod ready app for consumer, admin and rest
  */
-
+const build = gulp.series(buildConsumer, buildAdmin);
 exports['build'] = gulp.series(buildConsumer, buildAdmin);
 
 /**
@@ -166,5 +166,12 @@ exports['deploy:admin'] = deployAdmin;
  * Deploy consumer and rest service app
  * Deploy rest first to ensure peer api dependencies are met
  */
-exports['deploy'] = gulp.series(deployRest, deployConsumer, deployAdmin);
+const deploy = gulp.series(deployRest, deployConsumer, deployAdmin);
+exports['deploy'] = deploy;
+
+/**
+ * `gulp build:deploy`
+ * Build and Deploy Rest, Admin and Consumer
+ */
+exports['build:deploy'] = gulp.series(build, deploy)
 
