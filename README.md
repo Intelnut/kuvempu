@@ -161,9 +161,7 @@ Map the values as mentioned below
 ADMIN_FIREBASE_CONFIG_APP_ID=<firebaseConfig.appId>
 ADMIN_FIREBASE_CONFIG_MEASUREMENT_ID=<firebaseConfig.measurementId>
 ADMIN_RESOURCE_ID=<App Nickname>
-ADMIN_URL=https://<firebaseConfig.projectId>.web.app 
-// or click **Linked Firebase Hosting** dropdown > **Manage in Hosting** and copy + paste the **Domain**, 
-// if you have configured hosting differently
+ADMIN_URL=<HOSTING_URL> // click **Linked Firebase Hosting** dropdown > **Manage in Hosting** and copy + paste the **Domain** value
 ```
 
 Select the rest app that you have created, under **Your apps** in Firebase **Project Settings**
@@ -178,9 +176,7 @@ Map the values as mentioned below
 REST_FIREBASE_CONFIG_APP_ID=<firebaseConfig.appId>
 REST_FIREBASE_CONFIG_MEASUREMENT_ID=<firebaseConfig.measurementId>
 REST_RESOURCE_ID=<App Nickname>
-REST_URL=https://<firebaseConfig.projectId>.web.app
-// or click **Linked Firebase Hosting** dropdown > **Manage in Hosting** and copy + paste the **Domain**, 
-// if you have configured hosting differently
+REST_URL=<HOSTING_URL> // click **Linked Firebase Hosting** dropdown > **Manage in Hosting** and copy + paste the **Domain** value
 ```
 
 Select the consumer app that you have created, under **Your apps** in Firebase **Project Settings**
@@ -194,9 +190,7 @@ Map the values as mentioned below
 CONSUMER_FIREBASE_CONFIG_APP_ID=<firebaseConfig.appId>
 CONSUMER_FIREBASE_CONFIG_MEASUREMENT_ID=<firebaseConfig.measurementId>
 CONSUMER_RESOURCE_ID=<App Nickname>
-CONSUMER_URL=https://<firebaseConfig.projectId>.web.app
-// or click **Linked Firebase Hosting** dropdown > **Manage in Hosting** and copy + paste the **Domain**, 
-// if you have configured hosting differently
+CONSUMER_URL=<HOSTING_URL> // click **Linked Firebase Hosting** dropdown > **Manage in Hosting** and copy + paste the **Domain** value
 
 FIREBASE_CONFIG_API_KEY=<firebaseConfig.apiKey>
 FIREBASE_CONFIG_AUTH_DOMAIN=<firebaseConfig.authDomain>
@@ -225,10 +219,13 @@ cd /path/to/your/project
 firebase login
 gulp install
 gulp setup
-gulp build
-gulp deploy
 ```
 
+##### 3) Build and Deploy project
 
+```
+gulp build:deploy
+
+```
 
   
