@@ -9,10 +9,10 @@ const properties = (app) => {
     return {
 
         // C
-        ADMIN_RESOURCE_ID: process.env.ADMIN_RESOURCE_ID,
+        ADMIN_HOSTING_SITE: process.env.ADMIN_HOSTING_SITE,
 
         // C
-        CONSUMER_RESOURCE_ID: process.env.CONSUMER_RESOURCE_ID,
+        CONSUMER_HOSTING_SITE: process.env.CONSUMER_HOSTING_SITE,
 
         //F
         FIREBASE_SERVICE_ACCOUNT: {
@@ -29,7 +29,7 @@ const properties = (app) => {
         },
 
         // R
-        REST_RESOURCE_ID: process.env.REST_RESOURCE_ID,
+        REST_HOSTING_SITE: process.env.REST_HOSTING_SITE,
 
         // S
         SUPER_ADMIN_EMAIL_ID: process.env.SUPER_ADMIN_EMAIL_ID,

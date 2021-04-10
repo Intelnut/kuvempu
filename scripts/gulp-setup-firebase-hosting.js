@@ -68,7 +68,7 @@ const setupUseResource = (path) => {
     const useFirebaseResource = (done) => {
 
         try {
-            useResource(serverEnvironmentConfig().CONSUMER_RESOURCE_ID, path, done);
+            useResource(serverEnvironmentConfig().FIREBASE_SERVICE_ACCOUNT.project_id, path, done);
         } catch (error) {
             done(error);
         }
@@ -94,7 +94,7 @@ module.exports = gulp.series(
     setupUseResource(consumerPath),
     setupUseResource(restPath),
     setupUseResource(adminPath),
-    setupApplyTarget(serverEnvironmentConfig().CONSUMER_RESOURCE_ID, consumerPath, consumerTarget),
-    setupApplyTarget(serverEnvironmentConfig().REST_RESOURCE_ID, restPath, restTarget),
-    setupApplyTarget(serverEnvironmentConfig().ADMIN_RESOURCE_ID, adminPath, adminTarget),
+    setupApplyTarget(serverEnvironmentConfig().CONSUMER_HOSTING_SITE, consumerPath, consumerTarget),
+    setupApplyTarget(serverEnvironmentConfig().REST_HOSTING_SITE, restPath, restTarget),
+    setupApplyTarget(serverEnvironmentConfig().ADMIN_HOSTING_SITE, adminPath, adminTarget),
 );
