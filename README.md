@@ -137,6 +137,8 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 - Done
 - Proceed with **Sandbox Setup**
 
+![Sample](/diagrams/fb-screenshot.jpg)
+
 ### Sandbox Setup
 
 #### Install Global Dependencies
