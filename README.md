@@ -2,6 +2,11 @@
 
 Kuvempu helps you build fast, robust, adaptable and high performant PWA on Google Cloud Firebase.
 
+![Architecture](/diagrams/architecture.jpg)
+
+*NOTE: Kuvempu is still in Development mode*
+
+
 ## Vision
 > Develop Fast.
 
@@ -9,23 +14,40 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 
 > Iterate Fast.
 
-## Installation
 
-*NOTE: Kuvempu is still in Development mode*
 
-### Pre-requisites
+## Pre-requisites
 
 1. Google Firebase Project with Blaze Plan
 2. Node.js (>=12), Npm (>=6), git
 3. Basic understanding of JS, React, Express, Next.js
-3. Basic understanding of Firebase service API's
+3. Basic understanding of Firebase services
 4. Basic understanding of JSONSchema
+
+## Installation
 
 ### Quick Start
 
-#### 1) Create Firebase Project
+1) [Create Firebase Project](#user-content-create-firebase-project)
+    1) [Setup Firebase](#user-content-setup-firebase)
+    2) [Setup Authentication](#user-content-setup-authentication)
+    3) [Setup Firestore](#user-content-setup-firestore)
+    4) [Setup Apps](#user-content-setup-apps)
+        1) [Consumer App](#user-content-consumer-app)
+        2) [Admin App](#user-content-admin-app)
+        3) [REST App](#user-content-rest-app)
+    4) [Setup Service Account](#user-content-setup-service-account)
 
-##### 1) Setup Firebase
+2) [Sandbox Setup](#user-content-sandbox-setup)
+    1) [Install Global Dependencies](#user-content-install-global-dependencies)
+    2) [Clone Kuvempu repo](#user-content-clone-kuvempu-repo)
+    3) [Setup environment](#user-content-setup-environment)
+    4) [Initialise project](#user-content-initialise-project)
+    5) [Build and Deploy project](#user-content-build-and-deploy-project)
+
+### Create Firebase Project
+
+#### Setup Firebase
 
 - Go to [Firebase Console](https://console.firebase.google.com/)
 - Click on Add Project
@@ -39,7 +61,7 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 - Done
 - Proceed with **Setup Authentication**
 
-##### 2) Setup Authentication
+#### Setup Authentication
 
 - In the navigation, click on **Authentication**
 - Click on **Get Started**
@@ -50,7 +72,7 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 - Done
 - Proceed with **Setup Firestore**
 
-##### 3) Setup Firestore
+#### Setup Firestore
 
 - In the navigation, click on **Firestore**
 - Click on **Create Database**
@@ -61,9 +83,9 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 - Done
 - Proceed with **Setup Apps**
 
-##### 4) Setup Apps
+#### Setup Apps
 
-###### 1) Consumer App
+##### Consumer App
 
 - In the navigation, click on **Project Overview**
 - Click on **Web** under **Add an app to get started**
@@ -76,7 +98,7 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 - Done
 - Proceed with **Admin App**
 
-###### 2) Admin App
+##### Admin App
 
 - In the dashboard, click on **Add app**
 - Click on **Web** from the given options
@@ -90,7 +112,7 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 - Done
 - Proceed with **REST App**
 
-###### 3) REST App
+##### REST App
 
 - In the dashboard, click on **Add app**
 - Click on **Web** from the given options
@@ -104,7 +126,7 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 - Done
 - Proceed with **Setup Service Account**
 
-##### 4) Setup Service Account
+#### Setup Service Account
 
 - In the dashboard, click on the **Settings** icon corresponding to **Project Overview**
 - Click on **Project Settings** from the options
@@ -115,9 +137,9 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 - Done
 - Proceed with **Sandbox Setup**
 
-#### 4) Sandbox Setup
+### Sandbox Setup
 
-##### 1) Install Global Dependencies
+#### Install Global Dependencies
 
 `npm install -g firebase-tools` [*v9.3.0 was used during development*]
 
@@ -125,25 +147,25 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 
 `npm install -g gulp-cli` [*CLI v2.3.0 and Local 4.0.2 was used during development*]
 
-##### 2) Clone Kuvempu repo
+#### Clone Kuvempu repo
 
-###### Using HTTPS
+##### Using HTTPS
 
 `git clone https://github.com/Intelnut/kuvempu.git <your_project_dir_name> --depth=1`
 
-###### Using SSH
+##### Using SSH
 
 `git clone git@github.com:Intelnut/kuvempu.git <your_project_dir_name> --depth=1`
 
-##### 3) Setup environment
+#### Setup environment
 
-###### 1) Rename `sample.env` to `.env`
+##### Rename `sample.env` to `.env`
 
 `cd /path/to/your/project`
 
 `mv sample.env .env`
 
-###### 1) Update .env
+##### Update .env
 
 *Note: Before updating the environment, go to Firebase console > Select your Project > Settings Icon > Project Settings*
 
@@ -160,7 +182,7 @@ Map the values as mentioned below
 ```
 ADMIN_FIREBASE_CONFIG_APP_ID=<firebaseConfig.appId>
 ADMIN_FIREBASE_CONFIG_MEASUREMENT_ID=<firebaseConfig.measurementId>
-ADMIN_RESOURCE_ID=<App Nickname>
+ADMIN_HOSTING_SITE=<App Nickname>
 ADMIN_URL=<HOSTING_URL> // click **Linked Firebase Hosting** dropdown > **Manage in Hosting** and copy + paste the **Domain** value
 ```
 
@@ -175,7 +197,7 @@ Map the values as mentioned below
 ```
 REST_FIREBASE_CONFIG_APP_ID=<firebaseConfig.appId>
 REST_FIREBASE_CONFIG_MEASUREMENT_ID=<firebaseConfig.measurementId>
-REST_RESOURCE_ID=<App Nickname>
+REST_HOSTING_SITE=<App Nickname>
 REST_URL=<HOSTING_URL> // click **Linked Firebase Hosting** dropdown > **Manage in Hosting** and copy + paste the **Domain** value
 ```
 
@@ -189,7 +211,7 @@ Map the values as mentioned below
 ```
 CONSUMER_FIREBASE_CONFIG_APP_ID=<firebaseConfig.appId>
 CONSUMER_FIREBASE_CONFIG_MEASUREMENT_ID=<firebaseConfig.measurementId>
-CONSUMER_RESOURCE_ID=<App Nickname>
+CONSUMER_HOSTING_SITE=<App Nickname>
 CONSUMER_URL=<HOSTING_URL> // click **Linked Firebase Hosting** dropdown > **Manage in Hosting** and copy + paste the **Domain** value
 
 FIREBASE_CONFIG_API_KEY=<firebaseConfig.apiKey>
@@ -212,7 +234,7 @@ FIREBASE_SA_AUTH_PROVIDER_X509_CERT_URL=<auth_provider_x509_cert_url>
 FIREBASE_SA_CLIENT_X509_CERT_URL=<client_x509_cert_url>
 ```
 
-##### 3) Initialise project
+#### Initialise project
 
 ```
 cd /path/to/your/project
@@ -221,7 +243,7 @@ gulp install
 gulp setup
 ```
 
-##### 3) Build and Deploy project
+#### Build and Deploy project
 
 ```
 gulp build:deploy
