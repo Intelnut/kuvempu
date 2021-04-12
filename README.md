@@ -89,7 +89,7 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 
 - In the navigation, click on **Project Overview**
 - Click on **Web** under **Add an app to get started**
-- Provide an **App nickname** (Ex: yourappname-consumer) [NOTE: This app will be used to serve consumer traffic. Postfix with **-consumer** for identification, though not mandatory]
+- Provide an **Linked Firebase Hosting site** (Ex: yourappname-consumer) [NOTE: This app will be used to serve consumer traffic. Postfix with **-consumer** for identification, though not mandatory]
 - Enable setup **Firebase Hosting** for this app
 - Click on **Register app**
 - Click **Next** in **Add Firebase SDK** section
@@ -102,7 +102,7 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 
 - In the dashboard, click on **Add app**
 - Click on **Web** from the given options
-- Provide an **App nickname** (Ex: yourappname-admin) [NOTE: This app will be used to serve admin traffic. Postfix with **-admin** for identification, though not mandatory]
+- Provide an **Linked Firebase Hosting site** (Ex: yourappname-admin) [NOTE: This app will be used to serve admin traffic. Postfix with **-admin** for identification, though not mandatory]
 - Enable setup **Firebase Hosting** for this app
 - Provide a hosting name (Ex: yourappname-admin.web.app for consistency)
 - Click on **Register app**
@@ -116,7 +116,7 @@ Kuvempu helps you build fast, robust, adaptable and high performant PWA on Googl
 
 - In the dashboard, click on **Add app**
 - Click on **Web** from the given options
-- Provide an **App nickname** (Ex: yourappname-rest) [NOTE: This app will be used to serve admin traffic. Postfix with **-rest** for identification, though not mandatory]
+- Provide an **Linked Firebase Hosting site** (Ex: yourappname-rest) [NOTE: This app will be used to serve admin traffic. Postfix with **-rest** for identification, though not mandatory]
 - Enable setup **Firebase Hosting** for this app
 - Provide a hosting name (Ex: yourappname-rest.web.app for consistency)
 - Click on **Register app**
@@ -184,7 +184,7 @@ Map the values as mentioned below
 ```
 ADMIN_FIREBASE_CONFIG_APP_ID=<firebaseConfig.appId>
 ADMIN_FIREBASE_CONFIG_MEASUREMENT_ID=<firebaseConfig.measurementId>
-ADMIN_HOSTING_SITE=<App Nickname>
+ADMIN_HOSTING_SITE=<Linked Firebase Hosting site>
 ADMIN_URL=<HOSTING_URL> // click **Linked Firebase Hosting** dropdown > **Manage in Hosting** and copy + paste the **Domain** value
 ```
 
@@ -199,7 +199,7 @@ Map the values as mentioned below
 ```
 REST_FIREBASE_CONFIG_APP_ID=<firebaseConfig.appId>
 REST_FIREBASE_CONFIG_MEASUREMENT_ID=<firebaseConfig.measurementId>
-REST_HOSTING_SITE=<App Nickname>
+REST_HOSTING_SITE=<Linked Firebase Hosting site>
 REST_URL=<HOSTING_URL> // click **Linked Firebase Hosting** dropdown > **Manage in Hosting** and copy + paste the **Domain** value
 ```
 
@@ -213,7 +213,7 @@ Map the values as mentioned below
 ```
 CONSUMER_FIREBASE_CONFIG_APP_ID=<firebaseConfig.appId>
 CONSUMER_FIREBASE_CONFIG_MEASUREMENT_ID=<firebaseConfig.measurementId>
-CONSUMER_HOSTING_SITE=<App Nickname>
+CONSUMER_HOSTING_SITE=<Linked Firebase Hosting site>
 CONSUMER_URL=<HOSTING_URL> // click **Linked Firebase Hosting** dropdown > **Manage in Hosting** and copy + paste the **Domain** value
 
 FIREBASE_CONFIG_API_KEY=<firebaseConfig.apiKey>
